@@ -1,8 +1,8 @@
 package com.fantasy.fantasyleague.Group;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GroupRepository extends
-        CrudRepository<GroupFantasy, Integer> {
+        JpaRepository<GroupFantasy, Integer> {
 
 }

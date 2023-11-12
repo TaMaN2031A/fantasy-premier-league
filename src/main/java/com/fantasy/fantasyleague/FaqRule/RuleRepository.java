@@ -1,8 +1,8 @@
 package com.fantasy.fantasyleague.FaqRule;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RuleRepository extends
-        CrudRepository<Rule, Integer> {
+        JpaRepository<Rule, Integer> {
 
 }
