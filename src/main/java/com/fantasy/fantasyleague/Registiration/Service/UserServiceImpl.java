@@ -36,7 +36,6 @@ public class UserServiceImpl implements UserService{
         return this.passwordEncoder.encode(password);
     }
 
-
     @Override
     public String addUser(SignUpDTO signUpDTO) {
         if(checkEmail(signUpDTO.getEmail()))
