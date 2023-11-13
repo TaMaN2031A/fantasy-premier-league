@@ -16,14 +16,14 @@ public class SignUpDTO {
     private String password;
     private String region;
 
-    public User mapToUser() {
+    public User mapToUser(String password) {
         return new User(
                 this.userName,
                 this.email,
                 this.region,
                 this.firstName,
                 this.lastName,
-                this.password
+                password
         );
     }
 
