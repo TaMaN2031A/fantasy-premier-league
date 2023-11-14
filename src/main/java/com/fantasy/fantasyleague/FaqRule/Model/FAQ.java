@@ -1,4 +1,4 @@
-package com.fantasy.fantasyleague.FaqRule;
+package com.fantasy.fantasyleague.FaqRule.Model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,7 +11,7 @@ import java.util.Date;
 public class FAQ {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private long faqID;
+    private int faqID;
     @Column(name="question", nullable=false, length=512)
     private String question;
     @Column(name="answer", nullable=false, length=512)
@@ -25,11 +25,11 @@ public class FAQ {
         this.date = date;
     }
 
-    public long getFaqID() {
+    public int getFaqID() {
         return faqID;
     }
 
-    public void setFaqID(long faqID) {
+    public void setFaqID(int faqID) {
         this.faqID = faqID;
     }
 

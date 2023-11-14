@@ -1,4 +1,4 @@
-package com.fantasy.fantasyleague.FaqRule;
+package com.fantasy.fantasyleague.FaqRule.Model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
