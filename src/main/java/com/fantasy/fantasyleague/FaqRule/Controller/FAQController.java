@@ -4,9 +4,12 @@ import com.fantasy.fantasyleague.FaqRule.Model.FAQ;
 import com.fantasy.fantasyleague.FaqRule.Service.FAQService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 // Needs getters, filters, to be done in next phase
 @RestController
-@RequestMapping("/rule")
+@RequestMapping("/faq")
 public class FAQController {
     @Autowired
     FAQService faqService;
@@ -27,5 +30,9 @@ public class FAQController {
         String response = faqService.updateFAQ(faq);
         System.out.println(response);
         return response;
+    }
+    @GetMapping("/getAll")
+    public List<FAQ> getAllFAQ() {
+       return faqService.getAllFAQ();
     }
 }

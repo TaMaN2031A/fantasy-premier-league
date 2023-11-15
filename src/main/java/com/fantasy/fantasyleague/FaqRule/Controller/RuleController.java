@@ -1,12 +1,42 @@
 package com.fantasy.fantasyleague.FaqRule.Controller;
 
+import com.fantasy.fantasyleague.FaqRule.Model.FAQ;
+import com.fantasy.fantasyleague.FaqRule.Model.Rule;
 import com.fantasy.fantasyleague.FaqRule.Repository.RuleRepository;
+import com.fantasy.fantasyleague.FaqRule.Service.FAQService;
+import com.fantasy.fantasyleague.FaqRule.Service.RuleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/rule")
 public class RuleController {
+
+    @Autowired
+    RuleService ruleService;
+    @PostMapping("/insert")
+    public String insertRule(@RequestBody Rule rule) {
+        String response = ruleService.insertRule(rule);
+        System.out.println(response);
+        return response;
+    }
+    @DeleteMapping("/delete")
+    public String deleteRule(@RequestBody Rule rule) {
+        String response = ruleService.deleteRule(rule);
+        System.out.println(response);
+        return response;
+    }
+    @PostMapping("/update")
+    public String updateRule(@RequestBody Rule rule) {
+        String response = ruleService.updateRule(rule);
+        System.out.println(response);
+        return response;
+    }
+    @GetMapping("/getAll")
+    public List<Rule> getAllList() {
+        return ruleService.getAllRule();
+    }
 
 }
