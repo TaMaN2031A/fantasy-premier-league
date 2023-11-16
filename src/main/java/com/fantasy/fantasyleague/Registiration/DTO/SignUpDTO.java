@@ -23,7 +23,8 @@ public class SignUpDTO {
                 this.region,
                 this.firstName,
                 this.lastName,
-                password
+                password,
+                ""
         );
     }
 
