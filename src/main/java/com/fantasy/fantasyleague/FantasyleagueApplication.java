@@ -12,11 +12,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
 import java.util.Date;
 
-@SpringBootApplication
-public class FantasyleagueApplication implements CommandLineRunner {
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
+public class FantasyleagueApplication {// implements CommandLineRunner {
 	@Autowired
 	private RuleRepository repository;
 	@Autowired
@@ -31,14 +32,14 @@ public class FantasyleagueApplication implements CommandLineRunner {
 				(FantasyleagueApplication.class, args);
 		logger.info("Salam Aleikom");
 	}
-	@Override
-	public void run(String... args) throws Exception {
-		repository.save(new Rule("Don't cheat", new Date()));
-		repo.save(new FAQ("What is the admin name?", "It's abdallah", new Date()));
-		repository.save(new Rule("Sleep Early", new Date()));
-		repository.save(new Rule("Eat healthy food", new Date()));
-		repository.save(new Rule("Focus on the main target", new Date()));
-		requestRepository.save(new Request("Ahmed", "OOP@gmail.com", new Date(), "lol2023", "Egypt"));
-	}
+//	@Override
+//	public void run(String... args) throws Exception {
+//		repository.save(new Rule("Don't cheat", new Date()));
+//		repo.save(new FAQ("What is the admin name?", "It's abdallah", new Date()));
+//		repository.save(new Rule("Sleep Early", new Date()));
+//		repository.save(new Rule("Eat healthy food", new Date()));
+//		repository.save(new Rule("Focus on the main target", new Date()));
+//		requestRepository.save(new Request("Ahmed", "OOP@gmail.com", new Date(), "lol2023", "Egypt"));
+//	}
 
 }

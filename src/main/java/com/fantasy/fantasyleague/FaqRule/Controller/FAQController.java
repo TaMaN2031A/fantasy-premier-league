@@ -9,6 +9,7 @@ import java.util.List;
 
 // Needs getters, filters, to be done in next phase
 @RestController
+@CrossOrigin
 @RequestMapping("/faq")
 public class FAQController {
     @Autowired
@@ -27,12 +28,15 @@ public class FAQController {
     }
     @PostMapping("/update")
     public String updateFAQ(@RequestBody FAQ faq) {
-        String response = faqService.updateFAQ(faq);
-        System.out.println(response);
-        return response;
+        return faqService.updateFAQ(faq);
     }
     @GetMapping("/getAll")
     public List<FAQ> getAllFAQ() {
        return faqService.getAllFAQ();
+    }
+    @DeleteMapping("/deleteAll")
+    public String deleteAllFAQ() {
+        String response = faqService.deleteAllFAQ();
+        return response;
     }
 }

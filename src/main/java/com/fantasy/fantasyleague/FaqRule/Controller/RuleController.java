@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/rule")
 public class RuleController {
 
@@ -30,13 +31,17 @@ public class RuleController {
     }
     @PostMapping("/update")
     public String updateRule(@RequestBody Rule rule) {
-        String response = ruleService.updateRule(rule);
-        System.out.println(response);
-        return response;
+        return ruleService.updateRule(rule);
     }
     @GetMapping("/getAll")
     public List<Rule> getAllList() {
         return ruleService.getAllRule();
+    }
+    @DeleteMapping("/deleteAll")
+    public String deleteAllList() {
+        String response = ruleService.deleteAllRule();
+        System.out.println(response);
+        return response;
     }
 
 }

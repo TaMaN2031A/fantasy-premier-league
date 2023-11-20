@@ -9,5 +9,6 @@ public interface RuleService {
     String insertRule(Rule rule);
     String updateRule(Rule rule);
     String deleteRule(Rule rule);
-    public List<Rule> getAllRule();
+    List<Rule> getAllRule();
+    String deleteAllRule();
 }

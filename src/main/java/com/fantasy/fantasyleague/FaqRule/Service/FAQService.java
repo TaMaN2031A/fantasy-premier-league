@@ -8,6 +8,7 @@ public interface FAQService {
     String insertFAQ(FAQ faq);
     String updateFAQ(FAQ faq);
     String deleteFAQ(FAQ faq);
-    public List<FAQ> getAllFAQ();
+    List<FAQ> getAllFAQ();
+    String deleteAllFAQ();
 
     }
