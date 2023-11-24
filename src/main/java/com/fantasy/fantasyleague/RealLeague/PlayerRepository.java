@@ -1,4 +1,4 @@
-package com.fantasy.fantasyleague.Player;
+package com.fantasy.fantasyleague.RealLeague;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

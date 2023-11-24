@@ -1,4 +1,4 @@
-package com.fantasy.fantasyleague.Player;
+package com.fantasy.fantasyleague.RealLeague;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
