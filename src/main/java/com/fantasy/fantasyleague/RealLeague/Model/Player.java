@@ -1,11 +1,12 @@
-package com.fantasy.fantasyleague.RealLeague;
+package com.fantasy.fantasyleague.RealLeague.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Player {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -18,10 +19,12 @@ public class Player {
     private int saved;
     private char position;
     private int number_in_team;
-    private int team_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team")
+    private Team team;
     private String photo_link;
     private double price;
-    public Player(String name, int red_cards, int yellow_cards, int goals, int assists, int saved, char position, int number_in_team, int team_id, String photo_link, double price) {
+    public Player(String name, int red_cards, int yellow_cards, int goals, int assists, int saved, char position, int number_in_team, Team team, String photo_link, double price) {
         this.name = name;
         this.red_cards = red_cards;
         this.yellow_cards = yellow_cards;
@@ -30,7 +33,7 @@ public class Player {
         this.saved = saved;
         this.position = position;
         this.number_in_team = number_in_team;
-        this.team_id = team_id;
+        this.team = team;
         this.photo_link = photo_link;
         this.price = price;
     }
@@ -107,12 +110,12 @@ public class Player {
         this.number_in_team = number_in_team;
     }
 
-    public int getTeam_id() {
-        return team_id;
+    public Team getTeam_id() {
+        return team;
     }
 
-    public void setTeam_id(int team_id) {
-        this.team_id = team_id;
+    public void setTeam_id(Team team) {
+        this.team = team;
     }
 
     public String getPhoto_link() {
