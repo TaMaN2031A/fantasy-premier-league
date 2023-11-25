@@ -19,6 +19,12 @@ public class PlayerController {
         System.out.println(response);
         return response;
     }
+    @PostMapping("/addTo")
+    public String addPlayerToTeam(@RequestBody Player player) {
+        String response = playerService.insertPlayer(player);
+        System.out.println(response);
+        return response;
+    }
     @DeleteMapping("/delete")
     public String deletePlayer(@RequestBody Player player) {
         String response = playerService.deletePlayer(player);

@@ -1,109 +1,98 @@
 package com.fantasy.fantasyleague.RealLeague.Model;
 
+import com.fantasy.fantasyleague.RealLeague.Repository.TeamRepository;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.tool.schema.extract.spi.SequenceInformation;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.Serializable;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Player {
+    @Getter
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int ID;
+    @Getter
     private String name;
+    @Getter
     private int red_cards;
+    @Getter
     private int yellow_cards;
+    @Getter
     private int goals;
+    @Getter
     private int assists;
+    @Getter
     private int saved;
+    @Getter
     private char position;
+    @Getter
     private int number_in_team;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team")
-    private Team team;
-    private String photo_link;
-    private double price;
-    public Player(String name, int red_cards, int yellow_cards, int goals, int assists, int saved, char position, int number_in_team, Team team, String photo_link, double price) {
-        this.name = name;
-        this.red_cards = red_cards;
-        this.yellow_cards = yellow_cards;
-        this.goals = goals;
-        this.assists = assists;
-        this.saved = saved;
-        this.position = position;
-        this.number_in_team = number_in_team;
-        this.team = team;
-        this.photo_link = photo_link;
-        this.price = price;
+
+    public void setId_of_team(int id_of_team) {
+        this.id_of_team = id_of_team;
     }
 
-    public int getID() {
-        return ID;
+    @Getter
+    private int id_of_team;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "team_id", referencedColumnName = "id")
+    private Team team;
+    @Getter
+    private String photo_link;
+    @Getter
+    private double price;
+    public Player(String name, char position, int number_in_team, int id_of_team) {
+        this.name = name;
+        this.red_cards = 0;
+        this.yellow_cards = 0;
+        this.goals = 0;
+        this.assists = 0;
+        this.saved = 0;
+        this.position = position;
+        this.number_in_team = number_in_team;
+        this.price = 0;
+        this.id_of_team = id_of_team;
     }
 
     public void setID(int ID) {
         this.ID = ID;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getRed_cards() {
-        return red_cards;
     }
 
     public void setRed_cards(int red_cards) {
         this.red_cards = red_cards;
     }
 
-    public int getYellow_cards() {
-        return yellow_cards;
-    }
-
     public void setYellow_cards(int yellow_cards) {
         this.yellow_cards = yellow_cards;
-    }
-
-    public int getGoals() {
-        return goals;
     }
 
     public void setGoals(int goals) {
         this.goals = goals;
     }
 
-    public int getAssists() {
-        return assists;
-    }
-
     public void setAssists(int assists) {
         this.assists = assists;
-    }
-
-    public int getSaved() {
-        return saved;
     }
 
     public void setSaved(int saved) {
         this.saved = saved;
     }
 
-    public char getPosition() {
-        return position;
-    }
-
     public void setPosition(char position) {
         this.position = position;
-    }
-
-    public int getNumber_in_team() {
-        return number_in_team;
     }
 
     public void setNumber_in_team(int number_in_team) {
@@ -118,16 +107,8 @@ public class Player {
         this.team = team;
     }
 
-    public String getPhoto_link() {
-        return photo_link;
-    }
-
     public void setPhoto_link(String photo_link) {
         this.photo_link = photo_link;
-    }
-
-    public double getPrice() {
-        return price;
     }
 
     public void setPrice(double price) {

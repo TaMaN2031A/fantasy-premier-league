@@ -1,14 +1,16 @@
 package com.fantasy.fantasyleague.RealLeague.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Team {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -20,7 +22,6 @@ public class Team {
     private int goals_conceded;
     private int goals_difference;
     private int points;
-
     public List<Player> getPlayers() {
         return players;
     }
@@ -28,7 +29,7 @@ public class Team {
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
     private List<Player> players;
     public Team(int ID, String name) {

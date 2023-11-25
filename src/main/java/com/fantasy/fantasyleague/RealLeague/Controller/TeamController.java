@@ -35,7 +35,6 @@ public class TeamController {
     }
     @DeleteMapping("/deleteAll")
     public String deleteAllTeam() {
-        String response = teamService.deleteAllTeam();
-        return response;
+        return teamService.deleteAllTeam();
     }
 }

@@ -21,7 +21,7 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public String insertTeam(Team team) {
         Team team1 = teamRepository.findByName(team.getName()).orElse(null);
-        if(team1 == null)//Search by name
+        if(team1 != null)//Search by name
             return insertResponseF;
         teamRepository.save(team);
         return insertResponse;
