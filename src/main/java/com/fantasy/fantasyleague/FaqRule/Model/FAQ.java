@@ -18,7 +18,7 @@ import java.util.Date;
 public class FAQ {
     @Setter
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int faqID;
     @Setter
     @Column(nullable=false, length=512)
