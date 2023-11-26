@@ -14,8 +14,14 @@ import java.util.Date;
 public class Rule {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
+    @Getter
+    @Setter
     private int ruleID;
+    @Getter
+    @Setter
     private String rule;
+    @Getter
+    @Setter
     private Date date;
 
     public Rule(String rule, Date date) {
@@ -23,27 +29,4 @@ public class Rule {
         this.date = date;
     }
 
-    public int getRuleID() {
-        return ruleID;
-    }
-
-    public void setRuleID(int ruleID) {
-        this.ruleID = ruleID;
-    }
-
-    public String getRule() {
-        return rule;
-    }
-
-    public void setRule(String rule) {
-        this.rule = rule;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
 }

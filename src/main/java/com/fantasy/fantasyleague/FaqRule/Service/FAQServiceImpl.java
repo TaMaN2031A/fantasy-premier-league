@@ -23,8 +23,6 @@ public class FAQServiceImpl implements FAQService{
     FAQRepository faqRepository;
     @Override
     public String insertFAQ(FAQ faq) {
-        if(faqRepository.existsById(faq.getFaqID()))
-            return insertResponseF;
         faqRepository.save(faq);
         return insertResponse;
     }

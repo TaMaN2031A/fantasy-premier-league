@@ -23,8 +23,6 @@ public class RuleServiceImpl implements RuleService{
     RuleRepository ruleRepository;
     @Override
     public String insertRule(Rule rule) {
-        if(ruleRepository.existsById(rule.getRuleID()))
-            return insertResponseF;
         ruleRepository.save(rule);
         return insertResponse;
     }
