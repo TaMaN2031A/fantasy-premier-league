@@ -49,4 +49,5 @@ public class RegistrationController {
     public ResponseEntity<String> updatePassword(@RequestBody JsonNode PasswordUpdateInfo){
         return registrationService.updatePassword(PasswordUpdateInfo);
     }
+
 }

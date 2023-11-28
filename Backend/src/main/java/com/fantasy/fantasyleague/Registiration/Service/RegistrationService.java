@@ -6,6 +6,7 @@ import com.fantasy.fantasyleague.Registiration.Model.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.http.ResponseEntity;
 
+
 public interface RegistrationService {
 
     String addUser(User user);
@@ -17,4 +18,5 @@ public interface RegistrationService {
     ResponseEntity<String> updatePassword(JsonNode PasswordUpdateInfo);
 
     ResponseEntity<String> ForgetPassword(JsonNode emailDetails);
+
 }
