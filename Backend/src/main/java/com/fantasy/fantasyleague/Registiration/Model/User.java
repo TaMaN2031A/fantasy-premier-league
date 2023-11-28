@@ -1,24 +1,11 @@
 package com.fantasy.fantasyleague.Registiration.Model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import lombok.*;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
-public class User {
-
-    @Id
-    private String userName;
-    private String email;
-    private String region;
-    private String firstName;
-    private String lastName;
-    private String password;
-
+@Table(name = "users")
+public class User extends Person {
 }
