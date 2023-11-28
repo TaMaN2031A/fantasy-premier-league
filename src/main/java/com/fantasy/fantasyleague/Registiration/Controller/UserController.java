@@ -31,7 +31,7 @@ public class UserController {
     public boolean signIn(@RequestBody SignInDTO signInDTO) {
         return userService.validateUser(signInDTO);
     }
-//    emailDetails are email and username
+//    emailDetails are email
     @PostMapping("/forgetPassword")
     public ResponseEntity<String> forgetPassword(@RequestBody JsonNode emailDetails){
         return userService.ForgetPassword(emailDetails);

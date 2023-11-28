@@ -73,7 +73,6 @@ public class AdminServiceImpl implements AdminService{
             }
             if(!token.equals(admin.getToken())){
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
-
             }
             admin.setPassword(encodePassword(password));
             admin.setToken("");
@@ -88,14 +87,13 @@ public class AdminServiceImpl implements AdminService{
     public ResponseEntity<String> ForgetPassword(JsonNode emailDetails){
         try{
             String mail=emailDetails.get("email").asText();
-            String userName=emailDetails.get("userName").asText();
             String token = RandomString.make(8);
 
             Admin admin =adminRepository.findByEmail(mail);
             if(admin==null)
                 return ResponseEntity.notFound().build(); // No custom message
 
-            if(isResponseEntityOk(mailService.sendForgetPasswordEmail(mail,userName,token))){
+            if(isResponseEntityOk(mailService.sendForgetPasswordEmail(mail,admin.getUserName(),token))){
                 admin.setToken(token);
                 adminRepository.save(admin);
                 return ResponseEntity.ok("email sent");
