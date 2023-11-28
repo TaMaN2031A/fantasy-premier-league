@@ -25,6 +25,7 @@ public class Team {
     private int goals_difference;
     private int points;
 
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
     private List<Player> players;
