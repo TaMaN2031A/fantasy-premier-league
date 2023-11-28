@@ -25,13 +25,13 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    private Person findEntity(String email, String userName, Role role) {
-        return role == Role.ADMIN ?
+    public Person findEntity(String email, String userName, Role role) {
+       return role == Role.ADMIN ?
             adminRepository.findByEmailOrUserName(email, userName):
             userRepository.findByEmailOrUserName(email, userName);
     }
 
-    private Boolean checkPassword(String rawPassword, String encodedPassword) {
+    public Boolean checkPassword(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
