@@ -15,8 +15,10 @@ public interface RegistrationService {
 
     String validateGoogle(GoogleDTO googleDTO);
 
+
     String updatePassword(JsonNode PasswordUpdateInfo);
 
     String ForgetPassword(JsonNode emailDetails);
+
 
 }

@@ -41,13 +41,14 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
 
-    private Person findEntity(String email, String userName, Role role) {
+
+    public Person findEntity(String email, String userName, Role role) {
         return role == Role.ADMIN ?
             adminRepository.findByEmailOrUserName(email, userName):
             userRepository.findByEmailOrUserName(email, userName);
     }
 
-    private Boolean checkPassword(String rawPassword, String encodedPassword) {
+    public Boolean checkPassword(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
@@ -103,6 +104,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
+<
     public String updatePassword(JsonNode PasswordUpdateInfo) {
         try{
             String mail = PasswordUpdateInfo.get("email").asText();
@@ -121,13 +123,13 @@ public class RegistrationServiceImpl implements RegistrationService {
             if(!token.equals(user.getToken()))
                 return Response.InvalidToken;
 
+
             user.setPassword(this.passwordEncoder.encode(password));
             user.setToken("");
             if(retrievedUser==null)
                 adminRepository.save((Admin) user);
             else
                 userRepository.save((User) user);
-
             return Response.PassUpdateSuccessfully;
         }
         catch (Exception e){
