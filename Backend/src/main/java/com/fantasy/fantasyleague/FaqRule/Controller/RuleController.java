@@ -19,15 +19,11 @@ public class RuleController {
     RuleService ruleService;
     @PostMapping("/insert")
     public String insertRule(@RequestBody Rule rule) {
-        String response = ruleService.insertRule(rule);
-        System.out.println(response);
-        return response;
+        return ruleService.insertRule(rule);
     }
     @DeleteMapping("/delete")
     public String deleteRule(@RequestBody Rule rule) {
-        String response = ruleService.deleteRule(rule);
-        System.out.println(response);
-        return response;
+        return ruleService.deleteRule(rule);
     }
     @PostMapping("/update")
     public String updateRule(@RequestBody Rule rule) {
@@ -39,9 +35,7 @@ public class RuleController {
     }
     @DeleteMapping("/deleteAll")
     public String deleteAllList() {
-        String response = ruleService.deleteAllRule();
-        System.out.println(response);
-        return response;
+        return ruleService.deleteAllRule();
     }
 
 }

@@ -15,15 +15,11 @@ public class TeamController {
     TeamService teamService;
     @PostMapping("/insert")
     public String insertTeam(@RequestBody Team team) {
-        String response = teamService.insertTeam(team);
-        System.out.println(response);
-        return response;
+        return teamService.insertTeam(team);
     }
     @DeleteMapping("/delete")
     public String deleteTeam(@RequestBody Team team) {
-        String response = teamService.deleteTeam(team);
-        System.out.println(response);
-        return response;
+        return teamService.deleteTeam(team);
     }
     @PostMapping("/update")
     public String updateTeam(@RequestBody Team team) {

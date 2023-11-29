@@ -15,16 +15,12 @@ public class PlayerController {
     PlayerService playerService;
     @PostMapping("/insert")
     public String insertPlayer(@RequestBody Player player) {
-        String response = playerService.insertPlayer(player);
-        System.out.println(response);
-        return response;
+        return playerService.insertPlayer(player);
     }
 
     @DeleteMapping("/delete")
     public String deletePlayer(@RequestBody Player player) {
-        String response = playerService.deletePlayer(player);
-        System.out.println(response);
-        return response;
+        return playerService.deletePlayer(player);
     }
     @PostMapping("/update")
     public String updatePlayer(@RequestBody Player player) {

@@ -37,7 +37,7 @@ public class PlayerServiceImpl implements PlayerService{
                     return insertResponseF; // Cannot insert if same number
                 }
             }
-            player.setTeam_id(team);
+            player.setTeam(team);
             if(player.getNumber_in_team()<1||player.getNumber_in_team()>99)
                 return insertResponseF;
             playerRepository.save(player);
@@ -64,7 +64,7 @@ public class PlayerServiceImpl implements PlayerService{
                 }
             }
             playerToUpdate.setNumber_in_team(player.getNumber_in_team());
-            playerToUpdate.setTeam_id(team);
+            playerToUpdate.setTeam(team);
         }else{
             // User sent a wrong id team number
             return updateResponseF;

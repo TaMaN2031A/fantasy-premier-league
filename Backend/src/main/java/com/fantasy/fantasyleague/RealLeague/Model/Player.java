@@ -25,7 +25,6 @@ public class Player {
     private String position;
     private int number_in_team;
     private int id_of_team;
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id", referencedColumnName = "id")
     private Team team;

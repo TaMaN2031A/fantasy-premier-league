@@ -6,28 +6,37 @@ import { GetAuthDataFn } from "../wrapper";
 import { login } from "../myServices/personAuthorizationService/getData"
 import {adminPrv, userPrv} from "../collection";
 import './SoccerTable.css';
+import { fetchPlayersData, fetchTeamsData } from "../myServices/personAuthorizationService/getData";
 
 export const League = () => {    
     const [playerInfo, setPlayerInfo] = useState([]);
     const [teamInfo, setTeamInfo] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:8080/team/getAll', {method:'GET'})
-        .then(result => result.json())
-        .then(jsonresult => {
-            setTeamInfo(jsonresult)
-        })
-        .then(console.log("Got Teams Successfully"))
-        .catch(err => console.error(err))
-    }, [])
+        const fetchPlayerData = async () => {
+            try {
+                const result = await fetchPlayersData();
+                setPlayerInfo(result);
+                console.log("Got Players Successfully");
+            } catch (err) {
+                console.error(err);
+            } 
+        };
+
+        fetchPlayerData();
+    }, []);
     useEffect(() => {
-        fetch('http://localhost:8080/player/getAll', {method:'GET'})
-        .then(result => result.json())
-        .then(jsonresult => {
-            setPlayerInfo(jsonresult)
-        })
-        .then(console.log("Got Players Successfully"))
-        .catch(err => console.error(err))
-    }, [])
+        const fetchTeamData = async () => {
+            try {
+                const result = await fetchTeamsData();
+                setTeamInfo(result);
+                console.log("Got Teams Successfully");
+            } catch (err) {
+                console.error(err);
+            } 
+        };
+
+        fetchTeamData();
+    }, []);
     const formStyle =
         {
             width: '30%',
@@ -77,7 +86,7 @@ export const League = () => {
                                 <td>{item.name}</td>
                                 <td>{item.goals}</td>
                                 <td>{item.assists}</td>
-                                <td>{item.team_id.name}</td>
+                                <td>{item.team.name}</td>
                                 <td>{item.number_in_team}</td>
                             </tr>
                         ))}

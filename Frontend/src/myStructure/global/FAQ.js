@@ -6,18 +6,23 @@ import { GetAuthDataFn } from "../wrapper";
 import { login } from "../myServices/personAuthorizationService/getData"
 import {adminPrv, userPrv} from "../collection";
 import './SoccerTable.css';
+import { fetchFaqData } from "../myServices/personAuthorizationService/getData";
 
 export const Faq = () => {    
     const [info, setInfo] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:8080/faq/getAll', {method:'GET'})
-        .then(result => result.json())
-        .then(jsonresult => {
-            setInfo(jsonresult)
-        })
-        .then(console.log("Got FAQ Successfully"))
-        .catch(err => console.error(err))
-    }, [])
+    const fetchData = async () => {
+        try {
+            const result = await fetchFaqData();
+            setInfo(result);
+            console.log("Got FAQ Successfully");
+        } catch (err) {
+            console.error(err);
+        } 
+    };
+
+    fetchData();
+}, []);
    
     const formStyle =
         {
