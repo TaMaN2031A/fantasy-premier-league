@@ -6,8 +6,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Entity
+@NoArgsConstructor
 public class Player {
     @Getter
     @Setter
@@ -60,5 +62,4 @@ public class Player {
         this.photo_link = photo_link;
         this.price = price;
     }
-
 }

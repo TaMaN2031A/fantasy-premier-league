@@ -52,6 +52,14 @@ export const Login = () => {
         );
     }, [info]);
 
+    const formStyle = {
+        border: "1px solid #ccc",
+            padding: "20px",
+            borderRadius: "10px",
+            width: "30%",
+            backgroundColor: "white",
+    };
+
     const handleSubmit = async () => {
         try {
             // success
@@ -86,7 +94,7 @@ export const Login = () => {
             <div className="container">
                 <div className="row mt-lg-5">
                     <div className="col-12">
-                        <div className="formStyle">
+                        <div style={formStyle}>
                             <Form>
                                 {/* ------------------ username part ---------------------- */}
                                 <Form.Group controlId="formBasicEmail">

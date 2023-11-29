@@ -32,6 +32,16 @@ function Signup() {
         setInfo({ ...info, [e.target.name]: e.target.value });
     }
 
+    const formStyle = {
+        border: "1px solid #ccc",
+        padding: "20px",
+        borderRadius: "10px",
+        width: "30%",
+        backgroundColor: "white",
+        background: "linear-gradient(to top, #f2f2f2, rgba(242, 242, 242, 0))"
+
+};
+
     const handleSubmit = async () => {
         try {
             // success
@@ -64,7 +74,7 @@ function Signup() {
             <div className="container">
                 <div className="row mt-lg-5">
                     <div className="col-12">
-                        <div className="formStyle">
+                        <div style={formStyle}>
                             <Form>
 
                                 {/* ------------------ firstName part ---------------------- */}
