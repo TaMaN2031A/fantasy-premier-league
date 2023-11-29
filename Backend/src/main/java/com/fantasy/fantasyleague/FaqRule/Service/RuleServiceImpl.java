@@ -4,6 +4,7 @@ import com.fantasy.fantasyleague.FaqRule.Model.FAQ;
 import com.fantasy.fantasyleague.FaqRule.Model.Rule;
 import com.fantasy.fantasyleague.FaqRule.Repository.FAQRepository;
 import com.fantasy.fantasyleague.FaqRule.Repository.RuleRepository;
+import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

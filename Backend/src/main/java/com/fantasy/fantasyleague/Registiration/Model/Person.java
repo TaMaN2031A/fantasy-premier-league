@@ -9,11 +9,11 @@ public class Person {
 
     @Id
     private String email;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, updatable = false)
     private String userName;
     private String region;
     private String firstName;
     private String lastName;
     private String password;
-
+    private String token="";
 }
