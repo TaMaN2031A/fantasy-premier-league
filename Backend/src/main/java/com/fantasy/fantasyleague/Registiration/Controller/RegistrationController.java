@@ -42,11 +42,11 @@ public class RegistrationController {
         return response;
     }
     @PostMapping("/ForgetPassword")
-    public ResponseEntity<String> forgetPassword(@RequestBody JsonNode emailDetails){
+    public String forgetPassword(@RequestBody JsonNode emailDetails){
         return registrationService.ForgetPassword(emailDetails);
     }
     @PostMapping("/updatePassword")
-    public ResponseEntity<String> updatePassword(@RequestBody JsonNode PasswordUpdateInfo){
+    public String updatePassword(@RequestBody JsonNode PasswordUpdateInfo){
         return registrationService.updatePassword(PasswordUpdateInfo);
     }
 
