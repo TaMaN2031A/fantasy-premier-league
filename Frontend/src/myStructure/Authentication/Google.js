@@ -4,7 +4,7 @@ import "./Google.css";
 
 const Google = () => {
   const onSuccess = (response) => {
-    console.log("Login successfull", response);
+    console.log("Login successful", response);
     // connect with back here.
   };
 
