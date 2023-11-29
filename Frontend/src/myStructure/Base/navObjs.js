@@ -2,19 +2,20 @@ import { Login } from "../Authentication/login"
 import Signup from "../Authentication/signup";
 import Logout from "../Authentication/Logout";
 import {adminPrv, userPrv} from "../collection";
-import League from "../global/league";
+import {League} from "../global/league";
 import Functionalities from "../admin/functionalities";
-import FAQ from "../global/FAQ";
+import { Faq } from "../global/FAQ";
 import PickTeam from "../user/pickTeam";
 import Transfer from "../user/transfer";
 import Points from "../user/points";
 import FantasyLeagues from "../user/fantasyLeagues";
 import UserAccount from "../user/userAccount";
 import AdminAccount from "../admin/adminAccount";
+import { InsertPlayer } from "../admin/insertPlayer";
 
 export const nav = [
-    { path:     "/",         name: "league",        element: <League />,     status: "global"  },
-    { path:     "/FAQ",    name: "FAQ",       element: <FAQ />,     status: "global"  },
+    { path:     "/",         name: "League",        element: <League />,     status: "global"  },
+    { path:     "/FAQ",    name: "FAQ",       element: <Faq />,     status: "global"  },
 
     // user pages
     { path:     "/pickTeam",  name: "PickTeam",     element: <PickTeam />,     status: userPrv  },
@@ -26,6 +27,7 @@ export const nav = [
     // admin pages ** need some edit for making start page same as windows settings.
     { path:     "/adminAccount",  name: "AdminAccount",     element: <AdminAccount />,     status: adminPrv  },
     { path:     "/functionalities",  name: "Functionalities",     element: <Functionalities />,     status: adminPrv  },
+    { path:     "/insertPlayer",  name: "Insert Player",     element: <InsertPlayer />,     status: adminPrv  },
 
     // handled by condition with logout (person state update).
     { path:     "/login",    name: "Login",       element: <Login />,    status: "external"  },
