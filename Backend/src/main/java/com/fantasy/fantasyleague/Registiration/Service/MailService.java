@@ -1,5 +1,6 @@
 package com.fantasy.fantasyleague.Registiration.Service;
 
+
 import com.fantasy.fantasyleague.Registiration.Model.Mail;
 import org.springframework.http.ResponseEntity;
 
