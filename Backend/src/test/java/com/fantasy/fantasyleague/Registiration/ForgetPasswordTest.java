@@ -18,8 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -45,7 +43,7 @@ public class ForgetPasswordTest {
     void ForgetPassword1() {
         // send forget password email to a existing gmail
         assertEquals(service.sendForgetPasswordEmail("mohamed.arous940@gmail.com" , "mohaemd_arous" , "1234")
-                , ResponseEntity.ok("mail sent successfully"));
+                , "Mail Sent Successfully");
     }
 
 
@@ -53,7 +51,7 @@ public class ForgetPasswordTest {
     void ForgetPassword2() {
         // send forget password email to a false Email
         assertNotEquals(service.sendForgetPasswordEmail("mohamed.agmail.com" , "mohaemd_arous" , "1234")
-                , ResponseEntity.ok("mail sent successfully"));
+                ,"Mail Sent Successfully");
     }
 
 
@@ -67,7 +65,7 @@ public class ForgetPasswordTest {
         mail.setMessage("welcome to fantasy league");
 
         assertNotEquals(service.sendEmail( mail)
-                , ResponseEntity.ok("mail sent successfully"));
+                , "Mail Sent Successfully");
     }
 
     @Test
@@ -78,8 +76,8 @@ public class ForgetPasswordTest {
         mail.setUserName("mohaemd_arous");
         mail.setSubject("fantasy league");
         mail.setMessage("welcome to fantasy league");
-        assertEquals(service.sendEmail( mail)
-                , ResponseEntity.ok("mail sent successfully"));
+        assertEquals(service.sendEmail( mail).toString()
+                , "<200 OK OK,mail sent successfully,[]>");
     }
 
 
@@ -89,7 +87,7 @@ public class ForgetPasswordTest {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode emailDetails = objectMapper.createObjectNode()
                 .put("email", "mohamed.arous164@gmail.com");
-        assertEquals("<404 NOT_FOUND Not Found,[]>" , service2.ForgetPassword(emailDetails).toString());
+        assertEquals("User does not exist" , service2.ForgetPassword(emailDetails).toString());
     }
 
     @Test
@@ -106,7 +104,7 @@ public class ForgetPasswordTest {
         JsonNode emailDetails = objectMapper.createObjectNode()
                 .put("email", "mohamed.arous940@gmail.com");
 
-        assertEquals("<200 OK OK,email sent,[]>" , service2.ForgetPassword(emailDetails).toString());
+        assertEquals("Mail Sent Successfully" , service2.ForgetPassword(emailDetails).toString());
     }
 
     @Test
@@ -123,7 +121,7 @@ public class ForgetPasswordTest {
         JsonNode emailDetails = objectMapper.createObjectNode()
                 .put("email", "amr_eagle1321mail.com");
 
-        assertEquals("<500 INTERNAL_SERVER_ERROR Internal Server Error,Failed:Mail not sent,[]>" , service2.ForgetPassword(emailDetails).toString());
+        assertEquals("Email is wrong" , service2.ForgetPassword(emailDetails).toString());
     }
 
 
@@ -146,7 +144,7 @@ public class ForgetPasswordTest {
                 .put("email", "mohamed.arous177@gmail.com")
                 .put("token"  , user.getToken().toString() )
                 .put("password" , "newwwww12");
-        assertEquals("<200 OK OK,password updated successfully,[]>" , service2.updatePassword(PasswordUpdateInfo).toString());
+        assertEquals("password update successful" , service2.updatePassword(PasswordUpdateInfo).toString());
         user  = userRepo.findByEmail("mohamed.arous177@gmail.com").orElseThrow();
         assertTrue(service2.checkPassword("newwwww12"  , user.getPassword()));
         assertFalse(service2.checkPassword("12259861"  , user.getPassword()));
@@ -169,13 +167,12 @@ public class ForgetPasswordTest {
         JsonNode emailDetails = objectMapper.createObjectNode()
                 .put("email", "mohamed.arous188@gmail.com");
         service2.ForgetPassword(emailDetails);
-        User user  = userRepo.findByEmail("mohamed.arous188@gmail.com").orElseThrow();
         JsonNode PasswordUpdateInfo = objectMapper.createObjectNode()
                 .put("email", "mohamed.arous188@gmail.com")
                 .put("token"  , "123456789" )
                 .put("password" , "newwwww12");
-        assertEquals("<401 UNAUTHORIZED Unauthorized,Invalid token,[]>" , service2.updatePassword(PasswordUpdateInfo).toString());
-        user = userRepo.findByEmail("mohamed.arous188@gmail.com").orElseThrow();
+        assertEquals("Invalid Token Try again" , service2.updatePassword(PasswordUpdateInfo).toString());
+        User user = userRepo.findByEmail("mohamed.arous188@gmail.com").orElseThrow();
         assertFalse(service2.checkPassword("newwwww12"  , user.getPassword()));
         assertTrue(service2.checkPassword("12259861"  , user.getPassword()));
     }

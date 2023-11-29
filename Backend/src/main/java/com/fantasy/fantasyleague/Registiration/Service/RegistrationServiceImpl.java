@@ -104,7 +104,6 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-<
     public String updatePassword(JsonNode PasswordUpdateInfo) {
         try{
             String mail = PasswordUpdateInfo.get("email").asText();

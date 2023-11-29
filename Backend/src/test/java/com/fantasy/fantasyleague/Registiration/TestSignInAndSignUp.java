@@ -52,7 +52,7 @@ public class TestSignInAndSignUp {
         signup.setPassword("12259861");
         signup.setUserName("mohamed_arous1");
         assertEquals(service.addUser(signup), "Sign up successful");
-        assertEquals(service.validate(signin) , "Sign up successful");
+        assertEquals(service.validate(signin) , "Login successful");
     }
 
     @Test
@@ -69,7 +69,7 @@ public class TestSignInAndSignUp {
         admin.setPassword(passwordEncoder.encode("12259861"));
         admin.setUserName("mohamed_arous");
         adminRepo.save(admin);
-        assertEquals(service.validate(signin) , "Sign up successful");
+        assertEquals(service.validate(signin) , "Login successful");
     }
 
     @Test
@@ -125,7 +125,7 @@ public class TestSignInAndSignUp {
         signup.setPassword("arousss2");
         signup.setUserName("mohamed_arous2");
         assertEquals(service.addUser(signup), "Sign up successful");
-        assertEquals(service.validate(signin) , "Sign up successful");
+        assertEquals(service.validate(signin) , "Login successful");
     }
 
 
@@ -143,7 +143,7 @@ public class TestSignInAndSignUp {
         admin.setPassword(passwordEncoder.encode("arousss3"));
         admin.setUserName("mohamed_arous3");
         adminRepo.save(admin);
-        assertEquals(service.validate(signin) , "Sign up successful");
+        assertEquals(service.validate(signin) , "Login successful");
     }
 
     @Test
