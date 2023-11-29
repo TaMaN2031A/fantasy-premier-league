@@ -16,15 +16,11 @@ public class FAQController {
     FAQService faqService;
     @PostMapping("/insert")
     public String insertFAQ(@RequestBody FAQ faq) {
-        String response = faqService.insertFAQ(faq);
-        System.out.println(response);
-        return response;
+        return faqService.insertFAQ(faq);
     }
     @DeleteMapping("/delete")
     public String deleteFAQ(@RequestBody FAQ faq) {
-        String response = faqService.deleteFAQ(faq);
-        System.out.println(response);
-        return response;
+        return faqService.deleteFAQ(faq);
     }
     @PostMapping("/update")
     public String updateFAQ(@RequestBody FAQ faq) {
@@ -36,7 +32,6 @@ public class FAQController {
     }
     @DeleteMapping("/deleteAll")
     public String deleteAllFAQ() {
-        String response = faqService.deleteAllFAQ();
-        return response;
+        return faqService.deleteAllFAQ();
     }
 }
