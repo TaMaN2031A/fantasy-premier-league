@@ -51,7 +51,7 @@ public class ForgetPasswordTest {
     void ForgetPassword2() {
         // send forget password email to a false Email
         assertNotEquals(service.sendForgetPasswordEmail("mohamed.agmail.com" , "mohaemd_arous" , "1234")
-                , ResponseEntity.ok("mail sent successfully"));
+                ,"Mail Sent Successfully");
     }
 
 
@@ -65,7 +65,7 @@ public class ForgetPasswordTest {
         mail.setMessage("welcome to fantasy league");
 
         assertNotEquals(service.sendEmail( mail)
-                , ResponseEntity.ok("mail sent successfully"));
+                , "Mail Sent Successfully");
     }
 
     @Test
@@ -76,8 +76,8 @@ public class ForgetPasswordTest {
         mail.setUserName("mohaemd_arous");
         mail.setSubject("fantasy league");
         mail.setMessage("welcome to fantasy league");
-        assertEquals(service.sendEmail( mail)
-                , ResponseEntity.ok("mail sent successfully"));
+        assertEquals(service.sendEmail( mail).toString()
+                , "<200 OK OK,mail sent successfully,[]>");
     }
 
 
@@ -167,7 +167,6 @@ public class ForgetPasswordTest {
         JsonNode emailDetails = objectMapper.createObjectNode()
                 .put("email", "mohamed.arous188@gmail.com");
         service2.ForgetPassword(emailDetails);
-        User user  = userRepo.findByEmail("mohamed.arous188@gmail.com").orElseThrow();
         JsonNode PasswordUpdateInfo = objectMapper.createObjectNode()
                 .put("email", "mohamed.arous188@gmail.com")
                 .put("token"  , "123456789" )
