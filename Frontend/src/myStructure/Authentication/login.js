@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Form from "react-bootstrap/Form";
-import { Button, Row } from "react-bootstrap";
+import {Button, Col, Row} from "react-bootstrap";
 import { GetAuthDataFn } from "../wrapper";
 import {login, signIn} from "../myServices/personAuthorizationService/registration";
 import { adminPrv, userPrv } from "../collection";
@@ -18,10 +18,11 @@ export const Login = () => {
     // must be converted into service
 
     const [info, setInfo] = useState({
-        emailUsername: "",
+        userNameOrEmail: "",
         password: "",
-        privilege: "",
+        Role: "",
     });
+
     function inputChange(e) {
         /*
          * update the existing object by creating same obj (info)
@@ -29,8 +30,9 @@ export const Login = () => {
          * */
         setInfo({ ...info, [e.target.name]: e.target.value });
     }
+
     function radioChange(e) {
-        setInfo({ ...info, ["privilege"]: e.target.id });
+        setInfo({ ...info, ["Role"]: e.target.id });
     }
 
     useEffect(() => {
@@ -48,7 +50,7 @@ export const Login = () => {
          * you can check validity of email given in this function.
          * */
         console.log(
-            info.emailUsername + " " + info.password + " " + info.privilege
+            info.userNameOrEmail + " " + info.password + " " + info.Role
         );
     }, [info]);
 
@@ -58,33 +60,34 @@ export const Login = () => {
             borderRadius: "10px",
             width: "30%",
             backgroundColor: "white",
+            background: "linear-gradient(to top, #f2f2f2, rgba(242, 242, 242, 0))"
     };
 
-    const handleSubmit = async () => {
-        try {
-            // success
-            ///---------------------- must take whole info from request. ------------------------
-            let ret = await signIn(info);
-            console.log(ret)
-            await setPerson({
-                isAuthorized: true,
-                username: info.emailUsername,
-                privilege: info.privilege,
-                personObj: {},
-            });
-            // navigate to admin home or user home
-            // based on privilege attribute
-            // useEffect(
-            //     console.log(info)
-            // , [])
-            navigate("/");
-        } catch (error) {
-            // failure(reject in login in service)
-            // make an error....
-            console.log("error");
-        }
+    const handleSubmit = async (e) => {
+        // e.preventDefault();
+        try{
+           let ret = await signIn(info);
+           if(ret === "Login successful"){
+               await setPerson({
+                   isAuthorized: true,
+                   username: info.userNameOrEmail,
+                   privilege: info.Role,
+                   personObj: {},
+               });
+               console.log(ret)
+               navigate("/");
+           } else {
+               alert(ret)
+           }
+       } catch (e) {
+           alert("login failed");
+       }
+        // navigate to admin home or user home
+        // based on Role attribute
+        // useEffect(
+        //     console.log(info)
+        // , [])
     };
-
 
     return (
         <>
@@ -100,10 +103,10 @@ export const Login = () => {
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Label>Email address/username</Form.Label>
                                     <Form.Control
-                                        type="email"
+                                        type="text"
                                         placeholder="Enter email/username"
-                                        name="emailUsername"
-                                        value={info.emailUsername}
+                                        name="userNameOrEmail"
+                                        value={info.userNameOrEmail}
                                         onChange={inputChange}  required /> <br/>
                                 </Form.Group>
 
@@ -118,10 +121,18 @@ export const Login = () => {
                                         onChange={inputChange} required /> <br/>
                                 </Form.Group>
 
+                                {/* ------------------ Forgot Password link ----------------------*/}
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={2}></Form.Label>
+                                    <Col sm={10} className="text-right">
+                                        <Link to="/forgetPassword">Forgot Password?</Link>
+                                    </Col>
+                                </Form.Group>
+
                                 {/* ------------------ privileges part ---------------------- */}
                                 <Form.Group as={Row}>
                                     <Form.Label>
-                                        your privilege
+                                        your Role
                                     </Form.Label> <br/>
                                     <div className="col-5">
                                         <Form.Check
@@ -143,7 +154,7 @@ export const Login = () => {
                                     </div>
                                 </Form.Group>
                                 <Button
-                                    type="submit"
+                                    type="button"
                                     variant="dark"
                                     onClick={handleSubmit}>
                                     submit

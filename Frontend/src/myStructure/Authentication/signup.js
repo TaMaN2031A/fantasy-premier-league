@@ -4,7 +4,9 @@ import Form from "react-bootstrap/Form";
 import {useNavigate} from "react-router-dom";
 import {GetAuthDataFn} from "../wrapper";
 import {formStyle} from "./login";
-import {login, signIn} from "../myServices/personAuthorizationService/registration";
+import {login, signIn, signUp} from "../myServices/personAuthorizationService/registration";
+import {Button} from "react-bootstrap";
+import {adminPrv, userPrv} from "../collection";
 
 function Signup() {
     const navigate = useNavigate();
@@ -13,6 +15,18 @@ function Signup() {
     /*
     * need to check on 2 passwords.
     * */
+    const isValidGmailEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return false;
+        }
+
+        const domain = email.split('@')[1].toLowerCase();
+        const validGmailDomains = ['gmail.com', 'googlemail.com'];
+        return validGmailDomains.includes(domain);
+    };
+
+
 
     const [info, setInfo] = useState({
         firstName: "",
@@ -43,26 +57,27 @@ function Signup() {
 };
 
     const handleSubmit = async () => {
-        try {
-            // success
-            ///---------------------- must take whole info from request. ------------------------
-            let ret = await signIn(info);
+        if(!isValidGmailEmail(info.email)){
+            alert("email is not valid");
+            return;
+        }
+        if(info.password !== info.confirmedPassword) {
+            alert("password and confirmed password are not identical");
+            return;
+        }
+
+        let ret = await signUp(info);
+        console.log(ret)
+        if(ret === "Sign up successful"){
             await setPerson({
                 isAuthorized: true,
-                username: info.emailUsername,
-                privilege: info.privilege,
-                personObj: {},
+                username: info.userName,
+                privilege: userPrv,
+                personObj: {}
             });
-            // navigate to admin home or user home
-            // based on privilege attribute
-            // useEffect(
-            //     console.log(info)
-            // , [])
             navigate("/");
-        } catch (error) {
-            // failure(reject in login in service)
-            // make an error....
-            console.log("error");
+        } else {
+            alert(ret)
         }
     };
 
@@ -90,7 +105,7 @@ function Signup() {
 
                                 {/* ------------------ lastName part ---------------------- */}
                                 <Form.Group controlId="lastName">
-                                    <Form.Label>Email lastName</Form.Label>
+                                    <Form.Label>lastName</Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="Enter lastName"
@@ -101,7 +116,7 @@ function Signup() {
 
                                 {/* ------------------ userName part ---------------------- */}
                                 <Form.Group controlId="userName">
-                                    <Form.Label>Email userName</Form.Label>
+                                    <Form.Label>userName</Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="Enter userName"
@@ -112,7 +127,7 @@ function Signup() {
 
                                 {/* ------------------ email part ---------------------- */}
                                 <Form.Group controlId="email">
-                                    <Form.Label>Email Email</Form.Label>
+                                    <Form.Label>Email</Form.Label>
                                     <Form.Control
                                         type="email"
                                         placeholder="Enter email"
@@ -123,7 +138,7 @@ function Signup() {
 
                                 {/* ------------------ region part ---------------------- */}
                                 <Form.Group controlId="region">
-                                    <Form.Label>Email region</Form.Label>
+                                    <Form.Label>region</Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="Enter region"
@@ -133,8 +148,8 @@ function Signup() {
                                 </Form.Group>
 
                                 {/* ------------------ password part ---------------------- */}
-                                <Form.Group controlId="formBasicEmail">
-                                    <Form.Label>Email password</Form.Label>
+                                <Form.Group controlId="password">
+                                    <Form.Label>password</Form.Label>
                                     <Form.Control
                                         type="password"
                                         placeholder="Enter password"
@@ -144,16 +159,21 @@ function Signup() {
                                 </Form.Group>
 
                                 {/* ------------------ confirmedPassword part ---------------------- */}
-                                <Form.Group controlId="formBasicEmail">
-                                    <Form.Label>Email password</Form.Label>
+                                <Form.Group controlId="confirmedPassword">
+                                    <Form.Label>confirmedPassword</Form.Label>
                                     <Form.Control
                                         type="password"
-                                        placeholder="Enter password"
-                                        name="password"
-                                        value={info.password}
+                                        placeholder="Enter confirmedPassword"
+                                        name="confirmedPassword"
+                                        value={info.confirmedPassword}
                                         onChange={inputChange}  required /> <br/>
                                 </Form.Group>
-
+                                <Button
+                                    type="button"
+                                    variant="dark"
+                                    onClick={handleSubmit}>
+                                    submit
+                                </Button>
                             </Form>
                         </div>
                     </div>

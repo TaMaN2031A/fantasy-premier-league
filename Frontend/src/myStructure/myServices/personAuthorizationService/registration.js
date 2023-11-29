@@ -7,7 +7,7 @@ const handleRequest = async (requestPromise) => {
         const response = await requestPromise;
         return response.data;
     } catch (error) {
-        throw error;
+        return "failed";
     }
 };
 
@@ -21,6 +21,7 @@ export const signUp = async (info) => {
 };
 
 export const signIn = async (info) => {
+    console.log(info)
     return handleRequest(
         axios.post(`${API_BASE_URL}/sign-in`, info)
     );
@@ -33,6 +34,9 @@ export const forgetPassword = async (info) => {
 };
 
 export const updatePassword = async (info) => {
+    const requestData = { ...info };
+    delete requestData.confirmedPassword;
+    console.log(info)
     return handleRequest(
         axios.post(`${API_BASE_URL}/updatePassword`, info)
     );

@@ -1,6 +1,7 @@
 package com.fantasy.fantasyleague.Registiration.Service;
 
 import com.fantasy.fantasyleague.Registiration.Model.Mail;
+import com.fantasy.fantasyleague.Registiration.Model.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,19 +37,19 @@ public class MailServiceImplementation implements MailService{
     }
 
     @Override
-    public ResponseEntity<String> sendForgetPasswordEmail(String toEmail, String userName,String token) {
+    public String sendForgetPasswordEmail(String toEmail, String userName,String token) {
         try {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
-            String message = "Dear "+userName+"\n\n"+"Your password changing code is \n"+token+"\nlink of page to front +email encrypted"+toEmail;
+            String message = "Your password changing code is \n"+token;
             mailMessage.setTo(toEmail);
             mailMessage.setSubject("Forgetting Password");
             mailMessage.setText("Dear "+userName+"\n\n"+message);
             mailMessage.setFrom("fantasyteamcsed@gmail.com");
             javaMailSender.send(mailMessage);
-            return ResponseEntity.ok("mail sent successfully");
+            return Response.MailSentSuccessfully;
         }
         catch (Exception e){
-            return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return Response.MailSendingFailed;
         }
     }
 }

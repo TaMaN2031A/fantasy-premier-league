@@ -15,8 +15,8 @@ public interface RegistrationService {
 
     String validateGoogle(GoogleDTO googleDTO);
 
-    ResponseEntity<String> updatePassword(JsonNode PasswordUpdateInfo);
+    String updatePassword(JsonNode PasswordUpdateInfo);
 
-    ResponseEntity<String> ForgetPassword(JsonNode emailDetails);
+    String ForgetPassword(JsonNode emailDetails);
 
 }
