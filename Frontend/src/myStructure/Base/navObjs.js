@@ -11,6 +11,7 @@ import Points from "../user/points";
 import FantasyLeagues from "../user/fantasyLeagues";
 import UserAccount from "../user/userAccount";
 import AdminAccount from "../admin/adminAccount";
+import ForgetPassword from "../Authentication/forgetPassword";
 
 export const nav = [
     { path:     "/",         name: "league",        element: <League />,     status: "global"  },
@@ -30,6 +31,7 @@ export const nav = [
     // handled by condition with logout (person state update).
     { path:     "/login",    name: "Login",       element: <Login />,    status: "external"  },
     { path:     "/signup",    name: "Signup",     element: <Signup />,    status: "external"  },
+    { path:     "/forgetPassword", name: "ForgetPass", element: <ForgetPassword />, status: "external" },
     { path:     "/logout",    name: "Logout",     element: <Logout />,    status: "internal"  }
 ]
 

@@ -12,7 +12,6 @@ public class GoogleDTO {
     private final String region = "International";
     private String firstName;
     private String lastName;
-    private String password;
     private Role role;
 
     public User userMapper(String encodedPassword) {

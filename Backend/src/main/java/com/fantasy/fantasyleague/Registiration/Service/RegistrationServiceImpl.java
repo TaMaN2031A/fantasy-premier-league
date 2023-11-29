@@ -41,6 +41,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
 
+
     public Person findEntity(String email, String userName, Role role) {
         return role == Role.ADMIN ?
             adminRepository.findByEmailOrUserName(email, userName):
@@ -75,7 +76,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             return Response.noUser;
 
         Boolean response = checkPassword(signInDTO.getPassword(), entity.getPassword());
-        return response == Boolean.TRUE ? Response.signUpSuccessfully : Response.wrongCredentials;
+        return response == Boolean.TRUE ? Response.loginSuccessfully : Response.wrongCredentials;
     }
 
     @Override
@@ -103,7 +104,8 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public ResponseEntity<String> updatePassword(JsonNode PasswordUpdateInfo) {
+<
+    public String updatePassword(JsonNode PasswordUpdateInfo) {
         try{
             String mail = PasswordUpdateInfo.get("email").asText();
             String password = PasswordUpdateInfo.get("password").asText();
@@ -111,15 +113,16 @@ public class RegistrationServiceImpl implements RegistrationService {
             Person retrievedUser = findEntity(mail, mail, Role.USER);
             Person retrievedAdmin = findEntity(mail, mail , Role.ADMIN);
             if(retrievedAdmin==null&&retrievedUser==null)
-                return ResponseEntity.notFound().build();
+                return Response.noUser;
 
             Person user = retrievedUser==null?retrievedAdmin:retrievedUser;
 
             if(user.getToken().isEmpty())
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("didn't enter email in first place");
+                return Response.MaliciousPasswordUpdate;
 
             if(!token.equals(user.getToken()))
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+                return Response.InvalidToken;
+
 
             user.setPassword(this.passwordEncoder.encode(password));
             user.setToken("");
@@ -127,45 +130,41 @@ public class RegistrationServiceImpl implements RegistrationService {
                 adminRepository.save((Admin) user);
             else
                 userRepository.save((User) user);
-
-            return ResponseEntity.ok("password updated successfully");
+            return Response.PassUpdateSuccessfully;
         }
         catch (Exception e){
-            return new ResponseEntity<>("An error occurred: password update failed", HttpStatus.INTERNAL_SERVER_ERROR);
+            return Response.PassUpdateFailed;
         }
     }
 
     @Override
-    public ResponseEntity<String> ForgetPassword(JsonNode emailDetails) {
-       try {
-           String mail = emailDetails.get("email").asText();
-           String token = RandomString.make(8);
-           Person retrievedUser = findEntity(mail, mail, Role.USER);
-           Person retrievedAdmin = findEntity(mail, mail, Role.ADMIN);
+    public String ForgetPassword(JsonNode emailDetails) {
+        try {
+            String mail = emailDetails.get("email").asText();
+            String token = RandomString.make(8);
+            Person retrievedUser = findEntity(mail, mail, Role.USER);
+            Person retrievedAdmin = findEntity(mail, mail, Role.ADMIN);
 
-           if(retrievedUser == null && retrievedAdmin == null)
-               return ResponseEntity.notFound().build();
+            if(retrievedUser == null && retrievedAdmin == null)
+                return Response.noUser;
 
-           String userName= retrievedUser==null? retrievedAdmin.getUserName() : retrievedUser.getUserName();
-           Person user = retrievedUser==null?retrievedAdmin:retrievedUser;
-           if(isResponseEntityOk(mailService.sendForgetPasswordEmail(mail,userName,token))){
-               user.setToken(token);
-               if (retrievedUser == null) {
-                   adminRepository.save((Admin) user);
-               } else {
-                   userRepository.save((User) user);
-               }
-               return ResponseEntity.ok("email sent");
-           }else {
-               return new ResponseEntity<>("Failed:Mail not sent", HttpStatus.INTERNAL_SERVER_ERROR);
-           }
-       }
-       catch (Exception e){
-           return new ResponseEntity<>("An error occurred:", HttpStatus.INTERNAL_SERVER_ERROR);
-       }
-    }
-    private boolean isResponseEntityOk(ResponseEntity<String> responseEntity) {
-        return responseEntity.getStatusCode() == HttpStatus.OK;
+            String userName= retrievedUser==null? retrievedAdmin.getUserName() : retrievedUser.getUserName();
+            Person user = retrievedUser==null?retrievedAdmin:retrievedUser;
+            if(mailService.sendForgetPasswordEmail(mail,userName,token).equals(Response.MailSentSuccessfully)){
+                user.setToken(token);
+                if (retrievedUser == null) {
+                    adminRepository.save((Admin) user);
+                } else {
+                    userRepository.save((User) user);
+                }
+                return Response.MailSentSuccessfully;
+            }else {
+                return Response.MailSendingFailed;
+            }
+        }
+        catch (Exception e){
+            return Response.ErrorOccurred;
+        }
     }
 
 }
