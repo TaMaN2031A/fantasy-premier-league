@@ -1,6 +1,7 @@
 import axios from 'axios';
+import {hostOfBack} from "../../collection";
 
-const API_BASE_URL = 'http://localhost:8081/register';
+const API_BASE_URL = hostOfBack + '/register';
 
 const handleRequest = async (requestPromise) => {
     try {
