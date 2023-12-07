@@ -43,6 +43,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 
     public Person findEntity(String email, String userName, Role role) {
+        System.out.println("role: " + role);
         return role == Role.ADMIN ?
             adminRepository.findByEmailOrUserName(email, userName):
             userRepository.findByEmailOrUserName(email, userName);

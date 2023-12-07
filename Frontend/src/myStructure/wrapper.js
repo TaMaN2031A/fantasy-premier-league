@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useState} from 'react';
 import {RenderMenu, RenderRoutes} from "./Base/RenderNavigation";
 import {useNavigate} from "react-router-dom";
+import {defaultPersonState} from "./collection";
 
 
 // file responsibility
@@ -15,15 +16,6 @@ import {useNavigate} from "react-router-dom";
 // when a component does not find a matching Provider above it in the component tree
 const AuthContext = createContext();
 export const GetAuthDataFn = () => useContext(AuthContext);
-
-export const defaultPersonState = () => {
-    return {
-        isAuthorized: false,  /* to check if there is a  */
-        username: "",
-        privilege: "",
-        personObj: {}
-    }
-}
 
 function Wrapper() {
     /*

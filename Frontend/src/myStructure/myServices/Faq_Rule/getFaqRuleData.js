@@ -1,13 +1,22 @@
 import {hostOfBack} from "../../collection";
-
-export const fetchFaqData = async () => {
-    const response = await fetch(hostOfBack + '/faq/getAll', { method: 'GET' });
-    if (response.ok) {
-        return await response.json();
-    } else {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+import axios from "axios";
+const handleRequest = async (requestPromise) => {
+    try {
+        const response = await requestPromise;
+        return response.data;
+    } catch (error) {
+        return "failed";
     }
 };
+
+export const fetchFaqData = async () => {
+    return handleRequest(
+        axios.get( hostOfBack + '/faq/getAll')
+    );
+};
+
+
+
 export const fetchPlayersData = async () => {
     const response = await fetch(hostOfBack + '/player/getAll', {method:'GET'});
     if (response.ok) {
