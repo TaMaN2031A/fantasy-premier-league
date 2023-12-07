@@ -17,7 +17,6 @@ public class RuleServiceImpl implements RuleService{
     private String insertResponse = "Inserted Successfully";
     private String updateResponse = "Updated Successfully";
     private String deleteResponseF = "Unsuccessful Delete";
-    private String insertResponseF = "Unsuccessful Insert";
     private String updateResponseF = "Unsuccessful Update";
 
     @Autowired

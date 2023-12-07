@@ -12,6 +12,7 @@ import lombok.Setter;
 import java.util.Date;
 
 @Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,13 +21,10 @@ public class FAQ {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int faqID;
-    @Setter
     @Column(nullable=false, length=512)
     private String question;
-    @Setter
     @Column(nullable=false, length=512)
     private String answer;
-    @Setter
     private Date date;
 
     public FAQ(String question, String answer, Date date) {

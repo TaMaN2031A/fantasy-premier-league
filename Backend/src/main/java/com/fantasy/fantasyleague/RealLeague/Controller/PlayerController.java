@@ -1,11 +1,16 @@
 package com.fantasy.fantasyleague.RealLeague.Controller;
 
+import com.fantasy.fantasyleague.RealLeague.DTO.PlayerDTO;
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
 import com.fantasy.fantasyleague.RealLeague.Service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -14,16 +19,16 @@ public class PlayerController {
     @Autowired
     PlayerService playerService;
     @PostMapping("/insert")
-    public String insertPlayer(@RequestBody Player player) {
-        return playerService.insertPlayer(player);
+    public ResponseEntity insertPlayer(@RequestBody PlayerDTO playerDTO) {
+        return playerService.insertPlayer(playerDTO);
     }
 
-    @DeleteMapping("/delete")
-    public String deletePlayer(@RequestBody Player player) {
-        return playerService.deletePlayer(player);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deletePlayer(@PathVariable String id) {
+        return playerService.deletePlayer(id);
     }
     @PostMapping("/update")
-    public String updatePlayer(@RequestBody Player player) {
+    public ResponseEntity updatePlayer(@RequestBody Player player) {
         return playerService.updatePlayer(player);
     }
     @GetMapping("/getAll")
@@ -31,7 +36,7 @@ public class PlayerController {
         return playerService.getAllPlayers();
     }
     @DeleteMapping("/deleteAll")
-    public String deleteAllPlayer() {
+    public ResponseEntity deleteAllPlayer() {
         return playerService.deleteAllPlayers();
     }
 }

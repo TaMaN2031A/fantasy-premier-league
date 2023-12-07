@@ -1,13 +1,15 @@
 package com.fantasy.fantasyleague.RealLeague.Service;
 
+import com.fantasy.fantasyleague.RealLeague.DTO.PlayerDTO;
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface PlayerService {
     List<Player> getAllPlayers();
-    String insertPlayer(Player player);
-    String updatePlayer(Player player);
-    String deletePlayer(Player player);
-    String deleteAllPlayers();
+    ResponseEntity insertPlayer(PlayerDTO playerDTO);
+    ResponseEntity updatePlayer(Player player);
+    ResponseEntity deletePlayer(String id);
+    ResponseEntity deleteAllPlayers();
 }

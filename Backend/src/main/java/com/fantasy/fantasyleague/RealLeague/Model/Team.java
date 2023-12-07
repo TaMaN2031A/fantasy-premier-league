@@ -15,8 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 public class Team {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private int ID;
+    @Column(unique = true, updatable = false)
     private String name;
     private int red_cards;
     private int yellow_cards;
@@ -29,8 +30,13 @@ public class Team {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
     private List<Player> players;
-    public Team(int ID, String name) {
-        this.ID = ID;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "home")
+    private List<UpcomingMatch> upcomingMatchesHome;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "away")
+    private List<UpcomingMatch> upcomingMatchesAway;
+    public Team(String name) {
         this.name = name;
         this.red_cards = 0;
         this.yellow_cards = 0;

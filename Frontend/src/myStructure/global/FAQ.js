@@ -1,10 +1,9 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import './SoccerTable.css';
-import { fetchFaqData } from "../myServices/Faq_Rule/getFaqRuleData";
 
-function Faq(props) {
-    const [info, setInfo] = useState(props.faqData);
-
+function Faq({faqData}) {
+    const [info, setInfo] = useState(faqData||[]); // Use an empty array as default if props.faqData is undefined
+    console.log(info)
     return (
         <div className="table-container">
             <h3>FAQ</h3>
@@ -31,5 +30,3 @@ function Faq(props) {
 }
 
 export default Faq;
-           
-

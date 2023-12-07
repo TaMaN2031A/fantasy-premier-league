@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Player {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private int ID;
     private String name;
     private int red_cards;
