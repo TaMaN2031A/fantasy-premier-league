@@ -2,9 +2,9 @@ import { Login } from "../Authentication/login"
 import Signup from "../Authentication/signup";
 import Logout from "../Authentication/Logout";
 import {adminPrv, userPrv} from "../collection";
-import League from "../global/league";
+import { League } from "../global/league";
 import Functionalities from "../admin/functionalities";
-import FAQ from "../global/FAQ";
+import Faq from "../global/FAQ";
 import PickTeam from "../user/pickTeam";
 import Transfer from "../user/transfer";
 import Points from "../user/points";
@@ -12,10 +12,11 @@ import FantasyLeagues from "../user/fantasyLeagues";
 import UserAccount from "../user/userAccount";
 import AdminAccount from "../admin/adminAccount";
 import ForgetPassword from "../Authentication/forgetPassword";
+import {fetchFaqData} from "../myServices/Faq_Rule/getFaqRuleData";
 
 export const nav = [
     { path:     "/",         name: "league",        element: <League />,     status: "global"  },
-    { path:     "/FAQ",    name: "FAQ",       element: <FAQ />,     status: "global"  },
+    { path:     "/FAQ",    name: "FAQ",       element: <Faq faqData={await fetchFaqData()} />,     status: "global"  },
 
     // user pages
     { path:     "/pickTeam",  name: "PickTeam",     element: <PickTeam />,     status: userPrv  },

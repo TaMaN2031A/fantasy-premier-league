@@ -20,7 +20,7 @@ export const Login = () => {
     const [info, setInfo] = useState({
         userNameOrEmail: "",
         password: "",
-        Role: "",
+        role: "",
     });
 
     function inputChange(e) {
@@ -32,7 +32,7 @@ export const Login = () => {
     }
 
     function radioChange(e) {
-        setInfo({ ...info, ["Role"]: e.target.id });
+        setInfo({ ...info, ["role"]: e.target.id });
     }
 
     useEffect(() => {
@@ -50,7 +50,7 @@ export const Login = () => {
          * you can check validity of email given in this function.
          * */
         console.log(
-            info.userNameOrEmail + " " + info.password + " " + info.Role
+            info.userNameOrEmail + " " + info.password + " " + info.role
         );
     }, [info]);
 
@@ -71,7 +71,7 @@ export const Login = () => {
                await setPerson({
                    isAuthorized: true,
                    username: info.userNameOrEmail,
-                   privilege: info.Role,
+                   privilege: info.role,
                    personObj: {},
                });
                console.log(ret)
