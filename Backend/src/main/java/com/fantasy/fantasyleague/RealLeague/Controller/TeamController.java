@@ -3,6 +3,7 @@ package com.fantasy.fantasyleague.RealLeague.Controller;
 import com.fantasy.fantasyleague.RealLeague.Model.Team;
 import com.fantasy.fantasyleague.RealLeague.Service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,24 +14,24 @@ import java.util.List;
 public class TeamController {
     @Autowired
     TeamService teamService;
-    @PostMapping("/insert")
-    public String insertTeam(@RequestBody Team team) {
-        return teamService.insertTeam(team);
+    @PostMapping("/insert/{name}")
+    public ResponseEntity insertTeam(@PathVariable String name) {
+        return teamService.insertTeam(name);
     }
-    @DeleteMapping("/delete")
-    public String deleteTeam(@RequestBody Team team) {
-        return teamService.deleteTeam(team);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deleteTeam(@PathVariable String id) {
+        return teamService.deleteTeam(id);
     }
-    @PostMapping("/update")
-    public String updateTeam(@RequestBody Team team) {
-        return teamService.updateTeam(team);
+    @PostMapping("/update/{id}/{name}")
+    public ResponseEntity updateTeam(@PathVariable int id, @PathVariable String newName) {
+        return teamService.updateTeam(id, newName);
     }
     @GetMapping("/getAll")
     public List<Team> getAllTeam() {
         return teamService.getAllTeams();
     }
     @DeleteMapping("/deleteAll")
-    public String deleteAllTeam() {
+    public ResponseEntity deleteAllTeam() {
         return teamService.deleteAllTeam();
     }
 }

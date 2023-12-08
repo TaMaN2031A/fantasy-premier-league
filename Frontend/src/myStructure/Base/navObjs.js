@@ -12,10 +12,19 @@ import FantasyLeagues from "../user/fantasyLeagues";
 import UserAccount from "../user/userAccount";
 import AdminAccount from "../admin/adminAccount";
 import ForgetPassword from "../Authentication/forgetPassword";
-import {fetchFaqData} from "../myServices/Faq_Rule/getFaqRuleData";
+import { InsertPlayer } from "../admin/insertPlayer";
+import { DeletePlayer } from "../admin/deletePlayer";
+import { fetchFaqData } from "../myServices/Faq_Rule";
+import { fetchPlayersData } from "../myServices/Player";
+import { fetchTeamsData } from "../myServices/Team";
+import { InsertTeam } from "../admin/insertTeam";
+import { DeleteTeam } from "../admin/deleteTeam";
+import { InsertUpcomingMatch } from "../admin/insertUpcomingMatch";
+import { DeleteUpcomingMatch } from "../admin/deleteUpcomingMatchs";
+
 
 export const nav = [
-    { path:     "/",         name: "league",        element: <League />,     status: "global"  },
+    { path:     "/",         name: "League",        element: <League getPlayers={await fetchPlayersData()} getTeams={await fetchTeamsData()} />,     status: "global"  },
     { path:     "/FAQ",    name: "FAQ",       element: <Faq faqData={await fetchFaqData()} />,     status: "global"  },
 
     // user pages
@@ -28,6 +37,12 @@ export const nav = [
     // admin pages ** need some edit for making start page same as windows settings.
     { path:     "/adminAccount",  name: "AdminAccount",     element: <AdminAccount />,     status: adminPrv  },
     { path:     "/functionalities",  name: "Functionalities",     element: <Functionalities />,     status: adminPrv  },
+    { path:     "/insertPlayer",  name: "Insert Player",     element: <InsertPlayer />,     status: adminPrv  },
+    { path:     "/deletePlayer",  name: "Delete Player",     element: <DeletePlayer />,     status: adminPrv  },
+    { path:     "/insertTeam",  name: "Insert Team",     element: < InsertTeam/>,     status: adminPrv  },
+    { path:     "/deleteTeam",  name: "Delete Team",     element: < DeleteTeam/>,     status: adminPrv  },
+    { path:     "/insertUpcomingMatch",  name: "Insert Upcoming Match",     element: < InsertUpcomingMatch/>,     status: adminPrv  },
+    { path:     "/deleteUpcomingTeam",  name: "Delete Upcoming Team",     element: < DeleteUpcomingMatch/>,     status: adminPrv  },
 
     // handled by condition with logout (person state update).
     { path:     "/login",    name: "Login",       element: <Login />,    status: "external"  },

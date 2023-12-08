@@ -7,21 +7,15 @@ import jakarta.persistence.Id;
 import lombok.*;
 
 import java.util.Date;
-
-@Entity
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Rule {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Getter
-    @Setter
     private int ruleID;
-    @Getter
-    @Setter
     private String rule;
-    @Getter
-    @Setter
     private Date date;
 
     public Rule(String rule, Date date) {

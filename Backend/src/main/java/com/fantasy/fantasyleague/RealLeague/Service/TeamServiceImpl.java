@@ -1,48 +1,76 @@
 package com.fantasy.fantasyleague.RealLeague.Service;
 
+import com.fantasy.fantasyleague.RealLeague.DTO.PlayerDTO;
+import com.fantasy.fantasyleague.RealLeague.Model.Player;
 import com.fantasy.fantasyleague.RealLeague.Model.Team;
 import com.fantasy.fantasyleague.RealLeague.Repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class TeamServiceImpl implements TeamService {
-    private String deleteResponse = "Deleted Successfully";
-    private String insertResponse = "Inserted Successfully";
-    private String updateResponse = "Updated Successfully";
-    private String deleteResponseF = "Unsuccessful Delete";
-    private String insertResponseF = "Unsuccessful Insert";
-    private String updateResponseF = "Unsuccessful Update";
-
     @Autowired
     TeamRepository teamRepository;
     @Override
-    public String insertTeam(Team team) {
-        Team team1 = teamRepository.findByName(team.getName()).orElse(null);
-        if(team1 != null)//Search by name
-            return insertResponseF;
-        teamRepository.save(team);
-        return insertResponse;
+    public ResponseEntity insertTeam(String name) {
+        Map<String, String> response = new HashMap<>();
+        try {
+            Team team1 = teamRepository.findByName(name).orElse(null);
+            if(team1 != null) {
+                response.put("error", "Team Already Exists");
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            }
+            teamRepository.save(new Team(name));
+            response.put("message", "Team inserted successfully");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            response.put("error", e.toString());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override
-    public String updateTeam(Team team) {
-        if(!teamRepository.existsById(team.getID()))
-            return updateResponseF;
-        Team teamToUpdate = teamRepository.getReferenceById(team.getID());
-        teamToUpdate.setName(team.getName()); // We'll add more functionalities in next phases
-        teamRepository.save(teamToUpdate);
-        return updateResponse;
+    public ResponseEntity updateTeam(int id, String newName) {
+        Map<String, String> response = new HashMap<>();
+        try {
+            if(!teamRepository.existsById(id)) {
+                response.put("error", "Team doesn't exist");
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            }
+            Team teamToUpdate = teamRepository.getReferenceById(id);
+            teamToUpdate.setName(newName);
+            response.put("message", "Team Updated successfully");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            response.put("error", e.toString());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @Override
-    public String deleteTeam(Team team) {
-        if(!teamRepository.existsById(team.getID()))
-            return deleteResponseF;
-        teamRepository.deleteById(team.getID());
-        return deleteResponse;
+    public ResponseEntity deleteTeam(String ID) {
+        Map<String, String> response = new HashMap<>();
+        try {
+            int id = Integer.parseInt(ID);
+            if(!teamRepository.existsById(id)) {
+                response.put("error", "Team doesn't exist");
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            }
+            teamRepository.deleteById(id);
+            response.put("message", "Team deleted successfully");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            response.put("error", e.toString());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override
@@ -51,8 +79,15 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public String deleteAllTeam(){
-        teamRepository.deleteAll();
-        return deleteResponse;
+    public ResponseEntity deleteAllTeam(){
+        Map<String, String> response = new HashMap<>();
+        try{
+            teamRepository.deleteAll();
+            response.put("message", "All Teams deleted successfully");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e){
+            response.put("error", e.toString());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
     }
 }
