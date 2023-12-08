@@ -7,11 +7,10 @@ import jakarta.persistence.Id;
 import lombok.*;
 
 import java.util.Date;
-@Setter
-@Getter
-@Entity
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Rule {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
