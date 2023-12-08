@@ -1,5 +1,8 @@
+import { hostOfBack } from "../collection";
+const API_BASE_URL = hostOfBack + '/player';
+
 export const fetchPlayersData = async () => {
-    const response = await fetch('http://localhost:8080/player/getAll', {method:'GET'});
+    const response = await fetch(`${API_BASE_URL}/getAll`, {method:'GET'});
     if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -9,7 +12,7 @@ export const fetchPlayersData = async () => {
 
 export const insertPlayerServ = async (data) => {
     try {
-        const response = await fetch('http://localhost:8080/player/insert', {
+        const response = await fetch(`${API_BASE_URL}/insert`, {
           method: 'POST',
           mode: 'cors',
           credentials: 'same-origin',
@@ -28,7 +31,7 @@ export const insertPlayerServ = async (data) => {
 };
 export const deletePlayerServ = async (id) => {
         try {
-          const response = await fetch(`http://localhost:8080/player/delete/${id}`, {
+          const response = await fetch(`${API_BASE_URL}/delete/${id}`, {
             method: 'DELETE',
             mode: 'cors',
             credentials: 'same-origin',

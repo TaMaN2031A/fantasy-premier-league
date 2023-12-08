@@ -10,7 +10,7 @@ export const InsertPlayer = () => {
         name: "",
         position: "",
         number_in_team:0,
-        id_of_team: 0,
+        id_of_team: 0
     });
     function inputChange (e) {
         /*
@@ -20,12 +20,6 @@ export const InsertPlayer = () => {
         setPlayer({...player, [e.target.name]: e.target.value})
     }
 
-    useEffect(() => {
-        /*
-        * you can check validity of email given in this function.
-        * */
-        console.log(player.name + " " + player.position + " " + player.number_in_team + " " + player.id_of_team);
-    }, [player]);
 
     const handleSubmit = async ()=> {
 

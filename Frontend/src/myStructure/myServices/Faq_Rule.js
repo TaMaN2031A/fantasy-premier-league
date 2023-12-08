@@ -1,6 +1,9 @@
+import { hostOfBack } from "../collection";
+const API_BASE_URL = hostOfBack + '/faq';
+
 export const fetchFaqData = async () => {
     try {
-      const response = await fetch('http://localhost:8080/faq/getAll', { method: 'GET' });
+      const response = await fetch(`${API_BASE_URL}/getAll`, { method: 'GET' });
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -12,3 +15,4 @@ export const fetchFaqData = async () => {
       throw new Error(`Error during data fetching: ${error.message}`);
     }
   };
+

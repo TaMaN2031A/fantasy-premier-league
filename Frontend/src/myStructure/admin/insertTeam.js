@@ -18,12 +18,6 @@ export const InsertTeam = () => {
         setTeam({...team, [e.target.name]: e.target.value})
     }
 
-    useEffect(() => {
-        /*
-        * you can check validity of email given in this function.
-        * */
-        console.log(team.name);
-    }, [team]);
 
     const handleSubmit = async ()=> {
 

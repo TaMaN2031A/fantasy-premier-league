@@ -1,6 +1,10 @@
+import { hostOfBack } from "../collection";
+
+const API_BASE_URL = hostOfBack + '/upcomingMatch';
+
 export const insertUpcomingMatchServ = async (data) => {
     try {
-        const response = await fetch(`http://localhost:8080/upcomingMatch/insert`, {
+        const response = await fetch(`${API_BASE_URL}/insert`, {
           method: 'POST',
           mode: 'cors',
           credentials: 'same-origin',
@@ -19,7 +23,7 @@ export const insertUpcomingMatchServ = async (data) => {
 };
 export const deleteUpcomingMatchServ = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/upcomingMatch/delete/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/delete/${id}`, {
         method: 'DELETE',
         mode: 'cors',
         credentials: 'same-origin',

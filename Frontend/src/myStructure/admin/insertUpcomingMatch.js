@@ -22,12 +22,6 @@ export const InsertUpcomingMatch = () => {
         setUpcomingMatch({...upcomingMatch, [e.target.name]: e.target.value})
     }
 
-    useEffect(() => {
-        /*
-        * you can check validity of email given in this function.
-        * */
-        console.log(upcomingMatch.homeID + " " + upcomingMatch.homeID + " " + upcomingMatch.week + " " + upcomingMatch.stadium);
-    }, [upcomingMatch]);
 
     const handleSubmit = async ()=> {
 

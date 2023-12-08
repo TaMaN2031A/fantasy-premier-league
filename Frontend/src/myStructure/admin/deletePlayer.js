@@ -18,12 +18,6 @@ export const DeletePlayer = () => {
         setPlayer({...player, [e.target.name]: e.target.value})
     }
 
-    useEffect(() => {
-        /*
-        * you can check validity of email given in this function.
-        * */
-        console.log(player.id);
-    }, [player]);
 
     const handleSubmit = async ()=> {
         try {

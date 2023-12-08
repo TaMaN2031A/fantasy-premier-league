@@ -35,11 +35,10 @@ public class PlayerServiceImpl implements PlayerService {
 
             if (toBeLinked.isPresent()) {
                 Team team = toBeLinked.get();
-                for (Player pl : team.getPlayers()) {
-                    if(pl.getNumber_in_team() == playerDTO.getNumber_in_team()){
-                        response.put("error", "There is a player having this number");
-                        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-                    }
+                if(isTherePlayerWithSameNumber(playerDTO, team))
+                {
+                    response.put("error", "There is a player with the same number");
+                    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
                 }
                 if (playerDTO.getNumber_in_team() < 1 || playerDTO.getNumber_in_team() > 99) {
                     response.put("error", "Give a number between 1 to 99");
@@ -61,6 +60,23 @@ public class PlayerServiceImpl implements PlayerService {
 
     }
 
+    boolean isTherePlayerWithSameNumber(PlayerDTO playerDTO, Team team){
+        for (Player pl : team.getPlayers()) {
+            if(pl.getNumber_in_team() == playerDTO.getNumber_in_team()){
+                return true;
+            }
+        }
+        return false;
+    }
+    boolean isTherePlayerWithSameNumber(Player player, Team team){
+        for(Player pl: team.getPlayers()){
+            if(pl.getNumber_in_team() == player.getNumber_in_team() && pl.getID() != player.getID()){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     @Override
     public ResponseEntity updatePlayer(Player player) {
@@ -70,40 +86,38 @@ public class PlayerServiceImpl implements PlayerService {
                 response.put("error", "Player doesn't exist");
                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             }
-            Player playerToUpdate = playerRepository.getReferenceById(player.getID());
-            playerToUpdate.setName(player.getName());
-            playerToUpdate.setAssists(player.getAssists());
-            playerToUpdate.setGoals(player.getGoals());
             Optional<Team> to_be_linked =  teamRepository.findById(player.getId_of_team());
             if(to_be_linked.isPresent())
             {
                 Team team = to_be_linked.get();
-                for(Player pl: team.getPlayers()){
-                    if(pl.getNumber_in_team() == player.getNumber_in_team() && pl.getID() != player.getID()){
-                        response.put("error", "There is a player having this number");
-                        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-                    }
+                if(isTherePlayerWithSameNumber(player, team)){
+                    response.put("error", "There si a player with same number");
+                    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
                 }
                 if (player.getNumber_in_team() < 1 || player.getNumber_in_team() > 99) {
                     response.put("error", "Give a number between 1 to 99");
                     return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
                 }
+                Player playerToUpdate = playerRepository.getReferenceById(player.getID());
+                playerToUpdate.setName(player.getName());
+                playerToUpdate.setAssists(player.getAssists());
+                playerToUpdate.setGoals(player.getGoals());
                 playerToUpdate.setNumber_in_team(player.getNumber_in_team());
                 playerToUpdate.setTeam(team);
+                playerToUpdate.setPhoto_link(player.getPhoto_link());
+                playerToUpdate.setPosition(player.getPosition());
+                playerToUpdate.setPrice(player.getPrice());
+                playerToUpdate.setRed_cards(player.getRed_cards());
+                playerToUpdate.setSaved(player.getSaved());
+                playerToUpdate.setYellow_cards(player.getYellow_cards());
+                playerRepository.save(playerToUpdate);
+                response.put("message", "Player updated successfully");
+                return new ResponseEntity<>(response, HttpStatus.OK);
             }else{
                 // User sent a wrong id team number
                 response.put("error", "Wrong team id");
                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             }
-            playerToUpdate.setPhoto_link(player.getPhoto_link());
-            playerToUpdate.setPosition(player.getPosition());
-            playerToUpdate.setPrice(player.getPrice());
-            playerToUpdate.setRed_cards(player.getRed_cards());
-            playerToUpdate.setSaved(player.getSaved());
-            playerToUpdate.setYellow_cards(player.getYellow_cards());
-            playerRepository.save(playerToUpdate);
-            response.put("message", "Player updated successfully");
-            return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (Exception e){
             response.put("error", e.toString());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);

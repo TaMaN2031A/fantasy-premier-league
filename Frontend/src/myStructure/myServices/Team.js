@@ -1,5 +1,8 @@
+import { hostOfBack } from "../collection";
+const API_BASE_URL = hostOfBack + '/team';
+
 export const fetchTeamsData = async () => {
-    const response = await fetch('http://localhost:8080/team/getAll', {method:'GET'});
+    const response = await fetch(`${API_BASE_URL}/getAll`, {method:'GET'});
     if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -8,7 +11,7 @@ export const fetchTeamsData = async () => {
 };
 export const insertTeamServ = async (name) => {
     try {
-        const response = await fetch(`http://localhost:8080/team/insert/${name}`, {
+        const response = await fetch(`${API_BASE_URL}/insert/${name}`, {
           method: 'POST',
           mode: 'cors',
           credentials: 'same-origin',
@@ -26,7 +29,7 @@ export const insertTeamServ = async (name) => {
 };
 export const deleteTeamServ = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/team/delete/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/delete/${id}`, {
         method: 'DELETE',
         mode: 'cors',
         credentials: 'same-origin',

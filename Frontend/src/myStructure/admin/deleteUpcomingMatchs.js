@@ -15,12 +15,7 @@ export const DeleteUpcomingMatch = () => {
         setUpcomingMatch({...upcomingMatch, [e.target.name]: e.target.value})
     }
 
-    useEffect(() => {
-        /*
-        * you can check validity of email given in this function.
-        * */
-        console.log(upcomingMatch.id);
-    }, [upcomingMatch]);
+
 
     const handleSubmit = async ()=> {
         try {

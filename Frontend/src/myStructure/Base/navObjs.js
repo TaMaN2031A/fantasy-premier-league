@@ -24,7 +24,7 @@ import { DeleteUpcomingMatch } from "../admin/deleteUpcomingMatchs";
 
 
 export const nav = [
-    { path:     "/",         name: "league",        element: <League />,     status: "global"  },
+    { path:     "/",         name: "League",        element: <League getPlayers={await fetchPlayersData()} getTeams={await fetchTeamsData()} />,     status: "global"  },
     { path:     "/FAQ",    name: "FAQ",       element: <Faq faqData={await fetchFaqData()} />,     status: "global"  },
 
     // user pages
