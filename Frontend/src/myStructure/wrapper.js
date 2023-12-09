@@ -50,7 +50,6 @@ function Wrapper() {
         * */
         <AuthContext.Provider value={{person, setPerson, logout}}>
             <>
-                <RenderMenu />
                 <RenderRoutes />
             </>
 

@@ -1,14 +1,16 @@
 import React, {useEffect, useReducer, useState} from "react";
 import { json, useNavigate } from "react-router-dom";
-import Form from "react-bootstrap/Form";
-import {Button, Row} from "react-bootstrap";
 import { GetAuthDataFn } from "../wrapper";
-import {adminPrv, userPrv} from "../collection";
+import {adminPrv, defaultPersonState, userPrv} from "../collection";
 import './SoccerTable.css';
 
 export const League = ({ getPlayers, getTeams }) => {
     const [playerInfo, setPlayerInfo] = useState(getPlayers ||[]);
     const [teamInfo, setTeamInfo] = useState(getTeams||[]);
+    const {person, setPerson}  = GetAuthDataFn();
+    useEffect(() => {
+        console.log(person)
+    })
         return (
             <div className="table-container">
                 <h3>Teams</h3>

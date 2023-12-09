@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from "./bg.png";
-import Form from "react-bootstrap/Form";
-import {useNavigate} from "react-router-dom";
+
+import {Link, useNavigate} from "react-router-dom";
 import {GetAuthDataFn} from "../wrapper";
 import {formStyle} from "./login";
 import {login, signIn, signUp} from "../myServices/personAuthorizationService/registration";
-import {Button} from "react-bootstrap";
+
 import {adminPrv, userPrv} from "../collection";
+import plLogo from "./logo.png";
 
 function Signup() {
     const navigate = useNavigate();
@@ -27,13 +28,16 @@ function Signup() {
     };
 
 
+    useEffect((() => {
+        console.log(info)
+    }))
 
     const [info, setInfo] = useState({
         firstName: "",
         lastName: "",
         userName: "",
         email: "",
-        region: "",
+        region: "Region",
         password: "",
         confirmedPassword: ""
     });
@@ -46,15 +50,18 @@ function Signup() {
         setInfo({ ...info, [e.target.name]: e.target.value });
     }
 
-    const formStyle = {
-        border: "1px solid #ccc",
-        padding: "20px",
-        borderRadius: "10px",
-        width: "30%",
-        backgroundColor: "white",
-        background: "linear-gradient(to top, #f2f2f2, rgba(242, 242, 242, 0))"
+    const regions = ['Africa', 'Asia', 'Europe', 'America']; // List of regions
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedRegion, setSelectedRegion] = useState('Region'); // Initial text for the button
+    const selectRegion = (region) => {
+        console.log(region)
+        setIsOpen(false); // Close the dropdown after selecting a region
+        setInfo({ ...info, ["region"]: region });
+    };
 
-};
+    const toggleDropdown = () => {
+        setIsOpen(!isOpen);
+    };
 
     const handleSubmit = async () => {
         if(!isValidGmailEmail(info.email)){
@@ -82,104 +89,175 @@ function Signup() {
     };
 
     return (
-        <>
-            <div className='bg-image' id="image" style={{height: "0px"}}>
-                <img src={logo} alt="abod"  />
-            </div>
-            <div className="container">
-                <div className="row mt-lg-5">
-                    <div className="col-12">
-                        <div style={formStyle}>
-                            <Form>
+        <section className="bg-gradient-to-r from-slate-800 to-gray-900">
+            <div className="flex flex-col items-center justify-center px-6 py-2 mx-auto md:h-screen lg:py-0">
 
-                                {/* ------------------ firstName part ---------------------- */}
-                                <Form.Group controlId="firstName">
-                                    <Form.Label>firstName</Form.Label>
-                                    <Form.Control
+                {/*----------------------------------premier league img------------------------------------------*/}
+                <img className="object-scale-down w-60 mb-10" src={plLogo} alt="logo"/>
+                <div
+                    className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                    <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                        <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900
+                            md:text-2xl dark:text-white text-center justify-center">
+                            Sign up
+                        </h1>
+
+                        {/*-----------------------------------form------------------------------------------*/}
+                        <form className="space-y-4 md:space-y-6">
+
+                            <div className="flex">
+                                {/*-----------------------------------first name------------------------------------------*/}
+                                <div>
+                                    <label htmlFor="First"
+                                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                        Your First Name
+                                    </label>
+                                    <input
+                                        className="bg-gray-50 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         type="text"
                                         placeholder="Enter firstName"
                                         name="firstName"
                                         value={info.firstName}
-                                        onChange={inputChange}  required /> <br/>
-                                </Form.Group>
+                                        onChange={inputChange} required/>
+                                </div>
 
-                                {/* ------------------ lastName part ---------------------- */}
-                                <Form.Group controlId="lastName">
-                                    <Form.Label>lastName</Form.Label>
-                                    <Form.Control
+                                {/*-----------------------------------last name------------------------------------------*/}
+                                <div className="ml-5">
+                                    <label htmlFor="Second"
+                                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                        Your Last Name
+                                    </label>
+                                    <input
+                                        className="bg-gray-50 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         type="text"
                                         placeholder="Enter lastName"
                                         name="lastName"
                                         value={info.lastName}
-                                        onChange={inputChange}  required /> <br/>
-                                </Form.Group>
+                                        onChange={inputChange} required/>
+                                </div>
+                            </div>
 
-                                {/* ------------------ userName part ---------------------- */}
-                                <Form.Group controlId="userName">
-                                    <Form.Label>userName</Form.Label>
-                                    <Form.Control
+                            <div className="flex">
+                                {/*-----------------------------------Username------------------------------------------*/}
+                                <div>
+                                    <label htmlFor="Username"
+                                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                        Your Username
+                                    </label>
+                                    <input
+                                        className="bg-gray-50 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         type="text"
                                         placeholder="Enter userName"
                                         name="userName"
                                         value={info.userName}
-                                        onChange={inputChange}  required /> <br/>
-                                </Form.Group>
+                                        onChange={inputChange} required/>
+                                </div>
 
-                                {/* ------------------ email part ---------------------- */}
-                                <Form.Group controlId="email">
-                                    <Form.Label>Email</Form.Label>
-                                    <Form.Control
-                                        type="email"
-                                        placeholder="Enter email"
-                                        name="email"
-                                        value={info.email}
-                                        onChange={inputChange}  required /> <br/>
-                                </Form.Group>
+                                {/*-----------------------------------regions------------------------------------------*/}
+                                <div className="relative ml-4 mt-7">
+                                    <button
+                                        id="dropdownDefaultButton"
+                                        onClick={toggleDropdown}
+                                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                        type="button">
+                                        {info.region}{' '}
+                                        <svg
+                                            className={`w-2.5 h-2.5 ms-3 ${isOpen ? 'transform rotate-180' : ''}`}
+                                            aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 10 6"
+                                        >
+                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                                        </svg>
+                                    </button>
 
-                                {/* ------------------ region part ---------------------- */}
-                                <Form.Group controlId="region">
-                                    <Form.Label>region</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Enter region"
-                                        name="region"
-                                        value={info.region}
-                                        onChange={inputChange}  required /> <br/>
-                                </Form.Group>
+                                    <div
+                                        id="dropdown"
+                                        className={`${
+                                            isOpen ? 'block' : 'hidden'
+                                        } absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}
+                                    >
+                                        <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                                            {regions.map((region, index) => (
+                                                <li key={index}>
+                                                    <button
+                                                        onClick={() => selectRegion(region)}
+                                                        className="block w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                        {region}
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
 
-                                {/* ------------------ password part ---------------------- */}
-                                <Form.Group controlId="password">
-                                    <Form.Label>password</Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        placeholder="Enter password"
-                                        name="password"
-                                        value={info.password}
-                                        onChange={inputChange}  required /> <br/>
-                                </Form.Group>
 
-                                {/* ------------------ confirmedPassword part ---------------------- */}
-                                <Form.Group controlId="confirmedPassword">
-                                    <Form.Label>confirmedPassword</Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        placeholder="Enter confirmedPassword"
-                                        name="confirmedPassword"
-                                        value={info.confirmedPassword}
-                                        onChange={inputChange}  required /> <br/>
-                                </Form.Group>
-                                <Button
-                                    type="button"
-                                    variant="dark"
-                                    onClick={handleSubmit}>
-                                    submit
-                                </Button>
-                            </Form>
-                        </div>
+                            {/*-----------------------------------email------------------------------------------*/}
+                            <div>
+                                <label htmlFor="email"
+                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+                                    email</label>
+                                <input
+                                    className="bg-gray-50 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    type="email"
+                                    placeholder="Enter email"
+                                    name="email"
+                                    value={info.email}
+                                    onChange={inputChange} required/>
+                            </div>
+
+                            {/*-----------------------------------password------------------------------------------*/}
+                            <div>
+                                <label htmlFor="password"
+                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                                <input
+                                    className="bg-gray-50 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    type="password"
+                                    placeholder="Enter password"
+                                    name="password"
+                                    value={info.password}
+                                    onChange={inputChange} required/>
+                            </div>
+
+                            {/*-----------------------------------check password------------------------------------------*/}
+                            <div>
+                                <label htmlFor="password"
+                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm
+                                    password</label>
+                                <input
+                                    className="bg-gray-50 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    type="password"
+                                    placeholder="Enter confirmedPassword"
+                                    name="confirmedPassword"
+                                    value={info.confirmedPassword}
+                                    onChange={inputChange} required/>
+                            </div>
+
+                            {/*-----------------------------------submit------------------------------------------*/}
+                            <button className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4
+                                    focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5
+                                    text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                    type="button" onClick={handleSubmit}>
+                                Sign up
+                            </button>
+
+                            {/*-----------------------------------log-in------------------------------------------*/}
+                            <div className="inline-flex">
+                                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                                    Don’t have an account yet?
+                                    <Link to="/login"
+                                          className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                                        log in
+                                    </Link>
+                                </p>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </>
+        </section>
     );
 }
 

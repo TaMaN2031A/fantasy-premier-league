@@ -22,10 +22,14 @@ import { DeleteTeam } from "../admin/deleteTeam";
 import { InsertUpcomingMatch } from "../admin/insertUpcomingMatch";
 import { DeleteUpcomingMatch } from "../admin/deleteUpcomingMatchs";
 
+/*
+* faq-rule >> remove global
+* default page >> login >> success >> home
+* functionality req >> link its page.
+*
+* */
 
 export const nav = [
-    { path:     "/",         name: "League",        element: <League getPlayers={await fetchPlayersData()} getTeams={await fetchTeamsData()} />,     status: "global"  },
-    { path:     "/FAQ",    name: "FAQ",       element: <Faq faqData={await fetchFaqData()} />,     status: "global"  },
 
     // user pages
     { path:     "/pickTeam",  name: "PickTeam",     element: <PickTeam />,     status: userPrv  },
@@ -48,7 +52,9 @@ export const nav = [
     { path:     "/login",    name: "Login",       element: <Login />,    status: "external"  },
     { path:     "/signup",    name: "Signup",     element: <Signup />,    status: "external"  },
     { path:     "/forgetPassword", name: "ForgetPass", element: <ForgetPassword />, status: "external" },
-    { path:     "/logout",    name: "Logout",     element: <Logout />,    status: "internal"  }
+    { path:     "/logout",    name: "Logout",     element: <Logout />,    status: "internal"  },
+    { path:     "/",         name: "League",        element: <League getPlayers={await fetchPlayersData()} getTeams={await fetchTeamsData()} />,     status: "internal"  },
+    { path:     "/FAQ",    name: "FAQ",       element: <Faq faqData={await fetchFaqData()} />,     status: "internal"  }
 ]
 
 
