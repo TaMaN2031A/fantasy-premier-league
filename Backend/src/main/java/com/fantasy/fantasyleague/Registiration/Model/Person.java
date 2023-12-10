@@ -8,6 +8,7 @@ import lombok.*;
 public class Person {
 
     @Id
+    @Column(nullable = false,updatable = false)
     private String email;
     @Column(nullable = false, unique = true, updatable = false)
     private String userName;
