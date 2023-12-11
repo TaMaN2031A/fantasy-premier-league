@@ -1,14 +1,14 @@
 import React from "react";
-import Card from "./Card";
 import Profile from "./Profile";
 import plLogo from "../Authentication/logo.png";
+import { commonList, adminList, userList } from "./HomeCollection";
+import { GetAuthDataFn } from "../wrapper";
 
 function Home(props) {
-  const items = [1, 2, 3, 4, 5, 6, 7, 8];
 
-  const list = items.map(() => (
-    <Card Title="Matches" details="HAve fun and play with friends" />
-  ));
+  const { person } = GetAuthDataFn();
+
+  let list = [...commonList, ...(person.isAuthorized && person.privilege === "admin") ? adminList : userList];
 
   return (
     <div className="bg-gradient-to-r from-slate-800 to-gray-900 min-h-screen">
@@ -16,7 +16,7 @@ function Home(props) {
       <div className=" justify-center text-center">
         <Profile />
         <hr className="border-b-2 border-gray-500 w-3/4 mx-auto" />
-        <div className="flex flex-wrap justify-center">{list}</div>
+        <div className="flex flex-wrap justify-center mt-10">{list}</div>
       </div>
     </div>
   );
