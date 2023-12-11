@@ -1,5 +1,6 @@
 package com.fantasy.fantasyleague.Registiration.Service;
 
+import com.fantasy.fantasyleague.Registiration.DTO.AdminPromotionDTO;
 import com.fantasy.fantasyleague.Registiration.DTO.GoogleDTO;
 import com.fantasy.fantasyleague.Registiration.DTO.SignInDTO;
 import com.fantasy.fantasyleague.Registiration.Model.*;
@@ -7,15 +8,21 @@ import com.fantasy.fantasyleague.Registiration.Repository.AdminRepository;
 import com.fantasy.fantasyleague.Registiration.Repository.UserRepository;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import jakarta.persistence.EntityManager;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
@@ -32,12 +39,16 @@ public class RegistrationServiceImpl implements RegistrationService {
     final
     MailService mailService;
 
+    private final EntityManager entityManager;
+
+
     @Autowired
-    public RegistrationServiceImpl(UserRepository userRepository, AdminRepository adminRepository, PasswordEncoder passwordEncoder, MailService mailService) {
+    public RegistrationServiceImpl(UserRepository userRepository, AdminRepository adminRepository, PasswordEncoder passwordEncoder, MailService mailService, EntityManager entityManager) {
         this.userRepository = userRepository;
         this.adminRepository = adminRepository;
         this.passwordEncoder = passwordEncoder;
         this.mailService = mailService;
+        this.entityManager = entityManager;
     }
 
 
@@ -165,6 +176,25 @@ public class RegistrationServiceImpl implements RegistrationService {
         catch (Exception e){
             return Response.ErrorOccurred;
         }
+    }
+
+    public Page<AdminPromotionDTO> GetAllUsers(Pageable pageable) {
+        return userRepository.findAllUsers(pageable)
+                .map(user -> new AdminPromotionDTO(user.getEmail(), user.getUserName()));
+    }
+    public <T> Page<AdminPromotionDTO> searchBySpecification(String specificationType, T value, int page, int size) {
+        Specification<User> specification = buildSpecification(specificationType, value);
+        Pageable pageable = PageRequest.of(page, size);
+        return userRepository.findAll(specification, pageable);
+    }
+
+    private <T> Specification<User> buildSpecification(String specificationType, T value) {
+        return (root, query, builder) -> switch (specificationType) {
+            case "email" -> builder.equal(root.get("email"), value);
+            case "userName" -> builder.equal(root.get("userName"), value);
+            // Add more cases as needed
+            default -> null;
+        };
     }
 
 }
