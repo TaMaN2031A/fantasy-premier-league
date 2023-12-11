@@ -9,30 +9,10 @@ import PickTeam from "../user/pickTeam";
 import Transfer from "../user/transfer";
 import Points from "../user/points";
 import FantasyLeagues from "../user/fantasyLeagues";
-import UserAccount from "../user/userAccount";
-import AdminAccount from "../admin/adminAccount";
 import ForgetPassword from "../Authentication/forgetPassword";
 import Error from "../Authentication/Error";
-import { InsertPlayer } from "../admin/insertPlayer";
-import { DeletePlayer } from "../admin/deletePlayer";
-import { fetchFaqData } from "../myServices/Faq_Rule";
-import { fetchPlayersData } from "../myServices/Player";
-import { fetchTeamsData } from "../myServices/Team";
-import { InsertTeam } from "../admin/insertTeam";
-import { DeleteTeam } from "../admin/deleteTeam";
-import { InsertUpcomingMatch } from "../admin/insertUpcomingMatch";
-import { DeleteUpcomingMatch } from "../admin/deleteUpcomingMatchs";
 import Home from "../Home/Home";
 
-/*
-* faq-rule >> remove global
-* default page >> login >> success >> home
-* functionality req >> link its page.
-* default router
-* refactoring code path must be a variable.
-* more than one request and default requested data to when we need it.
-* regions effect
-* */
 
 export const nav = [
 
@@ -65,8 +45,3 @@ export const nav = [
     // error page
     { path:     paths.notFound,        name: "404",       element: <Error />,     status: "global"  }
 ]
-
-
-// log out you need to make the page in external page
-// >> rerender with other menu that isAuthorized = false.
-//

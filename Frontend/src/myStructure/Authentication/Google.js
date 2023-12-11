@@ -1,8 +1,8 @@
 import { GoogleLogin } from "react-google-login";
-import {clientID, paths, toastStyle} from "../collection";
+import {responses, clientID, paths, toastStyle} from "../collection";
 import "./Google.css";
-import {adminPrv, userPrv} from "../collection";
-import {googleAuthSignIn, signIn} from "../myServices/personAuthorizationService/registration";
+import {userPrv} from "../collection";
+import {googleAuthSignIn} from "../myServices/personAuthorizationService/registration";
 import {useNavigate} from "react-router-dom";
 import {GetAuthDataFn} from "../wrapper";
 import {toast, ToastContainer} from "react-toastify";
@@ -15,7 +15,6 @@ const Google = () => {
     * ended session with google with a response
     * */
     const onSuccess = async (response) => {
-        console.log("Login successful", response);
         let res = response.profileObj;
         let info = {
             "email": res.email,
@@ -26,9 +25,9 @@ const Google = () => {
         try{
             let ret = await googleAuthSignIn(info);
             console.log(ret)
-            toast.success("Login Successful!", toastStyle);
+            toast.success(responses.loginSuccessfully, toastStyle);
         } catch (e) {
-            toast.error("Login Failed!", toastStyle);
+            toast.error(responses.errorGeneratedInFront, toastStyle);
             return;
         }
         await setPerson({
@@ -42,8 +41,7 @@ const Google = () => {
     };
 
     const onFailure = (response) => {
-        console.log("Login Failed!", response);
-        toast.error("Login Failed!", toastStyle);
+        toast.error(responses.errorGeneratedInFront, toastStyle);
     };
     return (
         <div className="container">

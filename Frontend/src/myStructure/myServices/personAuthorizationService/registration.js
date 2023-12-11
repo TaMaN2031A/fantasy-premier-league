@@ -22,7 +22,6 @@ export const signUp = async (info) => {
 };
 
 export const signIn = async (info) => {
-    console.log(info)
     return handleRequest(
         axios.post(`${API_BASE_URL}/sign-in`, info)
     );
@@ -35,7 +34,6 @@ export const forgetPassword = async (info) => {
 };
 
 export const updatePassword = async (info) => {
-    console.log(info)
     return handleRequest(
         axios.post(`${API_BASE_URL}/updatePassword`, info)
     );

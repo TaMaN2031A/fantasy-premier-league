@@ -70,7 +70,6 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     public String validate(SignInDTO signInDTO) {
-        // return Response.loginSuccessfully;
         Person entity = findEntity(signInDTO.getUserNameOrEmail(), signInDTO.getUserNameOrEmail(), signInDTO.getRole());
 
         if(entity == null)

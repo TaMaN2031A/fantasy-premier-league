@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
 import {forgetPassword, updatePassword} from "../myServices/personAuthorizationService/registration";
 import {useNavigate} from "react-router-dom";
 import plLogo from "./logo.png";
-import {paths, toastStyle} from "../collection";
+import {paths, responses, toastStyle} from "../collection";
 function ForgetPassword() {
 
     /*
@@ -36,7 +34,6 @@ function ForgetPassword() {
         name = parseInt(name);
         const tokenCopy = [...token];
         tokenCopy[name] = value;
-        console.log(name)
         setToken(tokenCopy);
     }
 
@@ -46,12 +43,11 @@ function ForgetPassword() {
 
     async function goToPuttingToken () {
         let ret = await forgetPassword({"email": email});
-        console.log(ret)
-        if(ret === "Mail Sent Successfully") {
-            toast.success('Mail Sent Successfully', toastStyle);
+        if(ret === responses.MailSentSuccessfully) {
+            toast.success(responses.MailSentSuccessfully, toastStyle);
             setStep(step + 1)
         } else {
-            toast.error('Entered email is not registered or not valid', toastStyle);
+            toast.error(responses.MailSendingFailed, toastStyle);
         }
     }
 
@@ -66,13 +62,13 @@ function ForgetPassword() {
         if(allExists) {
             setStep(step + 1)
         } else {
-            toast.error('Please fill up all input field', toastStyle);
+            toast.error(responses.tokenDigitsNotFilled, toastStyle);
         }
     }
 
     async function goToBackForSaving() {
         if (passwords.first !== passwords.second) {
-            toast.error('password and confirmed password are not identical', toastStyle);
+            toast.error(responses.notEqualPasswords, toastStyle);
             return;
         }
         let ret = await updatePassword({
@@ -80,21 +76,15 @@ function ForgetPassword() {
             "token": token.join(''),
             "password": passwords.first
         });
-        console.log(ret)
-        if (ret === "password update successful") {
-            toast.success('password update successful', toastStyle);
-            setTimeout(() => {
-                navigate(paths.login);
-            }, 2000);
+
+        if (ret === responses.PassUpdateSuccessfully) {
+            toast.success(responses.PassUpdateSuccessfully, toastStyle);
+            navigate(paths.login);
         } else {
-            toast.error('Entered token is not valid', toastStyle);
+            toast.error(responses.tokenIsWrong, toastStyle);
             setStep(step - 1);
         }
     }
-
-    useEffect((e) => {
-        console.log(token)
-    }, [token])
 
     return (
         <div

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { GetAuthDataFn } from "../wrapper";
-import {login, signIn} from "../myServices/personAuthorizationService/registration";
-import {adminPrv, paths, toastStyle, userPrv} from "../collection";
+import {signIn} from "../myServices/personAuthorizationService/registration";
+import {adminPrv, paths, responses, toastStyle, userPrv} from "../collection";
 import  Google  from "./Google";
 import { gapi } from "gapi-script";
 import { clientID } from "../collection";
-import logo from './bg.png';
 import plLogo from './logo.png';
 import {toast, ToastContainer} from "react-toastify";
 
@@ -45,32 +44,11 @@ export const Login = () => {
         gapi.load("client:auth2", start);
     });
 
-    useEffect(() => {
-        /*
-         * you can check validity of email given in this function.
-         * */
-        console.log(
-            info.userNameOrEmail + " " + info.password + " " + info.role
-        );
-    }, [info]);
-
-    const formStyle = {
-        border: "1px solid #ccc",
-            padding: "20px",
-            borderRadius: "10px",
-            width: "30%",
-            backgroundColor: "white",
-            background: "linear-gradient(to top, #f2f2f2, rgba(242, 242, 242, 0))"
-    };
-
-    const gradientStyle = {
-        background: 'radial-gradient(circle, #4558D5 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,1) 30%, rgba(0,0,0,1) 30%)',
-    };
 
     const handleSubmit = async (e) => {
         try{
            let ret = await signIn(info);
-           if(ret === "Login successful"){
+           if(ret === responses.loginSuccessfully){
                await setPerson({
                    isAuthorized: true,
                    username: info.userNameOrEmail,
@@ -83,7 +61,7 @@ export const Login = () => {
                 toast.error(ret, toastStyle);
            }
        } catch (e) {
-            toast.error("Login Failed!", toastStyle);
+            toast.error(responses.errorGeneratedInFront, toastStyle);
        }
 
     };

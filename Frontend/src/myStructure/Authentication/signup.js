@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import logo from "./bg.png";
-
 import {Link, useNavigate} from "react-router-dom";
 import {GetAuthDataFn} from "../wrapper";
-import {formStyle} from "./login";
-import {login, signIn, signUp} from "../myServices/personAuthorizationService/registration";
+import {signUp} from "../myServices/personAuthorizationService/registration";
 
-import {adminPrv, paths, toastStyle, userPrv} from "../collection";
+import {paths, responses, toastStyle, userPrv} from "../collection";
 import plLogo from "./logo.png";
 import {toast, ToastContainer} from "react-toastify";
 
@@ -28,11 +25,6 @@ function Signup() {
         return validGmailDomains.includes(domain);
     };
 
-
-    useEffect((() => {
-        console.log(info)
-    }))
-
     const [info, setInfo] = useState({
         firstName: "",
         lastName: "",
@@ -53,9 +45,7 @@ function Signup() {
 
     const regions = ['Africa', 'Asia', 'Europe', 'America']; // List of regions
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedRegion, setSelectedRegion] = useState('Region'); // Initial text for the button
     const selectRegion = (region) => {
-        console.log(region)
         setIsOpen(false); // Close the dropdown after selecting a region
         setInfo({ ...info, ["region"]: region });
     };
@@ -66,16 +56,16 @@ function Signup() {
 
     const handleSubmit = async () => {
         if(!isValidGmailEmail(info.email)){
-            alert("email is not valid");
+            toast.error(responses.MailNotValid, toastStyle)
             return;
         }
         if(info.password !== info.confirmedPassword) {
-            alert("password and confirmed password are not identical");
+            toast.error(responses.notEqualPasswords, toastStyle)
             return;
         }
 
         let ret = await signUp(info);
-        if(ret === "Sign up successful"){
+        if(ret === responses.signUpSuccessfully){
             await setPerson({
                 isAuthorized: true,
                 username: info.userName,
@@ -84,10 +74,8 @@ function Signup() {
             });
             toast.success(ret, toastStyle);
             navigate(paths.home);
-
         } else {
             toast.error(ret, toastStyle);
-
         }
     };
 
