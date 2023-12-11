@@ -1,10 +1,11 @@
 import { GoogleLogin } from "react-google-login";
-import { clientID } from "../collection";
+import {responses, clientID, paths, toastStyle} from "../collection";
 import "./Google.css";
-import {adminPrv, userPrv} from "../collection";
-import {googleAuthSignIn, signIn} from "../myServices/personAuthorizationService/registration";
+import {userPrv} from "../collection";
+import {googleAuthSignIn} from "../myServices/personAuthorizationService/registration";
 import {useNavigate} from "react-router-dom";
 import {GetAuthDataFn} from "../wrapper";
+import {toast, ToastContainer} from "react-toastify";
 const Google = () => {
 
     const navigate = useNavigate();
@@ -14,7 +15,6 @@ const Google = () => {
     * ended session with google with a response
     * */
     const onSuccess = async (response) => {
-        console.log("Login successful", response);
         let res = response.profileObj;
         let info = {
             "email": res.email,
@@ -25,9 +25,9 @@ const Google = () => {
         try{
             let ret = await googleAuthSignIn(info);
             console.log(ret)
-            alert(ret);
+            toast.success(responses.loginSuccessfully, toastStyle);
         } catch (e) {
-            alert("login failed");
+            toast.error(responses.errorGeneratedInFront, toastStyle);
             return;
         }
         await setPerson({
@@ -37,22 +37,25 @@ const Google = () => {
             personObj: {},
         });
 
-        navigate("/")
+        navigate(paths.home)
     };
 
     const onFailure = (response) => {
-        console.log("Login Failed!", response);
-        alert("Login Failed!")
+        toast.error(responses.errorGeneratedInFront, toastStyle);
     };
     return (
-        <GoogleLogin
-            className="custom-google-button"
-            clientId={clientID}
-            buttonText="Sign in"
-            onSuccess={onSuccess}
-            onFailure={onFailure}
-            cookiePolicy={"single_host_origin"}
-        />
+        <div className="container">
+            <ToastContainer/>
+
+            <GoogleLogin
+                className="custom-google-button"
+                clientId={clientID}
+                buttonText="Sign in"
+                onSuccess={onSuccess}
+                onFailure={onFailure}
+                cookiePolicy={"single_host_origin"}
+            />
+        </div>
     );
 };
 

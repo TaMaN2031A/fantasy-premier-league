@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
-import Form from "react-bootstrap/Form";
-import {Button, Col, Row} from "react-bootstrap";
 import { GetAuthDataFn } from "../wrapper";
-import {login, signIn} from "../myServices/personAuthorizationService/registration";
-import { adminPrv, userPrv } from "../collection";
+import {signIn} from "../myServices/personAuthorizationService/registration";
+import {adminPrv, paths, responses, toastStyle, userPrv} from "../collection";
 import  Google  from "./Google";
 import { gapi } from "gapi-script";
 import { clientID } from "../collection";
-import logo from './bg.png';
+import plLogo from './logo.png';
+import {toast, ToastContainer} from "react-toastify";
 
 
 export const Login = () => {
@@ -20,7 +19,7 @@ export const Login = () => {
     const [info, setInfo] = useState({
         userNameOrEmail: "",
         password: "",
-        role: "",
+        role: ""
     });
 
     function inputChange(e) {
@@ -45,192 +44,132 @@ export const Login = () => {
         gapi.load("client:auth2", start);
     });
 
-    useEffect(() => {
-        /*
-         * you can check validity of email given in this function.
-         * */
-        console.log(
-            info.userNameOrEmail + " " + info.password + " " + info.role
-        );
-    }, [info]);
-
-    const formStyle = {
-        border: "1px solid #ccc",
-            padding: "20px",
-            borderRadius: "10px",
-            width: "30%",
-            backgroundColor: "white",
-            background: "linear-gradient(to top, #f2f2f2, rgba(242, 242, 242, 0))"
-    };
 
     const handleSubmit = async (e) => {
-        // e.preventDefault();
         try{
            let ret = await signIn(info);
-           if(ret === "Login successful"){
+           if(ret === responses.loginSuccessfully){
                await setPerson({
                    isAuthorized: true,
                    username: info.userNameOrEmail,
                    privilege: info.role,
                    personObj: {},
                });
-               console.log(ret)
-               navigate("/");
+               await toast.success(ret, toastStyle);
+               navigate(paths.home);
            } else {
-               alert(ret)
+                toast.error(ret, toastStyle);
            }
        } catch (e) {
-           alert("login failed");
+            toast.error(responses.errorGeneratedInFront, toastStyle);
        }
-        // navigate to admin home or user home
-        // based on Role attribute
-        // useEffect(
-        //     console.log(info)
-        // , [])
+
     };
 
     return (
-        <>
-            <div className='bg-image' id="image" style={{height: "0px"}}>
-                <img src={logo} alt="abod"  />
-            </div>
-            <div className="container">
-                <div className="row mt-lg-5">
-                    <div className="col-12">
-                        <div style={formStyle}>
-                            <Form>
-                                {/* ------------------ username part ---------------------- */}
-                                <Form.Group controlId="formBasicEmail">
-                                    <Form.Label>Email address/username</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Enter email/username"
-                                        name="userNameOrEmail"
-                                        value={info.userNameOrEmail}
-                                        onChange={inputChange}  required /> <br/>
-                                </Form.Group>
+        <section className="bg-gradient-to-r from-slate-800 to-gray-900">
+            <div className="flex flex-col items-center justify-center px-6 py-2 mx-auto md:h-screen lg:py-0">
+                <ToastContainer/>
+                {/*----------------------------------premier league img------------------------------------------*/}
+                <img className="object-scale-down w-60 mb-10" src={plLogo} alt="logo"/>
+                <div
+                    className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                    <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                        <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                            Sign in to your account
+                        </h1>
 
-                                {/* ------------------ password part ---------------------- */}
-                                <Form.Group controlId="formBasicPassword">
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        placeholder="Password"
-                                        name="password"
-                                        value={info.password}
-                                        onChange={inputChange} required /> <br/>
-                                </Form.Group>
+                        {/*-----------------------------------form------------------------------------------*/}
+                        <form className="space-y-4 md:space-y-6" action="#">
 
-                                {/* ------------------ Forgot Password link ----------------------*/}
-                                <Form.Group as={Row}>
-                                    <Form.Label column sm={2}></Form.Label>
-                                    <Col sm={10} className="text-right">
-                                        <Link to="/forgetPassword">Forgot Password?</Link>
-                                    </Col>
-                                </Form.Group>
+                            {/*-----------------------------------email------------------------------------------*/}
+                            <div>
+                                <label htmlFor="email"
+                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+                                    email</label>
+                                <input type="email" id="email"
+                                       className="bg-gray-50 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       placeholder="Enter email/username"
+                                       name="userNameOrEmail"
+                                       value={info.userNameOrEmail}
+                                       onChange={inputChange}
+                                       required/>
+                            </div>
 
-                                {/* ------------------ privileges part ---------------------- */}
-                                <Form.Group as={Row}>
-                                    <Form.Label>
-                                        your Role
-                                    </Form.Label> <br/>
-                                    <div className="col-5">
-                                        <Form.Check
-                                            type="radio"
-                                            label="User"
-                                            name="formHorizontalRadios"
-                                            onChange={radioChange}
-                                            id={userPrv} required
-                                        />
-                                    </div>
-                                    <div className="col-5">
-                                        <Form.Check
-                                            type="radio"
-                                            label="Admin"
-                                            name="formHorizontalRadios"
-                                            onChange={radioChange}
-                                            id={adminPrv} required
-                                        />
-                                    </div>
-                                </Form.Group>
-                                <Button
-                                    type="button"
-                                    variant="dark"
-                                    onClick={handleSubmit}>
-                                    submit
-                                </Button>
+                            {/*-----------------------------------password------------------------------------------*/}
+                            <div>
+                                <label htmlFor="password"
+                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                                <input type="password" id="password"
+                                       className="bg-gray-50 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       placeholder="Password"
+                                       name="password"
+                                       value={info.password}
+                                       onChange={inputChange}
+                                       required/>
+                            </div>
+
+                            {/*-----------------------------------privilege------------------------------------------*/}
+                            <div className="flex flex-wrap justify-center space-x-8">
+                                <div className="flex items-center me-4">
+                                    <input
+                                        className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500"
+                                        type="radio" name="formHorizontalRadios"
+                                        onChange={radioChange} id={userPrv} required/>
+                                    <label htmlFor="red-radio"
+                                           className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">User</label>
+                                </div>
+                                <div className="flex items-center me-4">
+                                    <input
+                                        className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500"
+                                        type="radio" name="formHorizontalRadios"
+                                        onChange={radioChange} id={adminPrv} required
+                                    />
+                                    <label htmlFor="green-radio"
+                                           className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Admin</label>
+                                </div>
+                            </div>
+
+                            {/*-----------------------------------submit------------------------------------------*/}
+                            <button className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4
+                                    focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5
+                                    text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                    type="button" onClick={handleSubmit}>
+                                Sign in
+                            </button>
+
+                            {/*-----------------------------------google------------------------------------------*/}
+                            <div className="my-12 border-b text-center">
+                                <div
+                                    className="dark:bg-gray-800 leading-none px-2 inline-block text-sm text-white tracking-wide font-medium transform translate-y-1/2">
+                                    Or sign up with e-mail
+                                </div>
+                            </div>
+                            <div className="max-w-full">
                                 <Google/>
-                            </Form>
-                        </div>
+                            </div>
+
+                            {/*-----------------------------------signup - forget password------------------------------------------*/}
+                            <div className="flex items-center justify-between">
+                                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                                    Don’t have an account yet?
+                                    <Link to="/signup"
+                                          className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                                        Sign up
+                                    </Link>
+                                </p>
+                                <div className="flex items-center justify-between px-7">
+                                    <Link to="/forgetPassword"
+                                          className="text-sm font-medium text-white hover:underline dark:text-primary-500">
+                                        Forgot password?
+                                    </Link>
+                                </div>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
             </div>
-        </>
-
+        </section>
     );
 };
-
-function Background() {
-    let backgroundImageUrl = "public/logo512.png"
-    let styleImgObj = {
-        backgroundImage: `url(${backgroundImageUrl})`,
-        height: "100%",
-        weight: "100%"
-    }
-    return (
-
-        <div className="bg-i" style={styleImgObj}>
-            <img src='https://drive.google.com/file/d/1egio5vRvtGuy3hg7agMh9R-pwJuer9-u/view?usp=sharing' className='img-fluid' alt="abod" />
-        </div>
-
-
-//     <div class="container" *ngIf="login" id="loginContainer">
-//         <div class="row border border-secondary" id="allDataLogin">
-//         <div class="col" id="formPart">
-//         <form  id="formPocket">
-//
-//         <!-- hello -->
-//         <div form-group class="row" id="helloLabel">
-//         <div class="col mb-3 p-2 text-center">
-//         <span class="fs-1" > Hello! </span>
-// </div>
-// </div>
-//
-//     <!-- register -->
-//     <div form-group class="row g-0">
-//         <div class="col m-3 p-2 text-center" style="border-radius: 20px;">
-//             <span class="fs-4" > Use your Account </span>
-//         </div>
-//     </div>
-//
-//     <!-- email -->
-//     <div form-group class="row g-0">
-//         <div class="col mb-3 mx-3" >
-//             <label for="" class="form-label"  >Email address</label>
-//             <input type="text" class="form-control" placeholder="enter email address" #email (blur)="setEmail(email.value)" >
-//         </div>
-//     </div>
-//
-//     <!-- password -->
-//     <div form-group class="row g-0">
-//         <div class="col mb-3 mx-3" >
-//             <label for="" class="form-label"  >password</label>
-//             <input type="password" class="form-control" placeholder="enter password" #password (blur)="setPass(password.value)">
-//         </div>
-//     </div>
-//
-//     <!-- switch -->
-//     <div form-group class="row g-0 m-3 text-center">
-//         <a href="" (click)="login = false"> go to sign up</a>
-// </div>
-//
-//     <div form-group class="row g-0 text-center" id="logInBtn">
-//         <button class="btn mt-3 btn-primary" (click)="signInFn()">Log in</button>
-// </div>
-//
-// </form>
-// </div>
-// </div>
-// </div>
-    );
-}

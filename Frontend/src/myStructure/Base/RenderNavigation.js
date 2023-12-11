@@ -1,4 +1,4 @@
-import { Link, Route, Routes } from "react-router-dom";
+import {Link, Navigate, Route, Routes} from "react-router-dom";
 import { GetAuthDataFn } from "../wrapper";
 import { nav } from "./navObjs";
 
@@ -28,35 +28,6 @@ export const RenderRoutes = () => {
         )
    }
 
-   /*
-   * add navigation bar dynamically.
-   * */
-
-   export const RenderMenu = () => {
-   
-        const { person } = GetAuthDataFn();
-   
-        const MenuItem = ({r}) => {
-             return (
-                  <div className="menuItem"><Link to={r.path}>{r.name}</Link></div>
-             )
-        }
-        function jsxMenu (r, i) {
-            return (
-                <MenuItem key={i} r={r}/>
-            )
-        }
-
-       return (
-             <div className="menu">
-                  {
-                      nav.map((r, i) => {
-                          return gotNeededNav(r, i, person, jsxMenu);
-                      })
-                  }
-             </div>
-        )
-   }
    function gotNeededNav (r, i, person, jsxFn) {
        if(r.status === "global") {
            return jsxFn(r, i);
