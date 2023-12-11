@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {GetAuthDataFn} from "../wrapper";
 import {useNavigate} from "react-router-dom";
-import {defaultPersonState} from "../collection";
+import {defaultPersonState, paths} from "../collection";
 
 function Logout() {
     const {person, setPerson} = GetAuthDataFn();
@@ -12,7 +12,7 @@ function Logout() {
     * a warning for bad setState here.
     * */
     useEffect(() => {
-        navigate("/")
+        navigate(paths.login)
     }, [navigate, person])
 
     console.log("in log out")

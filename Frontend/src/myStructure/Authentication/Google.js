@@ -1,10 +1,11 @@
 import { GoogleLogin } from "react-google-login";
-import { clientID } from "../collection";
+import {clientID, paths, toastStyle} from "../collection";
 import "./Google.css";
 import {adminPrv, userPrv} from "../collection";
 import {googleAuthSignIn, signIn} from "../myServices/personAuthorizationService/registration";
 import {useNavigate} from "react-router-dom";
 import {GetAuthDataFn} from "../wrapper";
+import {toast, ToastContainer} from "react-toastify";
 const Google = () => {
 
     const navigate = useNavigate();
@@ -25,9 +26,9 @@ const Google = () => {
         try{
             let ret = await googleAuthSignIn(info);
             console.log(ret)
-            alert(ret);
+            toast.success("Login Successful!", toastStyle);
         } catch (e) {
-            alert("login failed");
+            toast.error("Login Failed!", toastStyle);
             return;
         }
         await setPerson({
@@ -37,22 +38,26 @@ const Google = () => {
             personObj: {},
         });
 
-        navigate("/")
+        navigate(paths.home)
     };
 
     const onFailure = (response) => {
         console.log("Login Failed!", response);
-        alert("Login Failed!")
+        toast.error("Login Failed!", toastStyle);
     };
     return (
-        <GoogleLogin
-            className="custom-google-button"
-            clientId={clientID}
-            buttonText="Sign in"
-            onSuccess={onSuccess}
-            onFailure={onFailure}
-            cookiePolicy={"single_host_origin"}
-        />
+        <div className="container">
+            <ToastContainer/>
+
+            <GoogleLogin
+                className="custom-google-button"
+                clientId={clientID}
+                buttonText="Sign in"
+                onSuccess={onSuccess}
+                onFailure={onFailure}
+                cookiePolicy={"single_host_origin"}
+            />
+        </div>
     );
 };
 

@@ -6,8 +6,9 @@ import {GetAuthDataFn} from "../wrapper";
 import {formStyle} from "./login";
 import {login, signIn, signUp} from "../myServices/personAuthorizationService/registration";
 
-import {adminPrv, userPrv} from "../collection";
+import {adminPrv, paths, toastStyle, userPrv} from "../collection";
 import plLogo from "./logo.png";
+import {toast, ToastContainer} from "react-toastify";
 
 function Signup() {
     const navigate = useNavigate();
@@ -74,7 +75,6 @@ function Signup() {
         }
 
         let ret = await signUp(info);
-        console.log(ret)
         if(ret === "Sign up successful"){
             await setPerson({
                 isAuthorized: true,
@@ -82,15 +82,19 @@ function Signup() {
                 privilege: userPrv,
                 personObj: {}
             });
-            navigate("/");
+            toast.success(ret, toastStyle);
+            navigate(paths.home);
+
         } else {
-            alert(ret)
+            toast.error(ret, toastStyle);
+
         }
     };
 
     return (
         <section className="bg-gradient-to-r from-slate-800 to-gray-900">
             <div className="flex flex-col items-center justify-center px-6 py-2 mx-auto md:h-screen lg:py-0">
+                <ToastContainer/>
 
                 {/*----------------------------------premier league img------------------------------------------*/}
                 <img className="object-scale-down w-60 mb-10" src={plLogo} alt="logo"/>

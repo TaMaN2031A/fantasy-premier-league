@@ -35,8 +35,6 @@ export const forgetPassword = async (info) => {
 };
 
 export const updatePassword = async (info) => {
-    const requestData = { ...info };
-    delete requestData.confirmedPassword;
     console.log(info)
     return handleRequest(
         axios.post(`${API_BASE_URL}/updatePassword`, info)

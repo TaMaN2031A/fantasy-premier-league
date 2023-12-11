@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { GetAuthDataFn } from "../wrapper";
 import {login, signIn} from "../myServices/personAuthorizationService/registration";
-import { adminPrv, userPrv } from "../collection";
+import {adminPrv, paths, toastStyle, userPrv} from "../collection";
 import  Google  from "./Google";
 import { gapi } from "gapi-script";
 import { clientID } from "../collection";
 import logo from './bg.png';
 import plLogo from './logo.png';
+import {toast, ToastContainer} from "react-toastify";
 
 
 export const Login = () => {
@@ -19,7 +20,7 @@ export const Login = () => {
     const [info, setInfo] = useState({
         userNameOrEmail: "",
         password: "",
-        role: "",
+        role: ""
     });
 
     function inputChange(e) {
@@ -67,7 +68,6 @@ export const Login = () => {
     };
 
     const handleSubmit = async (e) => {
-        // e.preventDefault();
         try{
            let ret = await signIn(info);
            if(ret === "Login successful"){
@@ -77,25 +77,21 @@ export const Login = () => {
                    privilege: info.role,
                    personObj: {},
                });
-               console.log(ret)
-               navigate("/FAQ");
+               await toast.success(ret, toastStyle);
+               navigate(paths.home);
            } else {
-               alert(ret)
+                toast.error(ret, toastStyle);
            }
        } catch (e) {
-           alert("login failed");
+            toast.error("Login Failed!", toastStyle);
        }
-        // navigate to admin home or user home
-        // based on Role attribute
-        // useEffect(
-        //     console.log(info)
-        // , [])
+
     };
 
     return (
         <section className="bg-gradient-to-r from-slate-800 to-gray-900">
             <div className="flex flex-col items-center justify-center px-6 py-2 mx-auto md:h-screen lg:py-0">
-
+                <ToastContainer/>
                 {/*----------------------------------premier league img------------------------------------------*/}
                 <img className="object-scale-down w-60 mb-10" src={plLogo} alt="logo"/>
                 <div
@@ -138,17 +134,19 @@ export const Login = () => {
                             {/*-----------------------------------privilege------------------------------------------*/}
                             <div className="flex flex-wrap justify-center space-x-8">
                                 <div className="flex items-center me-4">
-                                    <input className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500"
-                                           type="radio" name="formHorizontalRadios"
-                                           onChange={radioChange} id={userPrv} required/>
+                                    <input
+                                        className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500"
+                                        type="radio" name="formHorizontalRadios"
+                                        onChange={radioChange} id={userPrv} required/>
                                     <label htmlFor="red-radio"
                                            className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">User</label>
                                 </div>
                                 <div className="flex items-center me-4">
-                                    <input className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500"
-                                           type="radio" name="formHorizontalRadios"
-                                           onChange={radioChange} id={adminPrv} required
-                                           />
+                                    <input
+                                        className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500"
+                                        type="radio" name="formHorizontalRadios"
+                                        onChange={radioChange} id={adminPrv} required
+                                    />
                                     <label htmlFor="green-radio"
                                            className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Admin</label>
                                 </div>
@@ -161,7 +159,18 @@ export const Login = () => {
                                     type="button" onClick={handleSubmit}>
                                 Sign in
                             </button>
-                            <Google/>
+
+                            {/*-----------------------------------google------------------------------------------*/}
+                            <div className="my-12 border-b text-center">
+                                <div
+                                    className="dark:bg-gray-800 leading-none px-2 inline-block text-sm text-white tracking-wide font-medium transform translate-y-1/2">
+                                    Or sign up with e-mail
+                                </div>
+                            </div>
+                            <div className="max-w-full">
+                                <Google/>
+                            </div>
+
                             {/*-----------------------------------signup - forget password------------------------------------------*/}
                             <div className="flex items-center justify-between">
                                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">

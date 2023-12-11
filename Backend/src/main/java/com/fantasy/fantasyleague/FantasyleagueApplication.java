@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 public class FantasyleagueApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FantasyleagueApplication.class, args);
+
 	}
 
 }

@@ -70,14 +70,14 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     public String validate(SignInDTO signInDTO) {
-        return Response.loginSuccessfully;
-//        Person entity = findEntity(signInDTO.getUserNameOrEmail(), signInDTO.getUserNameOrEmail(), signInDTO.getRole());
-//
-//        if(entity == null)
-//            return Response.noUser;
-//
-//        Boolean response = checkPassword(signInDTO.getPassword(), signInDTO.getPassword());
-//        return response == Boolean.TRUE ? Response.loginSuccessfully : Response.wrongCredentials;
+        // return Response.loginSuccessfully;
+        Person entity = findEntity(signInDTO.getUserNameOrEmail(), signInDTO.getUserNameOrEmail(), signInDTO.getRole());
+
+        if(entity == null)
+            return Response.noUser;
+
+        Boolean response = checkPassword(signInDTO.getPassword(), entity.getPassword());
+        return response == Boolean.TRUE ? Response.loginSuccessfully : Response.wrongCredentials;
     }
 
     @Override
@@ -141,7 +141,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     public String ForgetPassword(JsonNode emailDetails) {
         try {
             String mail = emailDetails.get("email").asText();
-            String token = RandomString.make(8);
+            String token = RandomString.make(6);
             Person retrievedUser = findEntity(mail, mail, Role.USER);
             Person retrievedAdmin = findEntity(mail, mail, Role.ADMIN);
 
