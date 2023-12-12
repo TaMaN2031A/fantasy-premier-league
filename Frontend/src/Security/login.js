@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
-import { GetAuthDataFn } from "../wrapper";
-import {signIn} from "../myServices/personAuthorizationService/registration";
+import { GetAuthDataFn } from "../Routes/wrapper";
+import {signIn} from "../Services/Authentication/registration";
 import {adminPrv, paths, responses, toastStyle, userPrv} from "../collection";
 import  Google  from "./Google";
 import { gapi } from "gapi-script";
 import { clientID } from "../collection";
-import plLogo from './logo.png';
+import plLogo from './assets/PremierLeagueLogo.png';
 import {toast, ToastContainer} from "react-toastify";
 
 

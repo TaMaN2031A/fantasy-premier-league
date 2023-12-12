@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {GetAuthDataFn} from "../wrapper";
+import {GetAuthDataFn} from "../Routes/wrapper";
 import {useNavigate} from "react-router-dom";
 import {defaultPersonState, paths} from "../collection";
 

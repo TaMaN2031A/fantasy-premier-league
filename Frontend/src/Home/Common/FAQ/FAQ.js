@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import './SoccerTable.css';
-import {fetchFaqData} from "../../myServices/Faq_Rule";
+import React, { useState} from "react";
+import './../League Tables/SoccerTable.css';
+import {fetchFaqData} from "../../../Services/FAQ/Faq_Rule";
 
 async function Faq() {
     const [info, setInfo] = useState((fetchFaqData()) || []); // Use an empty array as default if props.faqData is undefined

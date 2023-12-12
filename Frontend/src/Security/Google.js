@@ -2,9 +2,9 @@ import { GoogleLogin } from "react-google-login";
 import {responses, clientID, paths, toastStyle} from "../collection";
 import "./Google.css";
 import {userPrv} from "../collection";
-import {googleAuthSignIn} from "../myServices/personAuthorizationService/registration";
+import {googleAuthSignIn} from "../Services/Authentication/registration";
 import {useNavigate} from "react-router-dom";
-import {GetAuthDataFn} from "../wrapper";
+import {GetAuthDataFn} from "../Routes/wrapper";
 import {toast, ToastContainer} from "react-toastify";
 const Google = () => {
 

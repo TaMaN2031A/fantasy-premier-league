@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {forgetPassword, updatePassword} from "../myServices/personAuthorizationService/registration";
+import {forgetPassword, updatePassword} from "../Services/Authentication/registration";
 import {useNavigate} from "react-router-dom";
-import plLogo from "./logo.png";
+import plLogo from "./assets/PremierLeagueLogo.png";
 import {paths, responses, toastStyle} from "../collection";
 function ForgetPassword() {
 

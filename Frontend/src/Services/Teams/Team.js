@@ -1,14 +1,20 @@
-import { hostOfBack } from "../collection";
+import { hostOfBack } from "../../collection";
+const API_BASE_URL = hostOfBack + '/team';
 
-const API_BASE_URL = hostOfBack + '/upcomingMatch';
-
-export const insertUpcomingMatchServ = async (data) => {
+export const fetchTeamsData = async () => {
+    const response = await fetch(`${API_BASE_URL}/getAll`, {method:'GET'});
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const jsonresult = await response.json();
+    return jsonresult;
+};
+export const insertTeamServ = async (name) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/insert`, {
+        const response = await fetch(`${API_BASE_URL}/insert/${name}`, {
           method: 'POST',
           mode: 'cors',
           credentials: 'same-origin',
-          body: JSON.stringify(data),
           headers: { 'Content-Type': 'application/json' },
         });
 
@@ -21,7 +27,7 @@ export const insertUpcomingMatchServ = async (data) => {
         throw new Error(`Error during data fetching: ${error.message}`);
       }
 };
-export const deleteUpcomingMatchServ = async (id) => {
+export const deleteTeamServ = async (id) => {
     try {
       const response = await fetch(`${API_BASE_URL}/delete/${id}`, {
         method: 'DELETE',

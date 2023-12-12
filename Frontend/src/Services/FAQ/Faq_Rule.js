@@ -1,4 +1,4 @@
-import {hostOfBack} from "../collection";
+import {hostOfBack} from "../../collection";
 import axios from "axios";
 const handleRequest = async (requestPromise) => {
     try {

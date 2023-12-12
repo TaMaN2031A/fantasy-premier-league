@@ -3,7 +3,7 @@ import "./Card.css";
 
 function Card(props) {
   function handleClick(e) {
-    console.log(props.Title); // Accessing the Title from props
+    nav(props.Title); // Accessing the Title from props
   }
 
   return (

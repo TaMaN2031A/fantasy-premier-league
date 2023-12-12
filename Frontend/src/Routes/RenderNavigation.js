@@ -1,5 +1,5 @@
-import {Link, Navigate, Route, Routes} from "react-router-dom";
-import { GetAuthDataFn } from "../wrapper";
+import {Route, Routes} from "react-router-dom";
+import { GetAuthDataFn } from "../Routes/wrapper";
 import { nav } from "./navObjs";
 
 

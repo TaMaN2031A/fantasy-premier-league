@@ -1,8 +1,8 @@
 import React from "react";
 import Profile from "./Profile";
-import plLogo from "../Authentication/logo.png";
+import plLogo from "../../Security/assets/PremierLeagueLogo.png";
 import { commonList, adminList, userList } from "./HomeCollection";
-import { GetAuthDataFn } from "../wrapper";
+import { GetAuthDataFn } from "../../Routes/wrapper";
 
 function Home(props) {
 

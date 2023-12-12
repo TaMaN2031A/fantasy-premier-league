@@ -1,4 +1,4 @@
-import { hostOfBack } from "../collection";
+import { hostOfBack } from "../../collection";
 const API_BASE_URL = hostOfBack + '/player';
 
 export const fetchPlayersData = async () => {

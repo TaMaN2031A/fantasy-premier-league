@@ -1,7 +1,5 @@
-import React, {useEffect, useReducer, useState} from "react";
-import { json, useNavigate } from "react-router-dom";
-import { GetAuthDataFn } from "../../wrapper";
-import {adminPrv, defaultPersonState, userPrv} from "../../collection";
+import React, {useState} from "react";
+import { GetAuthDataFn } from "../../../Routes/wrapper";
 import './SoccerTable.css';
 
 export const League = ({ getPlayers, getTeams }) => {

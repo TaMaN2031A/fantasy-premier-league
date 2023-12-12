@@ -12,13 +12,16 @@ export const paths = {
     home: "/home",
     league: "/league",
     faq: "/FAQ",
-    rule: "/rule",
+    rule: "/Rule",
+    leagueTable: "/leagueTables",
 
     pickTeam: "/pickTeam",
     transfer: "/transfer",
-    points: "/points",
-    fantasyLeagues: "/fantasyLeagues",
+    history: "/history",
+    groups: "/groups",
 
+    promotion: "/promotion",
+    matchStatistics: "/matchStatistics",
     notFound: "*"
 }
 

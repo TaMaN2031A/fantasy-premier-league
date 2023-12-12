@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
-import {GetAuthDataFn} from "../wrapper";
-import {signUp} from "../myServices/personAuthorizationService/registration";
-
+import {GetAuthDataFn} from "../Routes/wrapper";
+import {signUp} from "../Services/Authentication/registration";
 import {paths, responses, toastStyle, userPrv} from "../collection";
-import plLogo from "./logo.png";
+import plLogo from "./assets/PremierLeagueLogo.png";
 import {toast, ToastContainer} from "react-toastify";
 
 function Signup() {
