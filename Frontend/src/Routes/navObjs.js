@@ -3,7 +3,14 @@ import Signup from "../Security/signup";
 import Logout from "../Security/Logout";
 import ForgetPassword from "../Security/forgetPassword";
 
-import {adminPrivilege, commonPrivilege, paths, userPrivilege} from "../collection";
+import {
+    adminPrivilege,
+    commonPrivilege,
+    externalPrivilege,
+    internalPrivilege,
+    paths,
+    userPrivilege
+} from "../collection";
 
 import PickTeam from "../Home/User/Pick Team/PickTeam";
 import Transfer from "../Home/User/Transfers/Transfers";
@@ -32,7 +39,7 @@ export const nav = [
         Title: "Home",
         description: "Welcome to the official Fantasy League website.",
         element: <Home />,
-        status: "internal"
+        status: internalPrivilege
     },
     {
         path: paths.faq,
@@ -129,25 +136,25 @@ export const nav = [
         path: paths.login,
         Title: "Login",
         element: <Login />,
-        status: "external"
+        status: externalPrivilege
     },
     {
         path: paths.signup,
         Title: "Signup",
         element: <Signup />,
-        status: "external"
+        status: externalPrivilege
     },
     {
         path: paths.forgetPassword,
         Title: "ForgetPass",
         element: <ForgetPassword />,
-        status: "external"
+        status: externalPrivilege
     },
     {
         path: paths.logout,
         Title: "Logout",
         element: <Logout />,
-        status: "internal"
+        status: internalPrivilege
     },
 
     // error page
