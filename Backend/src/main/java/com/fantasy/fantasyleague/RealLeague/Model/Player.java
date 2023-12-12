@@ -4,10 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class Player {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -24,6 +27,9 @@ public class Player {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id", referencedColumnName = "id")
     private Team team;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
+    private List<PlayerStatistics> playersStatistics;
     private String photo_link;
     private double price;
     public Player(String name, String position, int number_in_team, int id_of_team) {

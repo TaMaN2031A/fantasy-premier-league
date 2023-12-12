@@ -3,10 +3,14 @@ package com.fantasy.fantasyleague.RealLeague.Model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 @Data
+@EqualsAndHashCode
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UpcomingMatch {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

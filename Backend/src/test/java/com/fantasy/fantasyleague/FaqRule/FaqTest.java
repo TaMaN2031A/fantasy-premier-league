@@ -1,8 +1,7 @@
 package com.fantasy.fantasyleague.FaqRule;
 
-import com.fantasy.fantasyleague.FaqRule.Model.FAQ;
-import com.fantasy.fantasyleague.FaqRule.Service.FAQService;
-import com.fantasy.fantasyleague.Registiration.Service.RegistrationService;
+import com.fantasy.fantasyleague.Registiration.FaqRule.Model.FAQ;
+import com.fantasy.fantasyleague.Registiration.FaqRule.Service.FAQService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -10,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import javax.xml.crypto.Data;
+
 import java.util.Date;
 
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
