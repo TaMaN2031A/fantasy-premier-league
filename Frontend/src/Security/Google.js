@@ -1,7 +1,7 @@
 import { GoogleLogin } from "react-google-login";
 import {responses, clientID, paths, toastStyle} from "../collection";
 import "./Google.css";
-import {userPrv} from "../collection";
+import {userPrivilege} from "../collection";
 import {googleAuthSignIn} from "../Services/Authentication/registration";
 import {useNavigate} from "react-router-dom";
 import {GetAuthDataFn} from "../Routes/wrapper";
@@ -20,7 +20,7 @@ const Google = () => {
             "email": res.email,
             "firstName": res.givenName,
             "lastName": res.familyName,
-            "Role": userPrv
+            "Role": userPrivilege
         }
         try{
             let ret = await googleAuthSignIn(info);

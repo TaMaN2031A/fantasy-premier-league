@@ -1,6 +1,11 @@
-export const adminPrv = "ADMIN";
-export const userPrv = "USER";
-export const hostOfBack = "http://localhost:8081";
+import {nav} from "./Routes/navObjs";
+import Card from "./Home/Home Page/Card";
+
+export const adminPrivilege = "ADMIN";
+export const userPrivilege = "USER";
+export const commonPrivilege = "COMMON";
+
+export const serverHost = "http://localhost:8080";
 export const clientID = "157567928601-tpi54p30l3rpsdlmrh7on2fmfup3tpct.apps.googleusercontent.com";
 
 export const paths = {
@@ -11,15 +16,16 @@ export const paths = {
 
     home: "/home",
     league: "/league",
+    matches: "/matches",
     faq: "/FAQ",
     rule: "/Rule",
-    leagueTable: "/leagueTables",
 
     pickTeam: "/pickTeam",
     transfer: "/transfer",
     history: "/history",
     groups: "/groups",
-
+    players: "/players",
+    team: "/teams",
     promotion: "/promotion",
     matchStatistics: "/matchStatistics",
     notFound: "*"
@@ -56,3 +62,4 @@ export const responses = {
     InvalidToken: "Invalid Token Try again",
     PassUpdateSuccessfully: "password update successful"
 }
+

@@ -1,4 +1,4 @@
-import {hostOfBack} from "../../collection";
+import {serverHost} from "../../collection";
 import axios from "axios";
 const handleRequest = async (requestPromise) => {
     try {
@@ -11,7 +11,7 @@ const handleRequest = async (requestPromise) => {
 
 export const fetchFaqData = async () => {
     return handleRequest(
-        axios.get( hostOfBack + '/faq/getAll')
+        axios.get( serverHost + '/faq/getAll')
     );
 };
 

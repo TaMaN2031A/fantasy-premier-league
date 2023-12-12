@@ -1,6 +1,6 @@
-import { hostOfBack } from "../../collection";
+import { serverHost } from "../../collection";
 
-const API_BASE_URL = hostOfBack + '/upcomingMatch';
+const API_BASE_URL = serverHost + '/upcomingMatch';
 
 export const insertUpcomingMatchServ = async (data) => {
     try {

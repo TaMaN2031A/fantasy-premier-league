@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {hostOfBack} from "../../collection";
+import {serverHost} from "../../collection";
 
-const API_BASE_URL = hostOfBack + '/register';
+const API_BASE_URL = serverHost + '/register';
 
 const handleRequest = async (requestPromise) => {
     try {

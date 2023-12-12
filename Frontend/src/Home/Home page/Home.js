@@ -1,14 +1,18 @@
 import React from "react";
 import Profile from "./Profile";
 import plLogo from "../../Security/assets/PremierLeagueLogo.png";
-import { commonList, adminList, userList } from "./HomeCollection";
 import { GetAuthDataFn } from "../../Routes/wrapper";
+import {adminList, commonList, userList} from "../../Routes/RenderNavigation";
+import {adminPrivilege} from "../../collection";
 
 function Home(props) {
 
-  const { person } = GetAuthDataFn();
+    const { person } = GetAuthDataFn();
+    const myCommonList = commonList();
+    const myAdminList = adminList();
+    const myUserList = userList();
 
-  let list = [...commonList, ...(person.isAuthorized && person.privilege === "admin") ? adminList : userList];
+  let list = [...myCommonList, ...(person.isAuthorized && person.privilege === adminPrivilege) ? myAdminList: myUserList];
 
   return (
     <div className="bg-gradient-to-r from-slate-800 to-gray-900 min-h-screen">

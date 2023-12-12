@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import {GetAuthDataFn} from "../Routes/wrapper";
 import {signUp} from "../Services/Authentication/registration";
-import {paths, responses, toastStyle, userPrv} from "../collection";
+import {paths, responses, toastStyle, userPrivilege} from "../collection";
 import plLogo from "./assets/PremierLeagueLogo.png";
 import {toast, ToastContainer} from "react-toastify";
 
@@ -68,7 +68,7 @@ function Signup() {
             await setPerson({
                 isAuthorized: true,
                 username: info.userName,
-                privilege: userPrv,
+                privilege: userPrivilege,
                 personObj: {}
             });
             toast.success(ret, toastStyle);

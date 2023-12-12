@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { GetAuthDataFn } from "../Routes/wrapper";
 import {signIn} from "../Services/Authentication/registration";
-import {adminPrv, paths, responses, toastStyle, userPrv} from "../collection";
+import {adminPrivilege, paths, responses, toastStyle, userPrivilege} from "../collection";
 import  Google  from "./Google";
 import { gapi } from "gapi-script";
 import { clientID } from "../collection";
@@ -115,7 +115,7 @@ export const Login = () => {
                                     <input
                                         className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500"
                                         type="radio" name="formHorizontalRadios"
-                                        onChange={radioChange} id={userPrv} required/>
+                                        onChange={radioChange} id={userPrivilege} required/>
                                     <label htmlFor="red-radio"
                                            className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">User</label>
                                 </div>
@@ -123,7 +123,7 @@ export const Login = () => {
                                     <input
                                         className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500"
                                         type="radio" name="formHorizontalRadios"
-                                        onChange={radioChange} id={adminPrv} required
+                                        onChange={radioChange} id={adminPrivilege} required
                                     />
                                     <label htmlFor="green-radio"
                                            className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Admin</label>
