@@ -1,14 +1,10 @@
-package com.fantasy.fantasyleague.FaqRule.Service;
+package com.fantasy.fantasyleague.Registiration.FaqRule.Service;
 
-import com.fantasy.fantasyleague.FaqRule.Model.FAQ;
-import com.fantasy.fantasyleague.FaqRule.Model.Rule;
-import com.fantasy.fantasyleague.FaqRule.Repository.FAQRepository;
-import com.fantasy.fantasyleague.FaqRule.Repository.RuleRepository;
-import com.mysql.cj.x.protobuf.MysqlxDatatypes;
+import com.fantasy.fantasyleague.Registiration.FaqRule.Model.Rule;
+import com.fantasy.fantasyleague.Registiration.FaqRule.Repository.RuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 @Service
 public class RuleServiceImpl implements RuleService{

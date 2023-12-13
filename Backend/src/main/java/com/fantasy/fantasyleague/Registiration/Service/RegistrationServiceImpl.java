@@ -140,7 +140,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     public String ForgetPassword(JsonNode emailDetails) {
         try {
             String mail = emailDetails.get("email").asText();
-            String token = RandomString.make(6);
+            String token = RandomString.make(8);
             Person retrievedUser = findEntity(mail, mail, Role.USER);
             Person retrievedAdmin = findEntity(mail, mail, Role.ADMIN);
 

@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class Team {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -22,6 +23,13 @@ public class Team {
     private int goals_difference;
     private int points;
 
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "home")
+    private List<PlayedMatch> homeMatches;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "away")
+    private List<PlayedMatch> awayMatches;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")

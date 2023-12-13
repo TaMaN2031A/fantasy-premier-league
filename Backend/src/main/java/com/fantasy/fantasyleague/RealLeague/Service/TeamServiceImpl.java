@@ -22,7 +22,7 @@ public class TeamServiceImpl implements TeamService {
     public ResponseEntity insertTeam(String name) {
         Map<String, String> response = new HashMap<>();
         try {
-            Team team1 = teamRepository.findByName(name).orElse(null);
+            Team team1 = teamRepository.findByName(name);
             if(team1 != null) {
                 response.put("error", "Team Already Exists");
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
