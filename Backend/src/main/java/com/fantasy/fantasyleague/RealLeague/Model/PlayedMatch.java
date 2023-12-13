@@ -21,12 +21,12 @@ public class PlayedMatch {
     private int ID;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "home" , referencedColumnName = "id")
+    @JoinColumn(name = "home_id" , referencedColumnName = "id")
     private Team home;
 
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "away" , referencedColumnName = "id")
+    @JoinColumn(name = "away_id" , referencedColumnName = "id")
     private Team away;
 
     @Builder.Default
