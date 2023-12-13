@@ -7,10 +7,10 @@ function InsertFAQ(props) {
 
   const insertFAQ = async () => {
     try {
+      await addFAQService({ question, answer });
       setAnswer("");
       setQuestion("");
-      await addFAQService({ question, answer });
-      await props.func;
+      await props.func();
     } catch (err) {
       console.error("Error inserting item or fetching data:", err);
     }

@@ -18,10 +18,6 @@ public class FAQServiceImpl implements FAQService{
     @Autowired
     FAQRepository faqRepository;
 
-    private Date getDate() {
-        LocalDate currentDate = LocalDate.now();
-        return Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-    }
     @Override
     public String insertFAQ(FAQDTO faq) {
         try {
@@ -31,7 +27,6 @@ public class FAQServiceImpl implements FAQService{
             FAQ newFaq = new FAQ();
             newFaq.setQuestion(faq.getQuestion());
             newFaq.setAnswer(faq.getAnswer());
-            newFaq.setDate(getDate());
             faqRepository.save(newFaq);
             return Response.INSERT_SUCCESS.getMessage();
         } catch(IllegalArgumentException e) {
@@ -45,7 +40,6 @@ public class FAQServiceImpl implements FAQService{
             return Response.UPDATE_FAIL.getMessage();
         FAQ faqToUpdate = faqRepository.getReferenceById(faq.getFaqID());
         faqToUpdate.setAnswer(faq.getAnswer());
-        faqToUpdate.setDate(faq.getDate());
         faqToUpdate.setQuestion(faq.getQuestion());
         faqRepository.save(faqToUpdate);
         return Response.UPDATE_SUCCESS.getMessage();

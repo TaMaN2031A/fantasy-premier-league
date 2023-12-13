@@ -17,6 +17,5 @@ public class FAQ {
     private int faqID;
     private String question;
     private String answer;
-    private Date date;
 
 }

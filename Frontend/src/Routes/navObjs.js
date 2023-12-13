@@ -32,6 +32,39 @@ import Error from "../Security/Error";
 
 export const nav = [
 
+     // security pages
+     {
+        path: paths.login,
+        Title: "Login",
+        element: <Login />,
+        status: externalPrivilege
+    },
+    {
+        path: paths.signup,
+        Title: "Signup",
+        element: <Signup />,
+        status: externalPrivilege
+    },
+    {
+        path: paths.forgetPassword,
+        Title: "ForgetPass",
+        element: <ForgetPassword />,
+        status: externalPrivilege
+    },
+    {
+        path: paths.logout,
+        Title: "Logout",
+        element: <Logout />,
+        status: internalPrivilege
+    },
+
+    // error page
+    {
+        path: paths.notFound,
+        Title: "404",
+        element: <Error />,
+        status: "global"
+    },
 
     // Common Pages
     {
@@ -128,40 +161,6 @@ export const nav = [
         description: "View and manage match statistics.",
         element: <MatchStatistics />,
         status: adminPrivilege
-    },
-
-
-    // security pages
-    {
-        path: paths.login,
-        Title: "Login",
-        element: <Login />,
-        status: externalPrivilege
-    },
-    {
-        path: paths.signup,
-        Title: "Signup",
-        element: <Signup />,
-        status: externalPrivilege
-    },
-    {
-        path: paths.forgetPassword,
-        Title: "ForgetPass",
-        element: <ForgetPassword />,
-        status: externalPrivilege
-    },
-    {
-        path: paths.logout,
-        Title: "Logout",
-        element: <Logout />,
-        status: internalPrivilege
-    },
-
-    // error page
-    {
-        path: paths.notFound,
-        Title: "404",
-        element: <Error />,
-        status: "global"
     }
+
 ]

@@ -15,6 +15,5 @@ public class Rule {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int ruleID;
     private String rule;
-    private Date date;
 
 }

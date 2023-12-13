@@ -16,10 +16,6 @@ public class RuleServiceImpl implements RuleService{
     @Autowired
     RuleRepository ruleRepository;
 
-    private Date getDate() {
-        LocalDate currentDate = LocalDate.now();
-        return Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-    }
 
     @Override
     public String insertRule(String rule) {
@@ -28,7 +24,6 @@ public class RuleServiceImpl implements RuleService{
                 throw new IllegalArgumentException("input parameter is null");
             Rule newRule = new Rule();
             newRule.setRule(rule);
-            newRule.setDate(getDate());
             ruleRepository.save(newRule);
             return Response.INSERT_SUCCESS.getMessage();
         } catch (IllegalArgumentException e) {
@@ -42,7 +37,6 @@ public class RuleServiceImpl implements RuleService{
             return Response.UPDATE_FAIL.getMessage();
         Rule ruleToUpdate = ruleRepository.getReferenceById(rule.getRuleID());
         ruleToUpdate.setRule(rule.getRule());
-        ruleToUpdate.setDate(rule.getDate());
         ruleRepository.save(ruleToUpdate);
         return Response.UPDATE_SUCCESS.getMessage();
     }

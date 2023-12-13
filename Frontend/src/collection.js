@@ -1,6 +1,3 @@
-import {nav} from "./Routes/navObjs";
-import Card from "./Home/Home Page/Card";
-
 export const adminPrivilege = "ADMIN";
 export const userPrivilege = "USER";
 export const commonPrivilege = "COMMON";

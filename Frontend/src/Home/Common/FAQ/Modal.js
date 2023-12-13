@@ -7,12 +7,11 @@ const Modal = ({ isOpen, closeModal, faqID, func }) => {
 
   const handleSave = async () => {
     try {
+      await updateFAQService({ faqID, question, answer });
       setAnswer("");
       setQuestion("");
-      let date = new Date();
-      await updateFAQService({ faqID, question, answer, date });
-      await func;
       closeModal();
+      await func();
     } catch (err) {
       console.error("Error inserting item or fetching data:", err);
     }

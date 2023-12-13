@@ -17,6 +17,7 @@ public class RuleController {
 
     @Autowired
     RuleService ruleService;
+
     @PostMapping("/insert")
     public String insertRule(@RequestBody String rule) {
         return ruleService.insertRule(rule);
@@ -25,7 +26,7 @@ public class RuleController {
     public String deleteRule(@PathVariable int id) {
         return ruleService.deleteRule(id);
     }
-    @PostMapping("/update")
+    @PutMapping("/update")
     public String updateRule(@RequestBody Rule rule) {
         return ruleService.updateRule(rule);
     }

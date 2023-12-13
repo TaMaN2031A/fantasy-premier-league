@@ -5,7 +5,7 @@ function DeleteFAQ(props) {
   const removeFAQ = async () => {
     try {
       await deleteFAQService(props.faqID);
-      await props.func;
+      await props.func();
     } catch (err) {
       console.error("Error deleting item or fetching data:", err);
     }

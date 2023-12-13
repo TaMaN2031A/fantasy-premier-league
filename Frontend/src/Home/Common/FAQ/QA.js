@@ -26,8 +26,8 @@ function QA(props) {
             </g>
           </svg>
         </div>
-        <div className="bg-gray-100 rounded-xl p-5 px-10 w-full flex items-center">
-          <h4 className="text-2xl leading-6 font-medium text-gray-900">
+        <div className="rounded-xl p-5 px-10 w-full flex bg-white items-center">
+          <h4 className="text-2xl leading-6 font-medium text-black">
             {props.question}
           </h4>
         </div>

@@ -39,7 +39,7 @@ function Faq() {
         <div className="mt-20 mb-12">
           <ul className="">
             {isLoading ? (
-              // skeletionLoading
+              // skeletonLoading
               <Loading />
             ) : (
               // quetions and answers
