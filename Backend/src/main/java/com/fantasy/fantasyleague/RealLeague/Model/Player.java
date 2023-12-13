@@ -48,21 +48,5 @@ public class Player {
         this.id_of_team = id_of_team;
     }
 
-    @Override
-    public String toString() {
-        return "Player{" +
-                "ID=" + ID +
-                ", name='" + name + '\'' +
-                ", red_cards=" + red_cards +
-                ", yellow_cards=" + yellow_cards +
-                ", goals=" + goals +
-                ", assists=" + assists +
-                ", saved=" + saved +
-                ", position='" + position + '\'' +
-                ", number_in_team=" + number_in_team +
-                ", id_of_team=" + id_of_team +
-                ", photo_link='" + photo_link + '\'' +
-                ", price=" + price +
-                '}';
-    }
+
 }

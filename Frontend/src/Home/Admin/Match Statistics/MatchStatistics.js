@@ -11,7 +11,7 @@ function MatchStatistics(props) {
     const[info , setInfo] = useState({
         homeTeam: "",
         awayTeam: "" , 
-        playerOfMatch :"",
+        manOfMatch :"",
         homePlayers:"" ,
         awayPlayers:"",
         homeGoals: "" ,
@@ -31,47 +31,36 @@ function MatchStatistics(props) {
         setInfo({ ...info, [e.target.name]: e.target.value });
     }
     
+    function stringToList(e){
+      return e.replace(/\n/g, ',').split(',').filter(item => item.trim() !== '');
+    }
 
     const SubmitForm = async () => {
         
-  
-        // Process the input values as needed (e.g., replacing newlines with commas)
-        var homePlayersList = info.homePlayers.replace(/\n/g, ',').split(',').filter(item => item.trim() !== '');
-        var awayPlayersList = info.awayPlayers.replace(/\n/g, ',').split(',').filter(item => item.trim() !== '');
-        var homeGoalsList = info.homeGoals.replace(/\n/g, ',').split(',').filter(item => item.trim() !== '');
-        var awayGoalsList = info.awayGoals.replace(/\n/g, ',').split(',').filter(item => item.trim() !== '');
-        var homeYellowCardsList = info.homeYellowCards.replace(/\n/g, ',').split(',').filter(item => item.trim() !== '');
-        var awayYellowCardsList = info.awayYellowCards.replace(/\n/g, ',').split(',').filter(item => item.trim() !== '');
-        var homeRedCardsList = info.homeRedCards.replace(/\n/g, ',').split(',').filter(item => item.trim() !== '');
-        var awayRedCardsList = info.awayRedCards.replace(/\n/g, ',').split(',').filter(item => item.trim() !== '');
-        var homeAssistsList = info.homeAssists.replace(/\n/g, ',').split(',').filter(item => item.trim() !== '');
-        var awayAssistsList = info.awayAssists.replace(/\n/g, ',').split(',').filter(item => item.trim() !== '');
-        var homeSavesList = info.homeSaves.replace(/\n/g, ',').split(',').filter(item => item.trim() !== '');
-        var awaySavesList = info.awaySaves.replace(/\n/g, ',').split(',').filter(item => item.trim() !== '');
+
         // Create a JSON object
         var matchStatistics = {
           home: info.homeTeam,
           away: info.awayTeam,
-          playerOfMatch : info.playerOfMatch,
-          homePlayersPlayed: homePlayersList,
-          awayPlayersPlayed: awayPlayersList,
-          homePlayersScore: homeGoalsList,
-          awayPlayersScore: awayGoalsList,
-          homePlayersYellowCards: homeYellowCardsList,
-          awayPlayersYellowCards: awayYellowCardsList,
-          homePlayersRedCards: homeRedCardsList,
-          awayPlayersRedCards: awayRedCardsList,
-          homePlayersAssist:homeAssistsList,
-          awayPlayersAssist:awayAssistsList,
-          homePlayersSaves : homeSavesList,
-          awayPlayersSaves : awaySavesList,
+          manOfMatch : info.manOfMatch,
+          homePlayersPlayed: stringToList(info.homePlayers),
+          awayPlayersPlayed: stringToList(info.awayPlayers),
+          homePlayersScore: stringToList(info.homeGoals),
+          awayPlayersScore: stringToList(info.awayGoals),
+          homePlayersYellowCards: stringToList(info.homeYellowCards),
+          awayPlayersYellowCards: stringToList(info.awayYellowCards),
+          homePlayersRedCards: stringToList(info.homeRedCards),
+          awayPlayersRedCards: stringToList(info.awayRedCards),
+          homePlayersAssist:stringToList(info.homeAssists),
+          awayPlayersAssist: stringToList(info.awayAssists),
+          homePlayersSaves : stringToList(info.homeSaves),
+          awayPlayersSaves : stringToList(info.awaySaves),
         };
+        console.log(matchStatistics);
   
         // Display the result (you can send this data to the server or perform further actions)
         
-        console.log(matchStatistics);
         let response = await addMatchStatistics(matchStatistics);
-        console.log(response);
         if(response == responses.MatchAddedSuccessfully){
             toast.success(response, toastStyle);
             navigate(paths.home);
@@ -107,7 +96,7 @@ function MatchStatistics(props) {
                 <input type="text" id="inputMatch" name="awayTeam" value={info.awayTeam} onChange={inputChange} required/>
 
                 <label id ="labelMatch" for="playerOfMatch" className='text-white'>Player of the match:</label>
-                <input type="text" id="inputMatch" name="playerOfMatch" value={info.playerOfMatch} onChange={inputChange} required/>
+                <input type="text" id="inputMatch" name="manOfMatch" value={info.manOfMatch} onChange={inputChange} required/>
 
                 
                 <h3 className='text-white'>Players</h3>

@@ -7,8 +7,6 @@ const API_BASE_URL = serverHost + '/playedMatch';
 const handleRequest = async (requestPromise) => {
     try {
         const response = await requestPromise;
-        console.log("success");
-        console.log(response.data);
         return response.data;
     } catch (error) {
         return "failed";
