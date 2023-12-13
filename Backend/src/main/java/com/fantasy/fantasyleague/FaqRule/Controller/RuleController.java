@@ -1,9 +1,6 @@
 package com.fantasy.fantasyleague.FaqRule.Controller;
 
-import com.fantasy.fantasyleague.FaqRule.Model.FAQ;
 import com.fantasy.fantasyleague.FaqRule.Model.Rule;
-import com.fantasy.fantasyleague.FaqRule.Repository.RuleRepository;
-import com.fantasy.fantasyleague.FaqRule.Service.FAQService;
 import com.fantasy.fantasyleague.FaqRule.Service.RuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

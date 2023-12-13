@@ -5,8 +5,6 @@ import com.fantasy.fantasyleague.FaqRule.Repository.FAQRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 // Needs refactoring, what if delete is not successful + how to determine it's not

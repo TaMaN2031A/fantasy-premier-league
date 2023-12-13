@@ -11,4 +11,4 @@ public interface FAQService {
     List<FAQ> getAllFAQ();
     String deleteAllFAQ();
 
-    }
+}

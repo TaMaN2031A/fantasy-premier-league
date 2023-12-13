@@ -28,7 +28,7 @@ public class FAQController {
     }
     @GetMapping("/getAll")
     public List<FAQ> getAllFAQ() {
-       return faqService.getAllFAQ();
+        return faqService.getAllFAQ();
     }
     @DeleteMapping("/deleteAll")
     public String deleteAllFAQ() {
