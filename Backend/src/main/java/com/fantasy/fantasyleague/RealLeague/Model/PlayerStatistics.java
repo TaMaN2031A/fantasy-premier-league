@@ -38,7 +38,16 @@ public class PlayerStatistics {
     @Builder.Default
     private int effectivness = 0;
 
+    @Override
+    public String toString() {
+        return "PlayerStatistics{" +
+                ", goal=" + goal +
 
-
-
+                ", yellowCards=" + yellowCards +
+                ", redCards=" + redCards +
+                ", saves=" + saves +
+                ", assists=" + assists +
+                ", effectivness=" + effectivness +
+                '}';
+    }
 }

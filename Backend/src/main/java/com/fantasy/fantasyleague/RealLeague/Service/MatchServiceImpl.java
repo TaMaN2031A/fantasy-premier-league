@@ -40,6 +40,8 @@ public class MatchServiceImpl implements MatchService{
         UpcomingMatch upcomingMatch = upcomingMatchRepository.findByHomeAndAway(home , away) ;
         if(upcomingMatch != null){
             PlayedMatch match = UpcomingMatchToPlayedMatch(upcomingMatch , playedMatchDTO);
+            System.out.println(match.getRedCardsHome());
+            System.out.println(match.getRedCardsAway());
             matchRepository.save(match);
             generatePlayerStatistics(playedMatchDTO, match);
         }else{
@@ -54,10 +56,10 @@ public class MatchServiceImpl implements MatchService{
         List<String> awayPlayers = playedMatchDTO.getAwayPlayersPlayed();
         List<String> homePlayers = playedMatchDTO.getHomePlayersPlayed();
         for(String name : awayPlayers){
-            buildPlayerStatistics(playedMatchDTO, match , true , name );
+            buildPlayerStatistics(playedMatchDTO, match , false , name );
         }
         for(String name : homePlayers){
-            buildPlayerStatistics(playedMatchDTO, match , false , name );
+            buildPlayerStatistics(playedMatchDTO, match , true , name );
         }
 
     }
@@ -72,7 +74,6 @@ public class MatchServiceImpl implements MatchService{
                 count++;
             }
         }
-
         return count;
     }
 
@@ -112,11 +113,13 @@ public class MatchServiceImpl implements MatchService{
     }
 
     void updatePlayerData(Player player , PlayerStatistics statistics){
+        System.out.println(statistics.toString());
         player.setAssists(player.getAssists() + statistics.getAssists());
         player.setGoals(player.getGoals() + statistics.getGoal());
         player.setRed_cards(player.getRed_cards() + statistics.getRedCards());
         player.setYellow_cards(player.getYellow_cards() + statistics.getYellowCards()) ;
         player.setSaved(player.getSaved() + statistics.getSaves());
+        System.out.println(player.toString());
         playerRepository.save(player);
     }
 

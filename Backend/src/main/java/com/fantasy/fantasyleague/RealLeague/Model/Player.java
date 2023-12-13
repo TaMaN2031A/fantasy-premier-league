@@ -24,10 +24,13 @@ public class Player {
     private String position;
     private int number_in_team;
     private int id_of_team;
+
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id", referencedColumnName = "id")
     private Team team;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
     private List<PlayerStatistics> playersStatistics;
     private String photo_link;
@@ -45,4 +48,21 @@ public class Player {
         this.id_of_team = id_of_team;
     }
 
+    @Override
+    public String toString() {
+        return "Player{" +
+                "ID=" + ID +
+                ", name='" + name + '\'' +
+                ", red_cards=" + red_cards +
+                ", yellow_cards=" + yellow_cards +
+                ", goals=" + goals +
+                ", assists=" + assists +
+                ", saved=" + saved +
+                ", position='" + position + '\'' +
+                ", number_in_team=" + number_in_team +
+                ", id_of_team=" + id_of_team +
+                ", photo_link='" + photo_link + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }
