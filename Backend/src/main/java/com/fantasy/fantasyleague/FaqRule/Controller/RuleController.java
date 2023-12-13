@@ -18,12 +18,12 @@ public class RuleController {
     @Autowired
     RuleService ruleService;
     @PostMapping("/insert")
-    public String insertRule(@RequestBody Rule rule) {
+    public String insertRule(@RequestBody String rule) {
         return ruleService.insertRule(rule);
     }
-    @DeleteMapping("/delete")
-    public String deleteRule(@RequestBody Rule rule) {
-        return ruleService.deleteRule(rule);
+    @DeleteMapping("/delete/{id}")
+    public String deleteRule(@PathVariable int id) {
+        return ruleService.deleteRule(id);
     }
     @PostMapping("/update")
     public String updateRule(@RequestBody Rule rule) {

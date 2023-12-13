@@ -1,5 +1,6 @@
 package com.fantasy.fantasyleague.FaqRule.Controller;
 
+import com.fantasy.fantasyleague.FaqRule.DTO.FAQDTO;
 import com.fantasy.fantasyleague.FaqRule.Model.FAQ;
 import com.fantasy.fantasyleague.FaqRule.Service.FAQService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +13,19 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/faq")
 public class FAQController {
+
     @Autowired
     FAQService faqService;
+
     @PostMapping("/insert")
-    public String insertFAQ(@RequestBody FAQ faq) {
-        return faqService.insertFAQ(faq);
+    public String insertFAQ(@RequestBody FAQDTO Faq) {
+        return faqService.insertFAQ(Faq);
     }
-    @DeleteMapping("/delete")
-    public String deleteFAQ(@RequestBody FAQ faq) {
-        return faqService.deleteFAQ(faq);
+    @DeleteMapping("/delete/{id}")
+    public String deleteFAQ(@PathVariable int id) {
+        return faqService.deleteFAQ(id);
     }
-    @PostMapping("/update")
+    @PutMapping("/update")
     public String updateFAQ(@RequestBody FAQ faq) {
         return faqService.updateFAQ(faq);
     }
