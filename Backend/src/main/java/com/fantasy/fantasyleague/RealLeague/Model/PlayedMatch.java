@@ -29,19 +29,26 @@ public class PlayedMatch {
     @JoinColumn(name = "away" , referencedColumnName = "id")
     private Team away;
 
+    @Builder.Default
+    private Date date = new Date();
+    @Builder.Default
+    private int week = 0;
 
-    private Date date;
-    private int week;
 
-
-
-    private int yellowCardsHome;
-    private int redCardsHome;
-    private int yellowCardsAway;
-    private int redCardsAway;
-    private int awayGoals;
-    private int homeGoals;
-    private String stadium;
+    @Builder.Default
+    private int yellowCardsHome =0;
+    @Builder.Default
+    private int redCardsHome =0;
+    @Builder.Default
+    private int yellowCardsAway =0;
+    @Builder.Default
+    private int redCardsAway = 0;
+    @Builder.Default
+    private int awayGoals =0;
+    @Builder.Default
+    private int homeGoals = 0;
+    @Builder.Default
+    private String stadium = "";
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "match")
     private List<PlayerStatistics> playersStatistics;

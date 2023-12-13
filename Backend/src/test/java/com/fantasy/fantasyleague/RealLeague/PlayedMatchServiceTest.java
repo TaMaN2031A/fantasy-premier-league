@@ -71,10 +71,10 @@ public class PlayedMatchServiceTest {
 
     @Test
     void PlayedMatchServiceTest2(){
-        Team team1 = new Team( "liverbool");
+        Team team1 = new Team( "liverpool");
         Team team2 = new Team( "arsenal");
         MatchStatisticsDTO matchStatisticsDTO = MatchStatisticsDTO.builder()
-                .away("liverbool")
+                .away("liverpool")
                 .home("arsenal")
                 .build();
         when(teamRepository.findByName(anyString())).thenAnswer(invocation -> {
@@ -82,7 +82,7 @@ public class PlayedMatchServiceTest {
 
             // Perform classification based on the input parameter
 
-            if (inputParameter.equals("liverbool") ) {
+            if (inputParameter.equals("liverpool") ) {
                 return team1;
             } else {
                 return team2;
@@ -98,7 +98,7 @@ public class PlayedMatchServiceTest {
 
     @Test
     void PlayedMatchServiceTest3(){
-        Team team1 = new Team( "liverbool");
+        Team team1 = new Team( "liverpool");
         Team team2 = new Team( "arsenal");
         List<String> x= new ArrayList<>();
         x.add("mohamed arous");
@@ -118,7 +118,7 @@ public class PlayedMatchServiceTest {
 
 
         MatchStatisticsDTO matchStatisticsDTO = MatchStatisticsDTO.builder()
-                .away("liverbool")
+                .away("liverpool")
                 .home("man city")
                 .awayPlayersAssist(List.copyOf(x))
                 .awayPlayersPlayed(List.copyOf(x))
@@ -133,7 +133,7 @@ public class PlayedMatchServiceTest {
 
             // Perform classification based on the input parameter
 
-            if (inputParameter.equals("liverbool") ) {
+            if (inputParameter.equals("liverpool") ) {
                 return team1;
             } else {
                 return team2;
@@ -142,8 +142,6 @@ public class PlayedMatchServiceTest {
         });
         team1.setID(1);
         team2.setID(2);
-        System.out.println(team1);
-        System.out.println(team2);
         UpcomingMatch upcomingMatch = UpcomingMatch.builder()
                 .away(team1)
                 .home(team2)

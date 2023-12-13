@@ -32,7 +32,6 @@ public class MatchServiceImpl implements MatchService{
 
     @Override
     public String addMatchStatiscis(MatchStatisticsDTO playedMatchDTO){
-        Map<String, String> response = new HashMap<>();
         Team home = teamRepository.findByName(playedMatchDTO.getHome());
         Team away = teamRepository.findByName(playedMatchDTO.getAway());
         if(home == null || away == null){

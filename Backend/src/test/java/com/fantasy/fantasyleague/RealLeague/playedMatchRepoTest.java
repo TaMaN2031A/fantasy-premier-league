@@ -47,7 +47,7 @@ public class playedMatchRepoTest {
     @Order(1)
     @Test
     void playedMatch_InsertMatchAndStatistics(){
-        Team team1 = new Team( "liverbool");
+        Team team1 = new Team( "liverpool");
         Team team2 = new Team( "arsenal");
         Player player1 = new Player("mohamed arous" , "fwd" , 15 , 1);
         Player player2 = new Player("Amr Ahmed" , "fwd" , 10 , 2);
@@ -93,7 +93,7 @@ public class playedMatchRepoTest {
         matchRepository.save(match);
         playerStatisticsRepoository.save(playerStatistics1);
         playerStatisticsRepoository.save(playerStatistics2);
-        Team liverbool = teamRepository.findByName("liverbool");
+        Team liverbool = teamRepository.findByName("liverpool");
         Team arsenal = teamRepository.findByName("arsenal");
         PlayedMatch match3 = matchRepository.findByHomeAndAway(arsenal, liverbool);
         assertEquals(playerStatisticsRepoository.findAllByMatch(match3).size() , 2 );
@@ -104,7 +104,7 @@ public class playedMatchRepoTest {
     @Order(2)
     @Test
     void playedMatch_GetbyWeek(){
-        Team liverbool = teamRepository.findByName("liverbool");
+        Team liverbool = teamRepository.findByName("liverpool");
         Team arsenal = teamRepository.findByName("arsenal");
         Team man_city = new Team( "man city");
         Team man_united = new Team( "man united");
@@ -142,7 +142,7 @@ public class playedMatchRepoTest {
     @Test
     void playedMatch_DeletePlayer(){
         playerRepository.deleteById(playerRepository.findByName("mohamed arous").getID());
-        Team t = teamRepository.findByName("liverbool");
+        Team t = teamRepository.findByName("liverpool");
         Team t2 = teamRepository.findByName("arsenal");
         PlayedMatch match = matchRepository.findByHomeAndAway(t2, t);
         List<PlayerStatistics> y = playerStatisticsRepoository.findAllByMatch(match);
@@ -154,7 +154,7 @@ public class playedMatchRepoTest {
     @Test
     void playedMatch_DeleteMatch(){
         playerRepository.deleteById(playerRepository.findByName("Amr Ahmed").getID());
-        Team t = teamRepository.findByName("liverbool");
+        Team t = teamRepository.findByName("liverpool");
         Team t2 = teamRepository.findByName("arsenal");
         PlayedMatch match = matchRepository.findByHomeAndAway(t2, t);
         matchRepository.delete(match);

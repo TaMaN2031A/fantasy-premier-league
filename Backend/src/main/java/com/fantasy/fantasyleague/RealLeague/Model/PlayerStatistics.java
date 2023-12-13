@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @Entity
 @Table(name = "PlayerStatistics")
-@IdClass(PalyerMatchComposite.class)
+@IdClass(PlayerMatchComposite.class)
 @AllArgsConstructor
 @NoArgsConstructor
 public class PlayerStatistics {
@@ -23,13 +23,20 @@ public class PlayerStatistics {
     @JoinColumn(name = "match_id", referencedColumnName = "id")
     private PlayedMatch match;
 
-    private int goal;
-    private boolean man_of_match;
-    private int yellowCards;
-    private int redCards;
-    private int saves;
-    private int assists;
-    private int effectivness;
+    @Builder.Default
+    private int goal = 0;
+    @Builder.Default
+    private boolean man_of_match = false;
+    @Builder.Default
+    private int yellowCards = 0;
+    @Builder.Default
+    private int redCards = 0;
+    @Builder.Default
+    private int saves = 0;
+    @Builder.Default
+    private int assists = 0;
+    @Builder.Default
+    private int effectivness = 0;
 
 
 
