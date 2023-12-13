@@ -1,9 +1,6 @@
 package com.fantasy.fantasyleague.Registiration;
-
-
 import com.fantasy.fantasyleague.Registiration.Model.Mail;
 import com.fantasy.fantasyleague.Registiration.Model.User;
-import com.fantasy.fantasyleague.Registiration.Repository.AdminRepository;
 import com.fantasy.fantasyleague.Registiration.Repository.UserRepository;
 import com.fantasy.fantasyleague.Registiration.Service.MailServiceImplementation;
 import com.fantasy.fantasyleague.Registiration.Service.RegistrationServiceImpl;
@@ -13,11 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -31,11 +26,7 @@ public class ForgetPasswordTest {
     @Autowired
     private RegistrationServiceImpl service2;
     @Autowired
-    private AdminRepository adminRepo;
-
-    @Autowired
     private UserRepository userRepo;
-
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -46,7 +37,6 @@ public class ForgetPasswordTest {
                 , "Mail Sent Successfully");
     }
 
-
     @Test
     void ForgetPassword2() {
         // send forget password email to a false Email
@@ -54,32 +44,30 @@ public class ForgetPasswordTest {
                 ,"Mail Sent Successfully");
     }
 
-
     @Test
     void ForgetPassword3() {
         // send regular email to a false Email
         Mail mail = new Mail();
         mail.setToEmail("mohamed.agmail.com");
-        mail.setUserName("mohaemd_arous");
+        mail.setUserName("mohamed_arous");
         mail.setSubject("fantasy league");
         mail.setMessage("welcome to fantasy league");
+        assertEquals("mohamed.agmail.com",mail.getToEmail());
+        assertEquals("mohamed_arous",mail.getUserName());
+        assertEquals("fantasy league",mail.getSubject());
+        assertEquals("welcome to fantasy league",mail.getMessage());
 
-        assertNotEquals(service.sendEmail( mail)
+        assertNotEquals(service.sendEmail(mail).toString()
                 , "Mail Sent Successfully");
     }
 
     @Test
     void ForgetPassword4() {
         // send regular email to a existing Email
-        Mail mail = new Mail();
-        mail.setToEmail("mohamed.arous940@gmail.com");
-        mail.setUserName("mohaemd_arous");
-        mail.setSubject("fantasy league");
-        mail.setMessage("welcome to fantasy league");
-        assertEquals(service.sendEmail( mail).toString()
+        Mail mail = new Mail("mohamed.arous940@gmail.com", "mohaemd_arous" , "fantasy league" , "welcome to fantasy league");
+        assertEquals(service.sendEmail(mail).toString()
                 , "<200 OK OK,mail sent successfully,[]>");
     }
-
 
     @Test
     void ForgetPassword5() {
@@ -124,7 +112,6 @@ public class ForgetPasswordTest {
         assertEquals("Email is wrong" , service2.ForgetPassword(emailDetails).toString());
     }
 
-
     @Test
     void ForgetPassword8() {
 
@@ -148,14 +135,10 @@ public class ForgetPasswordTest {
         user  = userRepo.findByEmail("mohamed.arous177@gmail.com").orElseThrow();
         assertTrue(service2.checkPassword("newwwww12"  , user.getPassword()));
         assertFalse(service2.checkPassword("12259861"  , user.getPassword()));
-
-
     }
-
 
     @Test
     void ForgetPassword9() {
-
         User signup = new User();
         signup.setFirstName("mohamed1");
         signup.setLastName("arous1");
@@ -176,7 +159,6 @@ public class ForgetPasswordTest {
         assertFalse(service2.checkPassword("newwwww12"  , user.getPassword()));
         assertTrue(service2.checkPassword("12259861"  , user.getPassword()));
     }
-
 
 }
 
