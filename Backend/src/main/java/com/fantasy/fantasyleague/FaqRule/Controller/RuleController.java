@@ -1,7 +1,7 @@
-package com.fantasy.fantasyleague.Registiration.FaqRule.Controller;
+package com.fantasy.fantasyleague.FaqRule.Controller;
 
-import com.fantasy.fantasyleague.Registiration.FaqRule.Model.Rule;
-import com.fantasy.fantasyleague.Registiration.FaqRule.Service.RuleService;
+import com.fantasy.fantasyleague.FaqRule.Model.Rule;
+import com.fantasy.fantasyleague.FaqRule.Service.RuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

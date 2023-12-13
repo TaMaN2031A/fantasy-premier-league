@@ -1,7 +1,7 @@
-package com.fantasy.fantasyleague.Registiration.FaqRule.Service;
+package com.fantasy.fantasyleague.FaqRule.Service;
 
-import com.fantasy.fantasyleague.Registiration.FaqRule.Model.FAQ;
-import com.fantasy.fantasyleague.Registiration.FaqRule.Repository.FAQRepository;
+import com.fantasy.fantasyleague.FaqRule.Model.FAQ;
+import com.fantasy.fantasyleague.FaqRule.Repository.FAQRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
