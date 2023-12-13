@@ -1,7 +1,7 @@
-package com.fantasy.fantasyleague.Registiration.FaqRule.Controller;
+package com.fantasy.fantasyleague.FaqRule.Controller;
 
-import com.fantasy.fantasyleague.Registiration.FaqRule.Model.FAQ;
-import com.fantasy.fantasyleague.Registiration.FaqRule.Service.FAQService;
+import com.fantasy.fantasyleague.FaqRule.Model.FAQ;
+import com.fantasy.fantasyleague.FaqRule.Service.FAQService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +28,7 @@ public class FAQController {
     }
     @GetMapping("/getAll")
     public List<FAQ> getAllFAQ() {
-       return faqService.getAllFAQ();
+        return faqService.getAllFAQ();
     }
     @DeleteMapping("/deleteAll")
     public String deleteAllFAQ() {

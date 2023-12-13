@@ -1,6 +1,6 @@
-package com.fantasy.fantasyleague.Registiration.FaqRule.Service;
+package com.fantasy.fantasyleague.FaqRule.Service;
 
-import com.fantasy.fantasyleague.Registiration.FaqRule.Model.Rule;
+import com.fantasy.fantasyleague.FaqRule.Model.Rule;
 
 import java.util.List;
 
