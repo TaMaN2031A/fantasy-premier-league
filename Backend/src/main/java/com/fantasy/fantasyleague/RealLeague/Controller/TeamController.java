@@ -23,8 +23,8 @@ public class TeamController {
         return teamService.deleteTeam(id);
     }
     @PostMapping("/update/{id}/{name}")
-    public ResponseEntity updateTeam(@PathVariable int id, @PathVariable String newName) {
-        return teamService.updateTeam(id, newName);
+    public ResponseEntity updateTeam(@PathVariable String id, @PathVariable String name) {
+        return teamService.updateTeam(id, name);
     }
     @GetMapping("/getAll")
     public List<Team> getAllTeam() {
