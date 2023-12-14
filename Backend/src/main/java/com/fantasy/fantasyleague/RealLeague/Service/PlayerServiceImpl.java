@@ -51,8 +51,8 @@ public class PlayerServiceImpl implements PlayerService {
                 response.put("message", "Player inserted successfully");
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
-            response.put("error", "Failed to insert player");
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            response.put("error", "Wrong team id");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }catch (Exception e){
             response.put("error", e.toString());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -110,6 +110,7 @@ public class PlayerServiceImpl implements PlayerService {
                 playerToUpdate.setRed_cards(player.getRed_cards());
                 playerToUpdate.setSaved(player.getSaved());
                 playerToUpdate.setYellow_cards(player.getYellow_cards());
+                playerToUpdate.setClean_sheet(player.getClean_sheet());
                 playerRepository.save(playerToUpdate);
                 response.put("message", "Player updated successfully");
                 return new ResponseEntity<>(response, HttpStatus.OK);
@@ -138,7 +139,7 @@ public class PlayerServiceImpl implements PlayerService {
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e){
             response.put("message", e.toString());
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
@@ -146,14 +147,9 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public ResponseEntity deleteAllPlayers() {
         Map<String, String> response = new HashMap<>();
-        try{
-            playerRepository.deleteAll();
-            response.put("message", "All Players deleted successfully");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e){
-            response.put("error", e.toString());
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
+        playerRepository.deleteAll();
+        response.put("message", "All Players deleted successfully");
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 }

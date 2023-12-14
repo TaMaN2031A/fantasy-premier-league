@@ -39,6 +39,4 @@ public class PlayerStatistics {
     private int effectivness = 0;
 
 
-
-
 }

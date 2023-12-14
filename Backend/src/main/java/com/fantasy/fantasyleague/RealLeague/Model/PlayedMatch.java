@@ -14,7 +14,6 @@ import java.util.List;
 @Table(name = "PlayedMatch")
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class PlayedMatch {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -52,5 +51,4 @@ public class PlayedMatch {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "match")
     private List<PlayerStatistics> playersStatistics;
-
 }

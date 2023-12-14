@@ -1,45 +1,45 @@
 package com.fantasy.fantasyleague.FaqRule.Service;
 
+import com.fantasy.fantasyleague.FaqRule.Model.Response;
 import com.fantasy.fantasyleague.FaqRule.Model.Rule;
 import com.fantasy.fantasyleague.FaqRule.Repository.RuleRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class RuleServiceImpl implements RuleService{
 
-    private String deleteResponse = "Deleted Successfully";
-    private String insertResponse = "Inserted Successfully";
-    private String updateResponse = "Updated Successfully";
-    private String deleteResponseF = "Unsuccessful Delete";
-    private String updateResponseF = "Unsuccessful Update";
-
     @Autowired
     RuleRepository ruleRepository;
+
     @Override
-    public String insertRule(Rule rule) {
-        ruleRepository.save(rule);
-        return insertResponse;
+    public String insertRule(JsonNode jsonRule) {
+        String rule = jsonRule.get("rule").asText();
+        Rule newRule = new Rule();
+        newRule.setRule(rule);
+        ruleRepository.save(newRule);
+        return Response.INSERT_SUCCESS.getMessage();
     }
 
     @Override
     public String updateRule(Rule rule) {
         if(!ruleRepository.existsById(rule.getRuleID()))
-            return updateResponseF;
+            return Response.UPDATE_FAIL.getMessage();
         Rule ruleToUpdate = ruleRepository.getReferenceById(rule.getRuleID());
         ruleToUpdate.setRule(rule.getRule());
-        ruleToUpdate.setDate(rule.getDate());
         ruleRepository.save(ruleToUpdate);
-        return updateResponse;
+        return Response.UPDATE_SUCCESS.getMessage();
     }
 
     @Override
-    public String deleteRule(Rule rule) {
-        if(!ruleRepository.existsById(rule.getRuleID()))
-            return deleteResponseF;
-        ruleRepository.deleteById(rule.getRuleID());
-        return deleteResponse;
+    public String deleteRule(int rule) {
+        if(!ruleRepository.existsById(rule))
+            return Response.DELETE_FAIL.getMessage();
+        ruleRepository.deleteById(rule);
+        return Response.DELETE_SUCCESS.getMessage();
     }
 
     @Override
@@ -50,6 +50,6 @@ public class RuleServiceImpl implements RuleService{
     @Override
     public String deleteAllRule(){
         ruleRepository.deleteAll();
-        return deleteResponse;
+        return Response.DELETE_SUCCESS.getMessage();
     }
 }

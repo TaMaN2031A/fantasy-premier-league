@@ -2,6 +2,7 @@ package com.fantasy.fantasyleague.FaqRule.Controller;
 
 import com.fantasy.fantasyleague.FaqRule.Model.Rule;
 import com.fantasy.fantasyleague.FaqRule.Service.RuleService;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,15 +15,14 @@ public class RuleController {
 
     @Autowired
     RuleService ruleService;
+
     @PostMapping("/insert")
-    public String insertRule(@RequestBody Rule rule) {
-        return ruleService.insertRule(rule);
+    public String insertRule(@RequestBody JsonNode rule) {return ruleService.insertRule(rule);}
+    @DeleteMapping("/delete/{id}")
+    public String deleteRule(@PathVariable int id) {
+        return ruleService.deleteRule(id);
     }
-    @DeleteMapping("/delete")
-    public String deleteRule(@RequestBody Rule rule) {
-        return ruleService.deleteRule(rule);
-    }
-    @PostMapping("/update")
+    @PutMapping("/update")
     public String updateRule(@RequestBody Rule rule) {
         return ruleService.updateRule(rule);
     }
