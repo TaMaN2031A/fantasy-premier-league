@@ -158,8 +158,6 @@ public class TestSignInAndSignUp {
         signup.setUserName("mohamed_arous11");
         assertEquals(service.addUser(signup), "credentials already exists");
     }
-
-
     @Test
     void checkSignInAndSignUp9() {
         // user try to sign up using existing username
