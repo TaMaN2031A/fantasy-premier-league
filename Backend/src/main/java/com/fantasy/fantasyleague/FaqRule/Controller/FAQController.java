@@ -18,9 +18,7 @@ public class FAQController {
     FAQService faqService;
 
     @PostMapping("/insert")
-    public String insertFAQ(@RequestBody FAQDTO Faq) {
-        return faqService.insertFAQ(Faq);
-    }
+    public String insertFAQ(@RequestBody FAQDTO Faq) {return faqService.insertFAQ(Faq);}
     @DeleteMapping("/delete/{id}")
     public String deleteFAQ(@PathVariable int id) {
         return faqService.deleteFAQ(id);

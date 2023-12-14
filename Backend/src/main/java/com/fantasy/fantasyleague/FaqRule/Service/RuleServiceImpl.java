@@ -18,16 +18,10 @@ public class RuleServiceImpl implements RuleService{
     @Override
     public String insertRule(JsonNode jsonRule) {
         String rule = jsonRule.get("rule").asText();
-        try {
-            if(rule == null)
-                throw new IllegalArgumentException("input parameter is null");
-            Rule newRule = new Rule();
-            newRule.setRule(rule);
-            ruleRepository.save(newRule);
-            return Response.INSERT_SUCCESS.getMessage();
-        } catch (IllegalArgumentException e) {
-            return Response.INSERT_FAIL.getMessage();
-        }
+        Rule newRule = new Rule();
+        newRule.setRule(rule);
+        ruleRepository.save(newRule);
+        return Response.INSERT_SUCCESS.getMessage();
     }
 
     @Override
@@ -55,11 +49,7 @@ public class RuleServiceImpl implements RuleService{
 
     @Override
     public String deleteAllRule(){
-        try {
-            ruleRepository.deleteAll();
-            return Response.DELETE_SUCCESS.getMessage();
-        } catch (Exception e) {
-            return Response.DELETE_FAIL.getMessage();
-        }
+        ruleRepository.deleteAll();
+        return Response.DELETE_SUCCESS.getMessage();
     }
 }
