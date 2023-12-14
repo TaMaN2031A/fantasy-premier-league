@@ -21,13 +21,11 @@ public class LeagueStatisticsController {
 
     @GetMapping("/getLeagueStandings")
     public List<Team> getLeagueStandings() {
-        System.out.println("getLeagueStandings");
         return leagueStatisticsService.getLeagueStandings();
     }
 
     @GetMapping("/getTopScorers")
     public List<TopPlayer> getTopScorers() {
-        System.out.println("getTopScorers");
         return leagueStatisticsService.getTopScorers();
     }
 

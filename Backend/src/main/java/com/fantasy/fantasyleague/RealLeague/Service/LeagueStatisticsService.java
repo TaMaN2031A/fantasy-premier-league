@@ -59,7 +59,7 @@ public class LeagueStatisticsService {
     * then the team who collected the most points in the head-to-head matches,
     * then who scored most away goals in the head-to-head.
     */
-    private List<Team> sortTeams(List<Team> nonSortedTeams) {
+    public List<Team> sortTeams(List<Team> nonSortedTeams) {
         nonSortedTeams.sort((team1, team2) -> {
             int pointsDifference = team2.getPoints() - team1.getPoints();
             if (pointsDifference != 0) {
@@ -101,7 +101,7 @@ public class LeagueStatisticsService {
         return nonSortedTeams;
     }
 
-    private int[] getPointsOfMatch(PlayedMatch match) {
+    public int[] getPointsOfMatch(PlayedMatch match) {
         int[] points = new int[]{0, 0};
         if(match == null) return points;
 
@@ -115,7 +115,7 @@ public class LeagueStatisticsService {
         }
         return points;
     }
-    private int getMostAwayGoals(PlayedMatch match) {
+    public int getMostAwayGoals(PlayedMatch match) {
         if(match == null) return 0;
         return match.getAwayGoals();
     }
