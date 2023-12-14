@@ -1,14 +1,17 @@
 package com.fantasy.fantasyleague.RealLeague.Service;
 
+import com.fantasy.fantasyleague.RealLeague.DTO.TopPlayer;
 import com.fantasy.fantasyleague.RealLeague.Model.PlayedMatch;
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
 import com.fantasy.fantasyleague.RealLeague.Model.Team;
 import com.fantasy.fantasyleague.RealLeague.Repository.MatchRepository;
+import com.fantasy.fantasyleague.RealLeague.Repository.PlayerRepository;
 import com.fantasy.fantasyleague.RealLeague.Repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.function.Function;
 
 @Service
 public class LeagueStatisticsService {
@@ -16,7 +19,33 @@ public class LeagueStatisticsService {
     TeamRepository teamRepository;
 
     @Autowired
+    PlayerRepository playerRepository;
+
+    @Autowired
     MatchRepository matchRepository;
+
+    public List<TopPlayer> getTopScorers() {
+        return getTop(Player::getGoals, player -> new TopPlayer(player.getName(), player.getGoals()));
+    }
+    public List<TopPlayer> getTopAssists() {
+        return getTop(Player::getAssists, player -> new TopPlayer(player.getName(), player.getAssists()));
+    }
+    public List<TopPlayer> getTopCleanSheets() {
+        return getTop(Player::getClean_sheet, player -> new TopPlayer(player.getName(), player.getClean_sheet()));
+    }
+    public List<TopPlayer> getTop(Function<Player, Integer> criteria, Function<Player, TopPlayer> mapper) {
+        int NumberOfTop = 2;
+        List<Player> players = playerRepository.findAll();
+        players.sort((player1, player2) -> {
+            int Difference = criteria.apply(player2) - criteria.apply(player1);
+            if (Difference != 0) {
+                return Difference;
+            }
+            return player1.getName().compareTo(player2.getName());
+        });
+        return players.stream().map(mapper).toList();
+    }
+
 
     public List<Team> getLeagueStandings() {
         List<Team> nonSortedTeams = teamRepository.findAll();

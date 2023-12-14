@@ -12,9 +12,27 @@ const handleRequest = async (requestPromise) => {
 	}
 };
 
-export const fetchFaqData = async () => {
+export const fetchLeagueStandings = async () => {
+	console.log("fetching league standings");
 	return handleRequest(
-		axios.get( serverHost + '/getLeagueStandings')
+		axios.get( API_BASE_URL + '/getLeagueStandings')
 	);
 };
+
+export const fetchTopScorers = async () => {
+	return handleRequest(
+		axios.get( API_BASE_URL + '/getTopScorers')
+	);
+}
+export const fetchTopAssists = async () => {
+	return handleRequest(
+		axios.get( API_BASE_URL + '/getTopAssists')
+	);
+}
+
+export const fetchTopCleanSheets = async () => {
+	return handleRequest(
+		axios.get( serverHost + '/getTopCleanSheets')
+	);
+}
 

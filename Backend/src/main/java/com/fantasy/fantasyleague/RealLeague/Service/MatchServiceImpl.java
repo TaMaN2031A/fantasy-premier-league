@@ -83,7 +83,7 @@ public class MatchServiceImpl implements MatchService{
             assists = countStrings(playedMatchDTO.getHomePlayersAssist() , name);
             saves = countStrings(playedMatchDTO.getHomePlayersSaves() , name);
             cleanSheet = match.getAwayGoals() == 0 ? 1 : 0;
-        }else{
+        } else {
             goals = countStrings(playedMatchDTO.getAwayPlayersScore() , name);
             yellowCards = countStrings(playedMatchDTO.getAwayPlayersYellowCards() , name);
             redCards = countStrings(playedMatchDTO.getAwayPlayersRedCards() , name);
@@ -91,7 +91,7 @@ public class MatchServiceImpl implements MatchService{
             saves = countStrings(playedMatchDTO.getAwayPlayersSaves() , name);
             cleanSheet = match.getHomeGoals() == 0 ? 1 : 0;
         }
-        boolean playerOfMatch = name.equals(playedMatchDTO.getPlayerOfMatch());
+        boolean playerOfMatch = name.equals(playedMatchDTO.getManOfMatch());
         Player player = playerRepository.findByName(name);
         PlayerStatistics statistics1;
         if(player != null){
