@@ -40,7 +40,7 @@ export const defaultPersonState = () => {
     return {
         isAuthorized: false,  /* to check if there is a  */
         username: "",
-        privilege: "",
+        privilege: "ADMIN",
         personObj: {}
     }
 }
