@@ -90,7 +90,7 @@ public class MatchServiceImpl implements MatchService{
             assists = countStrings(playedMatchDTO.getAwayPlayersAssist() , name);
             saves = countStrings(playedMatchDTO.getAwayPlayersSaves() , name);
         }
-        boolean playerOfMatch = name.equals(playedMatchDTO.getPlayerOfMatch());
+        boolean playerOfMatch = name.equals(playedMatchDTO.getManOfMatch());
         Player player = playerRepository.findByName(name);
         PlayerStatistics statistics1;
         if(player != null){
