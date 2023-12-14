@@ -6,6 +6,7 @@ import com.fantasy.fantasyleague.Registiration.Repository.AdminRepository;
 import com.fantasy.fantasyleague.Registiration.Repository.UserRepository;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Path;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 
 public class SharedServices {

@@ -102,13 +102,5 @@ public class AdminPromotionRepoTest {
         Repo.deleteAll();
     }
 
-//    @Test
-//    void getUsersBySpecificationsTest(){
-////        service.searchBySpecification("email","ma@gmail.com",0,10);
-//    }
-//    @Test
-//    void PromoteUserTest(){
-//        generateUser("ma@gmail.com","ma","cairo","mohamed","ahmed","123456");
-////        service.PromoteUser("ma@gmail.com");
-//    }
+
 }

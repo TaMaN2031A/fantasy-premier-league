@@ -41,7 +41,7 @@ public class AdminPromotionServiceImplementation implements AdminPromotionServic
 
             Page<AdminPromotionDTO> adminPromotionDTOPage = new PageImpl<>(
                     usersPage.getContent().stream()
-                            .map(user -> new AdminPromotionDTO(user.getEmail(), user.getUserName()))
+                            .map(user -> new AdminPromotionDTO(user.getUserName(),user.getEmail()))
                             .collect(Collectors.toList()),
                     pageable, usersPage.getTotalElements()
             );

@@ -36,6 +36,5 @@ public class AdminPromotionSmokeTest {
     @Test
     void PromoteUserSmokeTest(){
         registrationService.addUser(generateUser("ma@gmail.com","ma","cairo","mohamed","ahmed","123456"));
-        System.out.println(service.PromoteUser("ma@gmail.com"));
     }
 }
