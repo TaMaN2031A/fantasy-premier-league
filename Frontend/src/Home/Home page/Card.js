@@ -11,7 +11,7 @@ function Card(props) {
     return (
         <button
           className="relative bg-grey w-1/5 h-40 rounded-3xl mx-8 my-20 text-gray-200 font-mono shadow-2xl
-           border-8 border-grey p-4 transition-all duration-500 hover:scale-110 hover:ring-4 ring-gold card-shine-effect"
+           border-8 border-grey p-4 transition-all duration-500 hover:scale-110 hover:ring-4 hover:bg-customGreen ring-gold card-shine-effect"
           onClick={handleClick}
         >
         {/* header */}

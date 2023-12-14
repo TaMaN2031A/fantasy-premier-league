@@ -3,6 +3,7 @@ package com.fantasy.fantasyleague.FaqRule.Service;
 import com.fantasy.fantasyleague.FaqRule.Model.Response;
 import com.fantasy.fantasyleague.FaqRule.Model.Rule;
 import com.fantasy.fantasyleague.FaqRule.Repository.RuleRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,9 @@ public class RuleServiceImpl implements RuleService{
     @Autowired
     RuleRepository ruleRepository;
 
-
     @Override
-    public String insertRule(String rule) {
+    public String insertRule(JsonNode jsonRule) {
+        String rule = jsonRule.get("rule").asText();
         try {
             if(rule == null)
                 throw new IllegalArgumentException("input parameter is null");
