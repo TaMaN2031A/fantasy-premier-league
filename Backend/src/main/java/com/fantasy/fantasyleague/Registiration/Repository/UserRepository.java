@@ -15,9 +15,9 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Query("SELECT u FROM User u WHERE u.email = :email OR u.userName = :userName")
     User findByEmailOrUserName(String email, String userName);
-
+// get all users
     @Query("SELECT new com.fantasy.fantasyleague.Registiration.DTO.AdminPromotionDTO(u.email, u.userName) FROM User u")
     Page<User> findAllUsers(Pageable pageable);
-
+// search by specification
     Page<User> findAll(Specification<User> spec, Pageable pageable);
 }
