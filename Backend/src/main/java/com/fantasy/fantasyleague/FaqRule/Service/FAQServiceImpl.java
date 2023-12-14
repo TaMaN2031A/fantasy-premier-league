@@ -21,7 +21,10 @@ public class FAQServiceImpl implements FAQService{
             if(faq == null) {
                 throw new IllegalArgumentException("Input parameter is null");
             }
-            FAQ newFaq = new FAQ();
+            FAQ newFaq = FAQ.builder()
+                            .question(faq.getQuestion())
+                            .answer(faq.getAnswer())
+                            .build();
             newFaq.setQuestion(faq.getQuestion());
             newFaq.setAnswer(faq.getAnswer());
             faqRepository.save(newFaq);
@@ -57,12 +60,8 @@ public class FAQServiceImpl implements FAQService{
 
     @Override
     public String deleteAllFAQ(){
-        try {
-            faqRepository.deleteAll();
-            return Response.DELETE_SUCCESS.getMessage();
-        } catch (Exception e) {
-            return Response.DELETE_FAIL.getMessage();
-        }
+        faqRepository.deleteAll();
+        return Response.DELETE_SUCCESS.getMessage();
     }
 
 }

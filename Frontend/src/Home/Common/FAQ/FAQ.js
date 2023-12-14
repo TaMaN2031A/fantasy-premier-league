@@ -10,7 +10,7 @@ import QA from "./QA";
 import UpdateFAQ from "./UpdateFAQ";
 
 function Faq() {
-  const { data, isLoading, error, refetch } = useQuery("FAQData", fetchFAQData);
+  const { data, isLoading, error, refetch } = useQuery("FAQData", fetchFAQData, {refetchOnWindowFocus: false});
   const { person } = GetAuthDataFn();
 
   if (error) {

@@ -3,6 +3,7 @@ package com.fantasy.fantasyleague.FaqRule.Service;
 import com.fantasy.fantasyleague.FaqRule.Model.Response;
 import com.fantasy.fantasyleague.FaqRule.Model.Rule;
 import com.fantasy.fantasyleague.FaqRule.Repository.RuleRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,19 +15,13 @@ public class RuleServiceImpl implements RuleService{
     @Autowired
     RuleRepository ruleRepository;
 
-
     @Override
-    public String insertRule(String rule) {
-        try {
-            if(rule == null)
-                throw new IllegalArgumentException("input parameter is null");
-            Rule newRule = new Rule();
-            newRule.setRule(rule);
-            ruleRepository.save(newRule);
-            return Response.INSERT_SUCCESS.getMessage();
-        } catch (IllegalArgumentException e) {
-            return Response.INSERT_FAIL.getMessage();
-        }
+    public String insertRule(JsonNode jsonRule) {
+        String rule = jsonRule.get("rule").asText();
+        Rule newRule = new Rule();
+        newRule.setRule(rule);
+        ruleRepository.save(newRule);
+        return Response.INSERT_SUCCESS.getMessage();
     }
 
     @Override
@@ -54,11 +49,7 @@ public class RuleServiceImpl implements RuleService{
 
     @Override
     public String deleteAllRule(){
-        try {
-            ruleRepository.deleteAll();
-            return Response.DELETE_SUCCESS.getMessage();
-        } catch (Exception e) {
-            return Response.DELETE_FAIL.getMessage();
-        }
+        ruleRepository.deleteAll();
+        return Response.DELETE_SUCCESS.getMessage();
     }
 }
