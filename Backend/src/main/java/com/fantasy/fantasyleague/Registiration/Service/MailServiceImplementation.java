@@ -1,8 +1,6 @@
 package com.fantasy.fantasyleague.Registiration.Service;
-
 import com.fantasy.fantasyleague.Registiration.Model.Mail;
 import com.fantasy.fantasyleague.Registiration.Model.Response;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +25,7 @@ public class MailServiceImplementation implements MailService{
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(mailToBeSent.getToEmail());
             mailMessage.setSubject(mailToBeSent.getSubject());
-            mailMessage.setText("Dear "+mailToBeSent.getUserName()+"\n\n"+mailToBeSent.getSubject());
+            mailMessage.setText("Dear "+mailToBeSent.getUserName()+"\n\n"+mailToBeSent.getMessage());
             mailMessage.setFrom("fantasyteamcsed@gmail.com");
             javaMailSender.send(mailMessage);
             return ResponseEntity.ok("mail sent successfully");
