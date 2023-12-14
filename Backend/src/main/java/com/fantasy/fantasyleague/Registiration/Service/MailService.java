@@ -8,5 +8,5 @@ public interface MailService {
     public String sendForgetPasswordEmail(String toEmail, String userName,  String token);
 
 
-     public ResponseEntity<String> sendEmail(Mail mail);
+    public ResponseEntity<String> sendEmail(Mail mail);
 }

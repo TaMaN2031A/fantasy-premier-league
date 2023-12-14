@@ -15,7 +15,7 @@ import java.util.List;
 public class MatchStatisticsDTO {
     private String home;
     private String away;
-    private String playerOfMatch;
+    private String manOfMatch;
 
 
     @Builder.Default

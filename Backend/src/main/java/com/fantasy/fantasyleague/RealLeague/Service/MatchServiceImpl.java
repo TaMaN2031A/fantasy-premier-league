@@ -54,10 +54,10 @@ public class MatchServiceImpl implements MatchService{
         List<String> awayPlayers = playedMatchDTO.getAwayPlayersPlayed();
         List<String> homePlayers = playedMatchDTO.getHomePlayersPlayed();
         for(String name : awayPlayers){
-            buildPlayerStatistics(playedMatchDTO, match , true , name );
+            buildPlayerStatistics(playedMatchDTO, match , false , name );
         }
         for(String name : homePlayers){
-            buildPlayerStatistics(playedMatchDTO, match , false , name );
+            buildPlayerStatistics(playedMatchDTO, match , true , name );
         }
 
     }
@@ -72,7 +72,6 @@ public class MatchServiceImpl implements MatchService{
                 count++;
             }
         }
-
         return count;
     }
 

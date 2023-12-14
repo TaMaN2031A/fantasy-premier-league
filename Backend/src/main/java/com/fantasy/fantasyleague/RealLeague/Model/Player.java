@@ -24,10 +24,13 @@ public class Player {
     private String position;
     private int number_in_team;
     private int id_of_team;
+
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id", referencedColumnName = "id")
     private Team team;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
     private List<PlayerStatistics> playersStatistics;
     private String photo_link;
@@ -44,5 +47,6 @@ public class Player {
         this.price = 0;
         this.id_of_team = id_of_team;
     }
+
 
 }

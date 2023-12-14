@@ -14,7 +14,6 @@ import java.util.List;
 @Table(name = "PlayedMatch")
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class PlayedMatch {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

@@ -1,9 +1,7 @@
 package com.fantasy.fantasyleague.RealLeague.Controller;
 
 import com.fantasy.fantasyleague.RealLeague.DTO.UpcomingMatchInsertionDTO;
-import com.fantasy.fantasyleague.RealLeague.Model.Team;
 import com.fantasy.fantasyleague.RealLeague.Model.UpcomingMatch;
-import com.fantasy.fantasyleague.RealLeague.Service.TeamService;
 import com.fantasy.fantasyleague.RealLeague.Service.UpcomingMatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
