@@ -1,6 +1,5 @@
 package com.fantasy.fantasyleague.FaqRule.Service;
 
-import com.fantasy.fantasyleague.FaqRule.Model.FAQ;
 import com.fantasy.fantasyleague.FaqRule.Model.Rule;
 
 import java.util.List;

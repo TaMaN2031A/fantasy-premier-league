@@ -6,10 +6,8 @@ import com.fantasy.fantasyleague.FaqRule.Repository.RuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
+
 @Service
 public class RuleServiceImpl implements RuleService{
 
