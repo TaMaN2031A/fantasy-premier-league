@@ -1,4 +1,4 @@
-package com.fantasy.fantasyleague.RealLeague;
+package com.fantasy.fantasyleague.RealLeague.Controller;
 
 import com.fantasy.fantasyleague.RealLeague.Controller.PlayedMatchController;
 import com.fantasy.fantasyleague.RealLeague.DTO.MatchStatisticsDTO;

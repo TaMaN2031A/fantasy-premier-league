@@ -1,4 +1,4 @@
-package com.fantasy.fantasyleague.RealLeague;
+package com.fantasy.fantasyleague.RealLeague.Repository;
 
 
 import com.fantasy.fantasyleague.RealLeague.Model.PlayedMatch;

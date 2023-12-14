@@ -8,7 +8,7 @@ import java.util.List;
 public interface TeamService {
     List<Team> getAllTeams();
     ResponseEntity insertTeam(String name);
-    ResponseEntity updateTeam(int id, String newName);
+    ResponseEntity updateTeam(String id, String newName);
     ResponseEntity deleteTeam(String ID);
     ResponseEntity deleteAllTeam();
 }

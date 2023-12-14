@@ -21,31 +21,29 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public ResponseEntity insertTeam(String name) {
         Map<String, String> response = new HashMap<>();
-        try {
-            Team team1 = teamRepository.findByName(name);
-            if(team1 != null) {
-                response.put("error", "Team Already Exists");
-                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-            }
-            teamRepository.save(new Team(name));
-            response.put("message", "Team inserted successfully");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }catch (Exception e){
-            response.put("error", e.toString());
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        Team team1 = teamRepository.findByName(name);
+        if(team1 != null) {
+            response.put("error", "Team Already Exists");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
+        teamRepository.save(new Team(name));
+        response.put("message", "Team inserted successfully");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity updateTeam(int id, String newName) {
+    public ResponseEntity updateTeam(String ID, String newName) {
         Map<String, String> response = new HashMap<>();
         try {
+            // If not integer returns 500
+            int id = Integer.parseInt(ID);
             if(!teamRepository.existsById(id)) {
                 response.put("error", "Team doesn't exist");
                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             }
             Team teamToUpdate = teamRepository.getReferenceById(id);
             teamToUpdate.setName(newName);
+            teamRepository.save(teamToUpdate);
             response.put("message", "Team Updated successfully");
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (Exception e){
@@ -81,13 +79,8 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public ResponseEntity deleteAllTeam(){
         Map<String, String> response = new HashMap<>();
-        try{
-            teamRepository.deleteAll();
-            response.put("message", "All Teams deleted successfully");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e){
-            response.put("error", e.toString());
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
+        teamRepository.deleteAll();
+        response.put("message", "All Teams deleted successfully");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
