@@ -51,5 +51,4 @@ public class PlayedMatch {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "match")
     private List<PlayerStatistics> playersStatistics;
-
 }

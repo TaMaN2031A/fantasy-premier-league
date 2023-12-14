@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class MatchServiceImpl implements MatchService{
@@ -76,19 +74,21 @@ public class MatchServiceImpl implements MatchService{
     }
 
     public void buildPlayerStatistics(MatchStatisticsDTO playedMatchDTO, PlayedMatch match , boolean isHome, String name){
-        int goals =0 , yellowCards  = 0 , redCards= 0  , assists = 0 , saves = 0;
+        int goals =0 , yellowCards  = 0 , redCards= 0  , assists = 0 , saves = 0, cleanSheet = 0;
         if(isHome){
             goals = countStrings(playedMatchDTO.getHomePlayersScore() , name);
             yellowCards = countStrings(playedMatchDTO.getHomePlayersYellowCards() , name);
             redCards = countStrings(playedMatchDTO.getHomePlayersRedCards() , name);
             assists = countStrings(playedMatchDTO.getHomePlayersAssist() , name);
             saves = countStrings(playedMatchDTO.getHomePlayersSaves() , name);
-        }else{
+            cleanSheet = match.getAwayGoals() == 0 ? 1 : 0;
+        } else {
             goals = countStrings(playedMatchDTO.getAwayPlayersScore() , name);
             yellowCards = countStrings(playedMatchDTO.getAwayPlayersYellowCards() , name);
             redCards = countStrings(playedMatchDTO.getAwayPlayersRedCards() , name);
             assists = countStrings(playedMatchDTO.getAwayPlayersAssist() , name);
             saves = countStrings(playedMatchDTO.getAwayPlayersSaves() , name);
+            cleanSheet = match.getHomeGoals() == 0 ? 1 : 0;
         }
         boolean playerOfMatch = name.equals(playedMatchDTO.getManOfMatch());
         Player player = playerRepository.findByName(name);
@@ -105,17 +105,18 @@ public class MatchServiceImpl implements MatchService{
                     .goal(goals)
                     .build();
             playerStatisticsRepoository.save(statistics1);
-            updatePlayerData(player , statistics1);
+            updatePlayerData(player , statistics1, cleanSheet);
         }
 
     }
 
-    void updatePlayerData(Player player , PlayerStatistics statistics){
+    void updatePlayerData(Player player , PlayerStatistics statistics, int cleanSheet){
         player.setAssists(player.getAssists() + statistics.getAssists());
         player.setGoals(player.getGoals() + statistics.getGoal());
         player.setRed_cards(player.getRed_cards() + statistics.getRedCards());
         player.setYellow_cards(player.getYellow_cards() + statistics.getYellowCards()) ;
         player.setSaved(player.getSaved() + statistics.getSaves());
+        player.setClean_sheet(player.getClean_sheet() + cleanSheet);
         playerRepository.save(player);
     }
 

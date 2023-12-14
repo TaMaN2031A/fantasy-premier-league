@@ -110,6 +110,7 @@ public class PlayerServiceImpl implements PlayerService {
                 playerToUpdate.setRed_cards(player.getRed_cards());
                 playerToUpdate.setSaved(player.getSaved());
                 playerToUpdate.setYellow_cards(player.getYellow_cards());
+                playerToUpdate.setClean_sheet(player.getClean_sheet());
                 playerRepository.save(playerToUpdate);
                 response.put("message", "Player updated successfully");
                 return new ResponseEntity<>(response, HttpStatus.OK);
