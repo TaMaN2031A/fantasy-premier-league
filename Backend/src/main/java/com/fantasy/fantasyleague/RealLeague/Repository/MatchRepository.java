@@ -14,7 +14,7 @@ public interface MatchRepository extends
 
     @Query(value = "SELECT * FROM Played_match u WHERE u.home = ?1 AND u.away = ?2" , nativeQuery = true)
     List<PlayedMatch> findAllMatches(int home , int away);
-    PlayedMatch findByHomeAndAway(Team home , Team away);
+    PlayedMatch findByHomeAndAway(Team home, Team away);
 
     boolean deleteById(int id);
 

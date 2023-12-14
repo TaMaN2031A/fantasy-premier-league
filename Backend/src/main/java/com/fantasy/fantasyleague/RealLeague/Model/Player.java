@@ -20,6 +20,7 @@ public class Player {
     private int yellow_cards;
     private int goals;
     private int assists;
+    private int clean_sheet;
     private int saved;
     private String position;
     private int number_in_team;
@@ -39,6 +40,7 @@ public class Player {
         this.goals = 0;
         this.assists = 0;
         this.saved = 0;
+        this.clean_sheet = 0;
         this.position = position;
         this.number_in_team = number_in_team;
         this.price = 0;
