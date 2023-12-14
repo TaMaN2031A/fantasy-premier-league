@@ -6,7 +6,6 @@ import com.fantasy.fantasyleague.Registiration.Model.Role;
 import com.fantasy.fantasyleague.Registiration.Model.User;
 import com.fantasy.fantasyleague.Registiration.Repository.AdminRepository;
 import com.fantasy.fantasyleague.Registiration.Repository.UserRepository;
-import com.fantasy.fantasyleague.Registiration.Service.RegistrationService;
 import com.fantasy.fantasyleague.Registiration.Service.RegistrationServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 
+import static com.fantasy.fantasyleague.Registiration.SharedServices.SharedServices.findEntity;
+import static com.fantasy.fantasyleague.Registiration.SharedServices.SharedServices.generateUser;
 import static org.junit.jupiter.api.Assertions.*;
 
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -35,21 +36,7 @@ public class TestUtilities {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public User generateUser(String email,
-                          String userName,
-                          String region,
-                          String firstName,
-                          String lastName,
-                          String password) {
-        User user = new User();
-        user.setEmail(email);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setRegion(region);
-        user.setUserName(userName);
-        return user;
-    }
+
 
     public Admin generateAdmin(String email,
                                 String userName,
@@ -113,7 +100,7 @@ public class TestUtilities {
                 "12345"
         );
         userRepo.save(user);
-        Person person = service.findEntity("amro@gmail.com", "amro", Role.USER);
+        Person person = findEntity(adminRepo,userRepo,"amro@gmail.com", "amro", Role.USER);
         assertNotNull(person);
         assertEquals(person.getRegion(), "EGY");
         assertEquals(person.getFirstName(), "Amr");
@@ -131,8 +118,8 @@ public class TestUtilities {
                 "12345"
         );
         adminRepo.save(admin);
-        Person person = service.findEntity("kamal@gmail.com", "Kamal123", Role.ADMIN);
-        Person person2 = service.findEntity("kamal@gmail.com", "Kamal123", Role.USER);
+        Person person = findEntity(adminRepo,userRepo,"kamal@gmail.com", "Kamal123", Role.ADMIN);
+        Person person2 = findEntity(adminRepo,userRepo,"kamal@gmail.com", "Kamal123", Role.USER);
         assertNull(person2);
         assertNotNull(person);
         assertEquals(person.getRegion(), "Spain");
@@ -143,7 +130,7 @@ public class TestUtilities {
     @Test
     void checkFindEntity3() {
         // test when used to find by username or email (used mainly in sign in)
-        Person person = service.findEntity("kamal@gmail.com", "kamal@gmail.com", Role.ADMIN);
+        Person person = findEntity(adminRepo,userRepo,"kamal@gmail.com", "kamal@gmail.com", Role.ADMIN);
         assertNotNull(person);
         assertEquals(person.getRegion(), "Spain");
         assertEquals(person.getLastName(), "Mohamed");

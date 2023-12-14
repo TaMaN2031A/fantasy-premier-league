@@ -47,6 +47,8 @@ public class playedMatchRepoTest {
     @Order(1)
     @Test
     void playedMatch_InsertMatchAndStatistics(){
+        teamRepository.deleteAll();
+        playerRepository.deleteAll();
         Team team1 = new Team( "liverpool");
         Team team2 = new Team( "arsenal");
         Player player1 = new Player("mohamed arous" , "fwd" , 15 , 1);
@@ -93,25 +95,23 @@ public class playedMatchRepoTest {
         matchRepository.save(match);
         playerStatisticsRepoository.save(playerStatistics1);
         playerStatisticsRepoository.save(playerStatistics2);
-        Team liverbool = teamRepository.findByName("liverpool");
+        Team liverPool = teamRepository.findByName("liverpool");
         Team arsenal = teamRepository.findByName("arsenal");
-        PlayedMatch match3 = matchRepository.findByHomeAndAway(arsenal, liverbool);
+        PlayedMatch match3 = matchRepository.findByHomeAndAway(arsenal, liverPool);
         assertEquals(playerStatisticsRepoository.findAllByMatch(match3).size() , 2 );
-
-
     }
 
     @Order(2)
     @Test
     void playedMatch_GetbyWeek(){
-        Team liverbool = teamRepository.findByName("liverpool");
+        Team liverpool = teamRepository.findByName("liverpool");
         Team arsenal = teamRepository.findByName("arsenal");
         Team man_city = new Team( "man city");
         Team man_united = new Team( "man united");
         teamRepository.save(man_city);
         teamRepository.save(man_united);
         PlayedMatch  match= PlayedMatch.builder()
-                .away(liverbool)
+                .away(liverpool)
                 .home(man_city)
                 .date(new Date())
                 .redCardsAway(1)
@@ -146,6 +146,31 @@ public class playedMatchRepoTest {
         Team t2 = teamRepository.findByName("arsenal");
         PlayedMatch match = matchRepository.findByHomeAndAway(t2, t);
         List<PlayerStatistics> y = playerStatisticsRepoository.findAllByMatch(match);
+        PlayedMatch SecondMatch = new PlayedMatch();
+        SecondMatch.setAway(t);
+        SecondMatch.setHome(t2);
+        SecondMatch.setAwayGoals(5);
+        SecondMatch.setHomeGoals(1);
+        SecondMatch.setYellowCardsAway(2);
+        SecondMatch.setYellowCardsHome(2);
+        SecondMatch.setRedCardsAway(1);
+        SecondMatch.setRedCardsHome(2);
+        SecondMatch.setStadium("camp nou");
+        SecondMatch.setWeek(2);
+        SecondMatch.setDate(new Date());
+        SecondMatch.setID(1188);
+        assertEquals(t,SecondMatch.getAway());
+        assertEquals(t2,SecondMatch.getHome());
+        assertEquals(5,SecondMatch.getAwayGoals());
+        assertEquals(1,SecondMatch.getHomeGoals());
+        assertEquals(2,SecondMatch.getYellowCardsAway());
+        assertEquals(2,SecondMatch.getYellowCardsHome());
+        assertEquals(1,SecondMatch.getRedCardsAway());
+        assertEquals(2,SecondMatch.getRedCardsHome());
+        assertEquals("camp nou",SecondMatch.getStadium());
+        assertEquals(2,SecondMatch.getWeek());
+        assertEquals(new Date(),SecondMatch.getDate());
+        assertEquals(1188,SecondMatch.getID());
         assertEquals(y.size() , 1 );
     }
 
@@ -160,7 +185,8 @@ public class playedMatchRepoTest {
         matchRepository.delete(match);
         List<PlayerStatistics> y = playerStatisticsRepoository.findAllByMatch(match);
         assertEquals(y.size() , 0 );
-
+        teamRepository.deleteAll();
+        playerRepository.deleteAll();
     }
 
 }
