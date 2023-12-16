@@ -17,8 +17,8 @@ export const League = () => {
     }
 
     return (
-        <section className="flex flex-row bg-gradient-to-r from-slate-800 to-gray-900">
-            <div className="flex flex-col items-center justify-center px-1 py-2 mx-auto md:h-screen lg:py-0">
+        <section className="flex flex-col bg-gradient-to-r from-slate-800 to-gray-900 ">
+            <div className="flex flex-row items-center justify-center px-1 py-2 mx-auto  lg:py-0">
                 <div className="mx-auto max-w-screen-xl px-2 lg:px-12">
                     <div className="relative overflow-x-auto">
                         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -75,13 +75,13 @@ export const League = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col items-center justify-center px-1 py-2 mx-auto md:h-screen lg:py-0">
+            <div className="flex flex-row items-center justify-center px-1 py-2 mx-auto  lg:py-0">
                 <Card data={TopScorer} criteria="Top Scorer"/>
             </div>
-            <div className="flex flex-col items-center justify-center px-1 py-2 mx-auto md:h-screen lg:py-0">
+            <div className="flex flex-row items-center justify-center px-1 py-2 mx-auto  lg:py-0">
                 <Card data={TopAssisted} criteria="Top Assisters"/>
             </div>
-            <div className="flex flex-col items-center justify-center px-1 py-2 mx-auto md:h-screen lg:py-0">
+            <div className="flex flex-row items-center justify-center px-1 py-2 mx-auto  lg:py-0">
                 <Card data={TopCleanSheet} criteria="Top Clean Sheet"/>
             </div>
         </section>

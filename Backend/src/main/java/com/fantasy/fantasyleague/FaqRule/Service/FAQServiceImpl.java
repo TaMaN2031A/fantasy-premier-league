@@ -12,8 +12,13 @@ import java.util.List;
 @Service
 public class FAQServiceImpl implements FAQService{
 
-    @Autowired
+    final
     FAQRepository faqRepository;
+
+    @Autowired
+    public FAQServiceImpl(FAQRepository faqRepository) {
+        this.faqRepository = faqRepository;
+    }
 
     @Override
     public String insertFAQ(FAQDTO faq) {
@@ -21,10 +26,8 @@ public class FAQServiceImpl implements FAQService{
             if(faq == null) {
                 throw new IllegalArgumentException("Input parameter is null");
             }
-            FAQ newFaq = FAQ.builder()
-                            .question(faq.getQuestion())
-                            .answer(faq.getAnswer())
-                            .build();
+
+            FAQ newFaq = new FAQ(faq.getQuestion(), faq.getAnswer());
             newFaq.setQuestion(faq.getQuestion());
             newFaq.setAnswer(faq.getAnswer());
             faqRepository.save(newFaq);

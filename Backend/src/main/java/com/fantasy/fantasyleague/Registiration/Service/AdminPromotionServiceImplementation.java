@@ -41,8 +41,8 @@ public class AdminPromotionServiceImplementation implements AdminPromotionServic
 
             Page<AdminPromotionDTO> adminPromotionDTOPage = new PageImpl<>(
                     usersPage.getContent().stream()
-                            .map(user -> new AdminPromotionDTO(user.getUserName(),user.getEmail()))
-                            .collect(Collectors.toList()),
+                            .map(user -> new AdminPromotionDTO(user.getUserName(), user.getEmail()))
+                            .toList(),
                     pageable, usersPage.getTotalElements()
             );
             return ResponseEntity.ok(adminPromotionDTOPage);
@@ -75,9 +75,9 @@ public class AdminPromotionServiceImplementation implements AdminPromotionServic
         try {
             Person user = findEntity(adminRepository,userRepository,UserNameOrEmail,UserNameOrEmail, Role.USER);
             Person admin = findEntity(adminRepository,userRepository,UserNameOrEmail,UserNameOrEmail, Role.ADMIN);
-            if(user==null&&admin==null)
+            if (user==null && admin == null)
                 return ResponseEntity.badRequest().body("User not found");
-            if(user==null) {
+            if (user == null) {
                 return ResponseEntity.badRequest().body("User already promoted");
             }
             userRepository.delete((User) user);

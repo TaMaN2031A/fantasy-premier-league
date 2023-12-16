@@ -1,6 +1,5 @@
 package com.fantasy.fantasyleague.RealLeague.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,8 +31,6 @@ public class PlayedMatch {
     private Date date = new Date();
     @Builder.Default
     private int week = 0;
-
-
     @Builder.Default
     private int yellowCardsHome =0;
     @Builder.Default

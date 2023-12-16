@@ -1,8 +1,13 @@
 import React from 'react';
+import { InsertTeam } from './insertTeam';
+import { DeleteTeam } from './deleteTeam';
 
 function Teams(props) {
     return (
-        <div></div>
+        <div>
+            <InsertTeam />
+            <DeleteTeam />
+        </div>
     );
 }
 

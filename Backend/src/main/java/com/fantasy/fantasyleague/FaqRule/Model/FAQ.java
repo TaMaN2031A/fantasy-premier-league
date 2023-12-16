@@ -8,8 +8,8 @@ import lombok.*;
 
 import java.util.Date;
 
-@Data
-@Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -20,5 +20,8 @@ public class FAQ {
     private int faqID;
     private String question;
     private String answer;
-
+    public FAQ(String question, String answer) {
+        this.question = question;
+        this.answer = answer;
+    }
 }
