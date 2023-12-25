@@ -15,14 +15,20 @@ import java.util.function.Function;
 
 @Service
 public class LeagueStatisticsService {
-    @Autowired
+    final
     TeamRepository teamRepository;
 
-    @Autowired
+    final
     PlayerRepository playerRepository;
 
-    @Autowired
+    final
     MatchRepository matchRepository;
+
+    public LeagueStatisticsService(TeamRepository teamRepository, PlayerRepository playerRepository, MatchRepository matchRepository) {
+        this.teamRepository = teamRepository;
+        this.playerRepository = playerRepository;
+        this.matchRepository = matchRepository;
+    }
 
     public List<TopPlayer> getTopScorers() {
         return getTop(Player::getGoals, player -> new TopPlayer(player.getName(), player.getGoals()));
@@ -85,7 +91,6 @@ public class LeagueStatisticsService {
             points = getPointsOfMatch(secondMatch);
             pointsT1 += points[1];
             pointsT2 += points[0];
-
             int pointsDifferenceHeadToHead = pointsT2 - pointsT1;
             if (pointsDifferenceHeadToHead != 0) {
                 return pointsDifferenceHeadToHead;

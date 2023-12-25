@@ -1,8 +1,13 @@
 import React from 'react';
+import { InsertPlayer } from './insertPlayer';
+import { DeletePlayer } from './deletePlayer';
 
 function Players(props) {
     return (
-        <div></div>
+        <div>
+            <InsertPlayer />
+            <DeletePlayer />
+        </div>
     );
 }
 

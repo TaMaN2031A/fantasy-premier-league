@@ -25,10 +25,7 @@ public class FAQRuleRepository {
 
     @BeforeEach
     public void init() {
-        this.faq = FAQ.builder()
-                .question("Test Question")
-                .answer("Test Answer")
-                .build();
+        this.faq = new FAQ("Test Question", "Test Answer");
     }
 
     @Test
@@ -72,10 +69,7 @@ public class FAQRuleRepository {
 
     @Test
     public void testFindAll() {
-        FAQ faq2 = FAQ.builder()
-                .question("Question 1")
-                .answer("Answer 1")
-                .build();
+        FAQ faq2 = new FAQ("Question 1", "Answer 1");
 
         faqRepository.save(faq);
         faqRepository.save(faq2);
@@ -91,10 +85,8 @@ public class FAQRuleRepository {
     @Test
     public void testDeleteAll() {
         // Create some FAQ entities
-        FAQ faq2 = FAQ.builder()
-                .question("Question 1")
-                .answer("Answer 1")
-                .build();
+        FAQ faq2 = new  FAQ("Question 2", "Answer 2");
+
 
         // Save the FAQ entities using the repository
         faqRepository.save(faq);

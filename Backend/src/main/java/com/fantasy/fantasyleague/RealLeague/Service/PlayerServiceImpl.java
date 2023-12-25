@@ -16,10 +16,16 @@ import java.util.Optional;
 
 @Service
 public class PlayerServiceImpl implements PlayerService {
-    @Autowired
+    final
     PlayerRepository playerRepository;
-    @Autowired
+    final
     TeamRepository teamRepository;
+
+    @Autowired
+    public PlayerServiceImpl(PlayerRepository playerRepository, TeamRepository teamRepository) {
+        this.playerRepository = playerRepository;
+        this.teamRepository = teamRepository;
+    }
 
 
     @Override
@@ -28,23 +34,16 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public ResponseEntity insertPlayer(PlayerDTO playerDTO) {
+    public ResponseEntity<Map<String,String>> insertPlayer(PlayerDTO playerDTO) {
         Map<String, String> response = new HashMap<>();
         try{
             Optional<Team> toBeLinked = teamRepository.findById(playerDTO.getId_of_team());
 
             if (toBeLinked.isPresent()) {
                 Team team = toBeLinked.get();
-                if(isTherePlayerWithSameNumber(playerDTO, team))
-                {
-                    response.put("error", "There is a player with the same number");
-                    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-                }
-                if (playerDTO.getNumber_in_team() < 1 || playerDTO.getNumber_in_team() > 99) {
-                    response.put("error", "Give a number between 1 to 99");
-                    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-                }
-                System.out.println(playerDTO.toString());
+                ResponseEntity<Map<String, String>> response1 = getMapResponseEntity(playerDTO, team, response);
+                if (response1 != null) return response1;
+                System.out.println(playerDTO);
                 Player player = playerDTO.getPlayer();
                 player.setTeam(team);
                 playerRepository.save(player);
@@ -58,6 +57,19 @@ public class PlayerServiceImpl implements PlayerService {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    private ResponseEntity<Map<String, String>> getMapResponseEntity(PlayerDTO playerDTO, Team team, Map<String, String> response) {
+        if(isTherePlayerWithSameNumber(playerDTO, team))
+        {
+            response.put("error", "There is a player with the same number");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        if (playerDTO.getNumber_in_team() < 1 || playerDTO.getNumber_in_team() > 99) {
+            response.put("error", "Give a number between 1 to 99");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        return null;
     }
 
     boolean isTherePlayerWithSameNumber(PlayerDTO playerDTO, Team team){
@@ -79,7 +91,7 @@ public class PlayerServiceImpl implements PlayerService {
 
 
     @Override
-    public ResponseEntity updatePlayer(Player player) {
+    public ResponseEntity<Map<String,String>> updatePlayer(Player player) {
         Map<String, String> response = new HashMap<>();
         try{
             if(!playerRepository.existsById(player.getID())){
@@ -126,7 +138,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public ResponseEntity deletePlayer(String ID) {
+    public ResponseEntity<Map<String,String>> deletePlayer(String ID) {
         Map<String, String> response = new HashMap<>();
         try{
             int id = Integer.parseInt(ID);
@@ -145,7 +157,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
     // We'll delete all players if a team deleted
     @Override
-    public ResponseEntity deleteAllPlayers() {
+    public ResponseEntity<Map<String,String>> deleteAllPlayers() {
         Map<String, String> response = new HashMap<>();
         playerRepository.deleteAll();
         response.put("message", "All Players deleted successfully");

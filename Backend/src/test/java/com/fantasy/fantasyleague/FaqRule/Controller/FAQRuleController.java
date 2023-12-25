@@ -71,11 +71,8 @@ public class FAQRuleController {
 
     @Test
     public void testUpdateFAQ() throws Exception {
-        FAQ updatedFAQ = FAQ.builder()
-                .faqID(1)
-                .question("new question")
-                .answer("new answer")
-                .build();
+
+        FAQ updatedFAQ = new FAQ("new question", "new answer");
 
         when(faqService.updateFAQ(any(FAQ.class))).thenReturn(Response.UPDATE_SUCCESS.getMessage());
 
@@ -90,17 +87,10 @@ public class FAQRuleController {
 
     @Test
     public void testGetAll() throws Exception {
-        FAQ faq1 = FAQ.builder()
-                .faqID(1)
-                .question("new question")
-                .answer("new answer")
-                .build();
 
-        FAQ faq2 = FAQ.builder()
-                .faqID(2)
-                .question("new question")
-                .answer("new answer")
-                .build();
+        FAQ faq1 = new FAQ("new question", "new answer");
+
+        FAQ faq2 = new FAQ("new question", "new answer");
 
         List<FAQ> allFAQs = Arrays.asList(faq1, faq2);
 

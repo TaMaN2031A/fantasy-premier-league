@@ -37,11 +37,8 @@ public class FAQRuleService {
                 .answer("Play every day and make good decisions!")
                 .build();
 
-        FAQ faq2 = FAQ.builder()
-                .question("Question 1")
-                .answer("Answer 1")
-                .build();
 
+        FAQ faq2 = new FAQ("Question 1", "Answer 1");
         when(faqRepository.save(Mockito.any(FAQ.class))).thenReturn(faq2);
 
         String answer = faqService.insertFAQ(faqdto);
@@ -58,10 +55,8 @@ public class FAQRuleService {
 
     @Test
     public void UpdateFAQ() throws Exception{
-        FAQ faq2 = FAQ.builder()
-                .question("Question 1")
-                .answer("Answer 1")
-                .build();
+
+        FAQ faq2 = new FAQ("Question 1", "Answer 1");
         when(faqRepository.existsById(Mockito.anyInt())).thenReturn(true); // Mocking save for any FAQ object
         when(faqRepository.getReferenceById(anyInt())).thenReturn(faq2);
         String answer = faqService.updateFAQ(faq2);
@@ -71,10 +66,7 @@ public class FAQRuleService {
 
     @Test
     public void UpdateFAQFailure() throws Exception{
-        FAQ faq2 = FAQ.builder()
-                .question("Question 1")
-                .answer("Answer 1")
-                .build();
+        FAQ faq2 = new FAQ("Question 1", "Answer 1");
         when(faqRepository.existsById(Mockito.anyInt())).thenReturn(false); // Mocking save for any FAQ object
         String answer = faqService.updateFAQ(faq2);
 
@@ -106,14 +98,8 @@ public class FAQRuleService {
     public void GetAllFAQ() throws Exception{
 
         List<FAQ> list = new ArrayList<>();
-        FAQ faq2 = FAQ.builder()
-                .question("Question 1")
-                .answer("Answer 1")
-                .build();
-        FAQ faq3 = FAQ.builder()
-                .question("Question 2")
-                .answer("Answer 2")
-                .build();
+        FAQ faq2 = new FAQ("Question 1", "Answer 1");
+        FAQ faq3 = new FAQ("Question 2", "Answer 2");
         list.add(faq2); list.add(faq3);
 
         when(faqRepository.findAll()).thenReturn(list); // Mocking save for any FAQ object

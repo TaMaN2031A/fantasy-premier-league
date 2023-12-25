@@ -4,11 +4,11 @@ export const commonPrivilege = "COMMON";
 export const externalPrivilege = "EXTERNAL";
 export const internalPrivilege = "INTERNAL";
 
-export const serverHost = "http://localhost:8081";
+export const serverHost = "http://localhost:8080";
 export const clientID = "157567928601-tpi54p30l3rpsdlmrh7on2fmfup3tpct.apps.googleusercontent.com";
 
 export const paths = {
-    login: "/login",
+    login: "/",
     logout: "/logout",
     signup: "/signup",
     forgetPassword: "/forgetPassword",

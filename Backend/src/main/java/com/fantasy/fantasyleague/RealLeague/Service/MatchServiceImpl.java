@@ -12,20 +12,29 @@ import java.util.List;
 @Service
 public class MatchServiceImpl implements MatchService{
 
-    @Autowired
+    final
     PlayerStatisticsRepoository playerStatisticsRepoository;
 
-    @Autowired
+    final
     MatchRepository matchRepository;
 
-    @Autowired
+    final
     UpcomingMatchRepository upcomingMatchRepository;
 
-    @Autowired
+    final
     PlayerRepository playerRepository;
 
-    @Autowired
+    final
     TeamRepository teamRepository;
+
+    @Autowired
+    public MatchServiceImpl(PlayerStatisticsRepoository playerStatisticsRepoository, MatchRepository matchRepository, UpcomingMatchRepository upcomingMatchRepository, PlayerRepository playerRepository, TeamRepository teamRepository) {
+        this.playerStatisticsRepoository = playerStatisticsRepoository;
+        this.matchRepository = matchRepository;
+        this.upcomingMatchRepository = upcomingMatchRepository;
+        this.playerRepository = playerRepository;
+        this.teamRepository = teamRepository;
+    }
 
 
     @Override
@@ -36,13 +45,12 @@ public class MatchServiceImpl implements MatchService{
             return "Teams not in the league.";
         }
         UpcomingMatch upcomingMatch = upcomingMatchRepository.findByHomeAndAway(home , away) ;
-        if(upcomingMatch != null){
-            PlayedMatch match = UpcomingMatchToPlayedMatch(upcomingMatch , playedMatchDTO);
-            matchRepository.save(match);
-            generatePlayerStatistics(playedMatchDTO, match);
-        }else{
-            return "Match is not in this week.";
-        }
+        if(upcomingMatch == null) return "Match is not in this week.";
+
+        PlayedMatch match = UpcomingMatchToPlayedMatch(upcomingMatch , playedMatchDTO);
+        matchRepository.save(match);
+        generatePlayerStatistics(playedMatchDTO, match);
+
         return "Match is added successfully";
     }
 
@@ -51,12 +59,8 @@ public class MatchServiceImpl implements MatchService{
     private void generatePlayerStatistics(MatchStatisticsDTO playedMatchDTO, PlayedMatch match) {
         List<String> awayPlayers = playedMatchDTO.getAwayPlayersPlayed();
         List<String> homePlayers = playedMatchDTO.getHomePlayersPlayed();
-        for(String name : awayPlayers){
-            buildPlayerStatistics(playedMatchDTO, match , false , name );
-        }
-        for(String name : homePlayers){
-            buildPlayerStatistics(playedMatchDTO, match , true , name );
-        }
+        awayPlayers.forEach(name -> buildPlayerStatistics(playedMatchDTO, match , false , name ));
+        homePlayers.forEach(name -> buildPlayerStatistics(playedMatchDTO, match , true , name ));
 
     }
 
@@ -74,7 +78,7 @@ public class MatchServiceImpl implements MatchService{
     }
 
     public void buildPlayerStatistics(MatchStatisticsDTO playedMatchDTO, PlayedMatch match , boolean isHome, String name){
-        int goals =0 , yellowCards  = 0 , redCards= 0  , assists = 0 , saves = 0, cleanSheet = 0;
+        int goals  , yellowCards   , redCards  , assists , saves , cleanSheet ;
         if(isHome){
             goals = countStrings(playedMatchDTO.getHomePlayersScore() , name);
             yellowCards = countStrings(playedMatchDTO.getHomePlayersYellowCards() , name);
