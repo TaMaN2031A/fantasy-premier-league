@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 function Groups(props) {
-    return (
-        <div>
-            Groups
-        </div>
-    );
+  return (
+    <div className=" bg-slate-500 h-screen">
+        Certain Group
+    </div>
+  );
 }
 
 export default Groups;
