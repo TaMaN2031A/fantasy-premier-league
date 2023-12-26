@@ -50,20 +50,21 @@ public class Player {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
     private List<CurrentFormation> currentFormations;
 
-    @OneToOne(mappedBy = "captain")
-    private UserTeam captainOfTeam;
+    @OneToMany(mappedBy = "captain")
+    private List<UserTeam> captainOfTeam;
 
-    @OneToOne(mappedBy = "viceCaptain")
-    private UserTeam viceCaptainOfTeam;
-
-    @OneToOne(mappedBy = "captain")
-    private FormationStatusHistory captainOfTeam1;
-
-    @OneToOne(mappedBy = "viceCaptain")
-    private FormationStatusHistory viceCaptainOfTeam1;
+    @OneToMany(mappedBy = "viceCaptain")
+    private List<UserTeam> viceCaptainOfTeam;
 
     @OneToMany(mappedBy = "playerPoint")
     private List<PointHistory> pointHistory;
+
+    @OneToMany(mappedBy = "captain")
+    private List<FormationStatusHistory> captainOfTeam1;
+
+    @OneToMany(mappedBy = "viceCaptain")
+    private List<FormationStatusHistory> viceCaptainOfTeam1;
+
     public Player(String name, String position, int number_in_team, int id_of_team) {
         this.name = name;
         this.red_cards = 0;

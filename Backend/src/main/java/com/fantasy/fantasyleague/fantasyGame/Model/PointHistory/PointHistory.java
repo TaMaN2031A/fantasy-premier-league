@@ -8,14 +8,16 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
+@IdClass(PointHistoryComposite.class)
 public class PointHistory {
+
+    @Id
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "player_id", referencedColumnName = "id")
+    private Player playerPoint;
+
     @Id
     private int week_no;
     private int points;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "player_id", referencedColumnName = "id")
-    @Id
-    private Player playerPoint;
 
 }

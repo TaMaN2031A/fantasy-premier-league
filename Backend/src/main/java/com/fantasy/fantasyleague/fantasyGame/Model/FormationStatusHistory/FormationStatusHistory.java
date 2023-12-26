@@ -9,6 +9,7 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
+@IdClass(FormationStatusHistoryComposite.class)
 public class FormationStatusHistory {
     @Id
     @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.MERGE)
@@ -18,12 +19,12 @@ public class FormationStatusHistory {
     @Id
     private int week_no;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "captain_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "captain_id", referencedColumnName = "id", unique = false)
     private Player captain;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "vice_captain_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vice_captain_id", referencedColumnName = "id", unique = false)
     private Player viceCaptain;
 
     private boolean benchBoost;
