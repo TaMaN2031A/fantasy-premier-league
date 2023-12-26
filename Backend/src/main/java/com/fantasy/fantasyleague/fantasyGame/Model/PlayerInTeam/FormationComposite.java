@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 @EqualsAndHashCode
 public class FormationComposite implements Serializable {
-    private Player player;
-    private UserTeam userTeam;
+    private int player;
+    private String userTeam;
+    private int weekNum;
 }

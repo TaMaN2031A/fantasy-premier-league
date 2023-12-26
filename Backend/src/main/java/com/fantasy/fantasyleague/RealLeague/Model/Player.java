@@ -1,6 +1,6 @@
 package com.fantasy.fantasyleague.RealLeague.Model;
 
-import com.fantasy.fantasyleague.fantasyGame.Model.History.Snapshot;
+import com.fantasy.fantasyleague.fantasyGame.Model.Formation.CurrentFormation;
 import com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam.Formation;
 import com.fantasy.fantasyleague.fantasyGame.Model.UserTeam;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -46,7 +46,7 @@ public class Player {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
-    private List<Snapshot> snapshots;
+    private List<CurrentFormation> currentFormations;
 
     @OneToOne(mappedBy = "captain")
     private UserTeam captainOfTeam;

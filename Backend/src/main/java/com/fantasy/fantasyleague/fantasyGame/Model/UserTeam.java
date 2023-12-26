@@ -3,11 +3,9 @@ package com.fantasy.fantasyleague.fantasyGame.Model;
 
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
 import com.fantasy.fantasyleague.Registiration.Model.User;
-import com.fantasy.fantasyleague.fantasyGame.Model.History.Snapshot;
+import com.fantasy.fantasyleague.fantasyGame.Model.Formation.CurrentFormation;
 import com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam.Formation;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Check;
 
 import java.util.List;
 
@@ -37,6 +35,6 @@ public class UserTeam {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userTeam")
     private List<Formation> formations;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userTeam")
-    private List<Snapshot> snapshots;
+    private List<CurrentFormation> currentFormations;
 
 }

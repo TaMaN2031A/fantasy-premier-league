@@ -2,11 +2,8 @@ package com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam;
 
 
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
-import com.fantasy.fantasyleague.fantasyGame.Model.History.Snapshot;
 import com.fantasy.fantasyleague.fantasyGame.Model.UserTeam;
 import jakarta.persistence.*;
-
-import java.util.List;
 
 @Entity
 @IdClass(FormationComposite.class)
@@ -21,7 +18,8 @@ public class Formation {
     @JoinColumn(name = "UserName", referencedColumnName = "userName")
     private UserTeam userTeam;
 
-
+    @Id
+    private int weekNum;
     /*
     * associated attributes
     * */
