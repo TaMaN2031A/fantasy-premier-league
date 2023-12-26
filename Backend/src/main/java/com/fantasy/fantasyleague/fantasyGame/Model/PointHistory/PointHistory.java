@@ -9,7 +9,7 @@ public class PointHistory {
     private int week_no;
     private int points;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "player_id", referencedColumnName = "id")
     @Id
     private Player playerPoint;

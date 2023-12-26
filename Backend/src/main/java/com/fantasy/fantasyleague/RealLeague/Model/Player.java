@@ -61,8 +61,9 @@ public class Player {
 
     @OneToOne(mappedBy = "viceCaptain")
     private FormationStatusHistory viceCaptainOfTeam1;
-    @OneToOne(mappedBy = "playerPoint")
-    private PointHistory pointHistory;
+
+    @OneToMany(mappedBy = "playerPoint")
+    private List<PointHistory> pointHistory;
     public Player(String name, String position, int number_in_team, int id_of_team) {
         this.name = name;
         this.red_cards = 0;
