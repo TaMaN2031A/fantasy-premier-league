@@ -4,8 +4,12 @@ package com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam;
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
 import com.fantasy.fantasyleague.fantasyGame.Model.UserTeam;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Setter
+@Getter
 @IdClass(FormationComposite.class)
 public class Formation {
     @Id

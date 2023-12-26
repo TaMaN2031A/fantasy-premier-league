@@ -6,9 +6,12 @@ import com.fantasy.fantasyleague.Registiration.Model.User;
 import com.fantasy.fantasyleague.fantasyGame.Model.Formation.CurrentFormation;
 import com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam.Formation;
 import jakarta.persistence.*;
-
+import lombok.Getter;
+import lombok.Setter;
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 public class UserTeam {
 
@@ -16,9 +19,9 @@ public class UserTeam {
     @OneToOne
     @JoinColumn(name = "userName", referencedColumnName = "userName")
     private User userName;
-    private boolean benchBoost;
-    private boolean tripleCaptain;
-    private double moneyRemaining;
+    private Boolean benchBoost = false;
+    private Boolean tripleCaptain = false;
+    private Double moneyRemaining;
 
     /*
     * - foreign key to captain and vice-captain of specific team

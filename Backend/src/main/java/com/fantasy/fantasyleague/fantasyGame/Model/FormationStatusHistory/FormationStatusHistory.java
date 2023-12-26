@@ -3,7 +3,12 @@ package com.fantasy.fantasyleague.fantasyGame.Model.FormationStatusHistory;
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
 import com.fantasy.fantasyleague.fantasyGame.Model.UserTeam;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Setter
+@Getter
 public class FormationStatusHistory {
     @Id
     @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.MERGE)

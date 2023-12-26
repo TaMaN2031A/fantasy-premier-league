@@ -1,6 +1,7 @@
 package com.fantasy.fantasyleague.Registiration.Model;
 
 import com.fantasy.fantasyleague.fantasyGame.Model.UserTeam;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
