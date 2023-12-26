@@ -1,7 +1,9 @@
 package com.fantasy.fantasyleague.RealLeague.Model;
 
 import com.fantasy.fantasyleague.fantasyGame.Model.Formation.CurrentFormation;
+import com.fantasy.fantasyleague.fantasyGame.Model.FormationStatusHistory.FormationStatusHistory;
 import com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam.Formation;
+import com.fantasy.fantasyleague.fantasyGame.Model.PointHistory.PointHistory;
 import com.fantasy.fantasyleague.fantasyGame.Model.UserTeam;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -54,7 +56,13 @@ public class Player {
     @OneToOne(mappedBy = "viceCaptain")
     private UserTeam viceCaptainOfTeam;
 
+    @OneToOne(mappedBy = "captain")
+    private FormationStatusHistory captainOfTeam1;
 
+    @OneToOne(mappedBy = "viceCaptain")
+    private FormationStatusHistory viceCaptainOfTeam1;
+    @OneToOne(mappedBy = "playerPoint")
+    private PointHistory pointHistory;
     public Player(String name, String position, int number_in_team, int id_of_team) {
         this.name = name;
         this.red_cards = 0;
