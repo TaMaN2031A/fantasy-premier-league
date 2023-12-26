@@ -1,5 +1,8 @@
 package com.fantasy.fantasyleague.RealLeague.Model;
 
+import com.fantasy.fantasyleague.fantasyGame.Model.History.Snapshot;
+import com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam.Formation;
+import com.fantasy.fantasyleague.fantasyGame.Model.UserTeam;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,6 +39,22 @@ public class Player {
     private List<PlayerStatistics> playersStatistics;
     private String photo_link;
     private double price;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
+    private List<Formation> formations;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
+    private List<Snapshot> snapshots;
+
+    @OneToOne(mappedBy = "captain")
+    private UserTeam captainOfTeam;
+
+    @OneToOne(mappedBy = "viceCaptain")
+    private UserTeam viceCaptainOfTeam;
+
+
     public Player(String name, String position, int number_in_team, int id_of_team) {
         this.name = name;
         this.red_cards = 0;
@@ -49,6 +68,4 @@ public class Player {
         this.price = 0;
         this.id_of_team = id_of_team;
     }
-
-
 }

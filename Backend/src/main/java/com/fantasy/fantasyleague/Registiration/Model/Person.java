@@ -15,5 +15,5 @@ public class Person {
     private String firstName;
     private String lastName;
     private String password;
-    private String token="";
+    private String token = "";
 }
