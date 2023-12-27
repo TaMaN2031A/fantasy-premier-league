@@ -36,7 +36,7 @@ public class GroupServiceTests {
     public void GroupService_insertGroupSuccessfullyPrivateGroup_ReturnResponseEntity200AndID() {
         User user = new User();
         user.setUserName("Ahmed Abdul Aziz");
-        when(userRepository.findByUserName(anyString())).thenReturn(user);
+        when(userRepository.findByEmailOrUserName(anyString(), anyString())).thenReturn(user);
         Optional<GroupFantasy> empty = Optional.empty();
         GroupCreatorDTO groupCreatorDTO = new GroupCreatorDTO("El Ahly", 1, user.getUserName());
         GroupFantasy groupFantasy = new GroupFantasy();
@@ -50,14 +50,14 @@ public class GroupServiceTests {
     @Test
     public void GroupService_insertGroupUnsuccessfullyOwnerDoesNotExist_ReturnResponseEntity200() {
         User user = new User();
-        when(userRepository.findByUserName(anyString())).thenReturn(null);
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, groupService.createGroup(new GroupCreatorDTO()).getStatusCode());
+        when(userRepository.findByEmailOrUserName(anyString(), anyString())).thenReturn(null);
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, groupService.createGroup(new GroupCreatorDTO("ll",1,"l")).getStatusCode());
     }
     @Test
     public void GroupService_insertGroupUnsuccessfullyGroupSAMENAMEOFNAME_ReturnResponseEntity400() {
         User user = new User();
         user.setUserName("Ahmed Abdul Aziz");
-        when(userRepository.findByUserName(anyString())).thenReturn(user);
+        when(userRepository.findByEmailOrUserName(anyString(), anyString())).thenReturn(user);
         GroupFantasy groupFantasy = new GroupFantasy();
         Optional<GroupFantasy> empty = Optional.of(groupFantasy);
         GroupCreatorDTO groupCreatorDTO = new GroupCreatorDTO("El Ahly", 1, user.getUserName());
@@ -69,7 +69,7 @@ public class GroupServiceTests {
     public void GroupService_insertGroupSuccessfullyPublic_ReturnResponseEntity200Only() {
         User user = new User();
         user.setUserName("Ahmed Abdul Aziz");
-        when(userRepository.findByUserName(anyString())).thenReturn(user);
+        when(userRepository.findByEmailOrUserName(anyString(), anyString())).thenReturn(user);
         Optional<GroupFantasy> empty = Optional.empty();
         GroupCreatorDTO groupCreatorDTO = new GroupCreatorDTO("El Ahly", 0, user.getUserName());
         GroupFantasy groupFantasy = new GroupFantasy();
@@ -82,14 +82,14 @@ public class GroupServiceTests {
     }
     @Test
     public void GroupService_addUserToGroupUnsuccessfullyNotAvailableUser_Return400(){
-        when(userRepository.findByUserName("Khalid")).thenReturn(null);
+        when(userRepository.findByEmailOrUserName("Khalid", "Khalid")).thenReturn(null);
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, groupService.addUserToGroup(new UserToGroupAdderDTO()).getStatusCode());
     }
     @Test
     public void GroupService_addUserToGroupUnsuccessfullyNotAvailableGroup_return400(){
         User user = new User();
         user.setUserName("Ahmed Abdul Aziz");
-        when(userRepository.findByUserName(user.getUserName())).thenReturn(user);
+        when(userRepository.findByEmailOrUserName(user.getUserName(), user.getUserName())).thenReturn(user);
         when(groupRepository.getReferenceById(1)).thenReturn(null);
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, groupService.addUserToGroup(new UserToGroupAdderDTO("Ahmed Abdul Aziz", 1)).getStatusCode());
     }
@@ -104,7 +104,7 @@ public class GroupServiceTests {
         UserToGroupAdderDTO userToGroupAdderDTO = new UserToGroupAdderDTO();
         userToGroupAdderDTO.setUserName(user.getUserName());
         userToGroupAdderDTO.setGroupID(1);
-        when(userRepository.findByUserName(user.getUserName())).thenReturn(user);
+        when(userRepository.findByEmailOrUserName(user.getUserName(), user.getUserName())).thenReturn(user);
         when(groupRepository.getReferenceById(1)).thenReturn(groupFantasy);
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, groupService.addUserToGroup(userToGroupAdderDTO).getStatusCode());
     }
@@ -119,7 +119,7 @@ public class GroupServiceTests {
         UserToGroupAdderDTO userToGroupAdderDTO = new UserToGroupAdderDTO();
         userToGroupAdderDTO.setUserName(user.getUserName());
         userToGroupAdderDTO.setGroupID(1);
-        when(userRepository.findByUserName(user.getUserName())).thenReturn(user);
+        when(userRepository.findByEmailOrUserName(user.getUserName(), user.getUserName())).thenReturn(user);
         when(groupRepository.getReferenceById(1)).thenReturn(groupFantasy);
         when(userRepository.save(user)).thenReturn(user);
         when(groupRepository.save(groupFantasy)).thenReturn(groupFantasy);
@@ -141,7 +141,7 @@ public class GroupServiceTests {
         L.add(groupFantasy);
         User user = new User();
         user.setGroupFantasies(L);
-        when(userRepository.findByUserName("Yousef")).thenReturn(user);
+        when(userRepository.findByEmailOrUserName("Yousef", "Yousef")).thenReturn(user);
         Assertions.assertEquals(2, groupService.getGroupsOfUser("Yousef").size());
     }
     @Test
@@ -153,11 +153,11 @@ public class GroupServiceTests {
         L.add(groupFantasy);
         User user = new User();
         user.setGroupFantasies(L);
-        when(userRepository.findByUserName("Yousef")).thenReturn(user);
+        when(userRepository.findByEmailOrUserName("Yousef", "Yousef")).thenReturn(user);
         Assertions.assertEquals(2, groupService.getGroupsOfUser("Yousef").size());
     }
     @Test
-    public void GroupService_getSpecificUserInfoSuccessfully_returnGroupInfoDTO(){
+    public void GroupService_getSpecificUserInfoSuccessfully_returnList(){
         List<GroupFantasy> L = new ArrayList<>();
         GroupFantasy groupFantasy = new GroupFantasy(), groupFantasy1 = new GroupFantasy();
         groupFantasy1.setOwner(new User()); groupFantasy.setOwner(new User());
@@ -165,12 +165,8 @@ public class GroupServiceTests {
         L.add(groupFantasy);
         User user = new User();
         user.setGroupFantasies(L);
-        when(userRepository.findByUserName("Yousef")).thenReturn(user);
+        when(userRepository.findByEmailOrUserName("Yousef", "Yousef")).thenReturn(user);
         Assertions.assertEquals(2, groupService.getGroupsOfUser("Yousef").size());
-    }
-    @Test
-    public void GroupService_getSpecificGroupInfo_return400(){
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, groupService.getSpecificGroupInfo("1a76575", "").getStatusCode());
     }
     @Test
     public void GroupService_getSpecificGroupInfo_return200AndGroupInfoDTO(){
@@ -187,14 +183,13 @@ public class GroupServiceTests {
         list.add(user1); list.add(user);
         groupFantasy.setUsers(list);
         when(groupRepository.getReferenceById(anyInt())).thenReturn(groupFantasy);
-        Assertions.assertEquals(HttpStatus.OK, groupService.getSpecificGroupInfo("1","Amor").getStatusCode());
-        Assertions.assertEquals("Amor", groupService.getSpecificGroupInfo("1","Amor").getBody().getGroupDTOList().get(0).getUserName());
+        Assertions.assertEquals("Amor", groupService.getSpecificGroupInfo("1","Amor").get(0).getUserName());
     }
     @Test
     public void groupService_getPublicGroups_returnAGroup(){
         User user = new User();
         user.setUserName("Eyad");
-        when(userRepository.findByUserName("Eyad")).thenReturn(user);
+        when(userRepository.findByEmailOrUserName("Eyad", "Eyad")).thenReturn(user);
         List<GroupFantasy> groupFantasies = new ArrayList<>();
         GroupFantasy groupFantasy = new GroupFantasy();
         groupFantasy.setOwner(new User());
@@ -207,107 +202,5 @@ public class GroupServiceTests {
         when(groupRepository.findPublicGroupsNotContainingUser("Eyad")).thenReturn(list);
         Assertions.assertEquals(1, groupService.getPublicGroups("Eyad").size());
     }
-//    @Test
-//    public void GroupService_InsertGroupUnsuccessfullyTwoGroupsWithSameName_ReturnResponseEntity200() {
-//        User user = new User();
-//        when(userRepository.findByUserName(anyString())).thenReturn(user);
-//        when(userRepository.findByUserName().thenReturn(user);
-//        Assertions.assertEquals(HttpStatus.BAD_REQUEST, groupService.createGroup(new GroupCreatorDTO()).getStatusCode());
-//    }
-//    @Test
-//    public void TeamService_InsertTeamUnsuccessfullyAsTeamExists_ReturnResponseEntity400() {
-//        when(teamRepository.findByName(anyString())).thenReturn(new Team());
-//        ResponseEntity response = teamService.insertTeam("Damanhour");
-//        Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-//    }
-//
-//    @Test
-//    public void TeamService_UpdateTeamSuccessfully_ReturnResponseEntity200() {
-//        Team team = new Team("Damanhour");
-//        Team teamToUpdate = new Team("Somouha");
-//
-//        when(teamRepository.existsById(anyInt())).thenReturn(true);
-//        when(teamRepository.getReferenceById(anyInt())).thenReturn(team);
-//        when(teamRepository.save(Mockito.any(Team.class))).thenReturn(teamToUpdate);
-//
-//        ResponseEntity response = teamService.updateTeam(String.valueOf(anyInt()), "Somouha");
-//        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-//    }
-//
-//    @Test
-//    public void TeamService_UpdateTeamUnsuccessfullyAsIDDoesntExist_ReturnResponseEntity404() {
-//        Team team = new Team("Damanhour");
-//
-//        when(teamRepository.existsById(team.getID())).thenReturn(false);
-//        ResponseEntity response = teamService.updateTeam(String.valueOf(team.getID()), "Somouha");
-//
-//        Assertions.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-//    }
-//
-//    @Test
-//    public void TeamService_UpdateTeamNotGivingAnIntegerString_ReturnResponseEntity500() {
-//
-//        ResponseEntity response = teamService.updateTeam("NaN", "Somouha");
-//
-//        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-//    }
-//
-//    @Test
-//    public void TeamService_DeleteTeamSuccessfully_Returns200() {
-//
-//        when(teamRepository.existsById(anyInt())).thenReturn(true);
-//        doNothing().when(teamRepository).deleteById(anyInt());
-//
-//        ResponseEntity response = teamService.deleteTeam(String.valueOf(anyInt()));
-//
-//        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-//
-//    }
-//
-//    @Test
-//    public void TeamService_DeleteTeamUnsuccessfully_ReturnsNotFound404() {
-//
-//
-//        when(teamRepository.existsById(anyInt())).thenReturn(false);
-//
-//        ResponseEntity response = teamService.deleteTeam(String.valueOf(anyInt()));
-//
-//        Assertions.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-//    }
-//
-//    @Test
-//    public void TeamService_DeleteTeamUnsuccessfully_ReturnsInternalServerError500() {
-//
-//
-//        ResponseEntity response = teamService.deleteTeam("NaN");
-//        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-//
-//    }
-//
-//    @Test
-//    public void TeamService_GetAllTeam_ReturnsListOfTeams() {
-//        Team team = new Team("Alahly");
-//        Team team1 = new Team("AlZamalek");
-//        List<Team> teamList = new ArrayList<>();
-//        teamList.add(team1);
-//        teamList.add(team);
-//
-//
-//        when(teamRepository.findAll()).thenReturn(teamList);
-//
-//
-//        Assertions.assertEquals(teamList, teamService.getAllTeams());
-//
-//    }
-//
-//    @Test
-//    public void TeamService_DeleteAllTeams_Returns200() {
-//
-//        doNothing().when(teamRepository).deleteAll();
-//
-//        ResponseEntity response = teamService.deleteAllTeam();
-//        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-//
-//    }
 }
 
