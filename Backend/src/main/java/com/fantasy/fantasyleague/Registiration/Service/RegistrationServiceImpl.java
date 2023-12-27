@@ -119,7 +119,6 @@ public class RegistrationServiceImpl implements RegistrationService {
                 if (retrievedUser == null) {
                     adminRepository.save((Admin) user);
                 } else {
-                    System.out.println("hena"+user);
                     userRepository.save((User) user);
                 }
                 return Response.MailSentSuccessfully;
@@ -128,7 +127,6 @@ public class RegistrationServiceImpl implements RegistrationService {
             }
         }
         catch (Exception e){
-            System.out.println(e.toString());
             return Response.ErrorOccurred;
         }
     }
