@@ -1,10 +1,10 @@
 package com.fantasy.fantasyleague.RealLeague.Model;
 
+import com.fantasy.fantasyleague.Registiration.Model.User;
 import com.fantasy.fantasyleague.fantasyGame.Model.Formation.CurrentFormation;
 import com.fantasy.fantasyleague.fantasyGame.Model.FormationStatusHistory.FormationStatusHistory;
 import com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam.Formation;
 import com.fantasy.fantasyleague.fantasyGame.Model.PointHistory.PointHistory;
-import com.fantasy.fantasyleague.fantasyGame.Model.UserTeam;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -51,10 +51,10 @@ public class Player {
     private List<CurrentFormation> currentFormations;
 
     @OneToMany(mappedBy = "captain")
-    private List<UserTeam> captainOfTeam;
+    private List<User> captainOfTeam;
 
     @OneToMany(mappedBy = "viceCaptain")
-    private List<UserTeam> viceCaptainOfTeam;
+    private List<User> viceCaptainOfTeam;
 
     @OneToMany(mappedBy = "playerPoint")
     private List<PointHistory> pointHistory;

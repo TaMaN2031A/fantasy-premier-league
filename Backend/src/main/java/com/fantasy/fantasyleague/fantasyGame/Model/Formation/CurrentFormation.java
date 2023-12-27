@@ -3,7 +3,7 @@ package com.fantasy.fantasyleague.fantasyGame.Model.Formation;
 //import com.fantasy.fantasyleague.RealLeague.Model.Player;
 //import com.fantasy.fantasyleague.fantasyGame.Model.UserTeam;
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
-import com.fantasy.fantasyleague.fantasyGame.Model.UserTeam;
+import com.fantasy.fantasyleague.Registiration.Model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,7 +28,7 @@ public class CurrentFormation {
     @Id
     @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.MERGE)
     @JoinColumn(name = "UserName", referencedColumnName = "userName")
-    private UserTeam userTeam;
+    private User user;
 
     /*
     * associated variables

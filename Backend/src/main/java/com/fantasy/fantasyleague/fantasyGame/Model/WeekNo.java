@@ -1,14 +1,23 @@
 package com.fantasy.fantasyleague.fantasyGame.Model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 @Entity
 @Table(name = "week_no")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 public class WeekNo {
 
     public enum Lock {
-        X
+        X("X");
+
+        Lock(String x) {
+        }
     }
 
     @Id
@@ -20,6 +29,4 @@ public class WeekNo {
     private int weekNo = 0;
 
     // Constructors, getters, setters, and other methods
-
-
 }

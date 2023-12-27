@@ -7,5 +7,5 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class CurrentFormationComposite implements Serializable {
     private int player;
-    private String userTeam;
+    private String user;
 }

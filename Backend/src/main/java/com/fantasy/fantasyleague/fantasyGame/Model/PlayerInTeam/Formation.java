@@ -2,7 +2,7 @@ package com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam;
 
 
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
-import com.fantasy.fantasyleague.fantasyGame.Model.UserTeam;
+import com.fantasy.fantasyleague.Registiration.Model.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,7 @@ public class Formation {
     @Id
     @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.MERGE )
     @JoinColumn(name = "UserName", referencedColumnName = "userName")
-    private UserTeam userTeam;
+    private User user;
 
     @Id
     private int weekNum;
