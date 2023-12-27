@@ -1,10 +1,10 @@
 export const adminPrivilege = "ADMIN";
-export const userPrivilege = "ADMIN";
-export const commonPrivilege = "ADMIN";
-export const externalPrivilege = "ADMIN";
-export const internalPrivilege = "ADMIN";
+export const userPrivilege = "USER";
+export const commonPrivilege = "COMMON";
+export const externalPrivilege = "EXTERNAL";
+export const internalPrivilege = "INTERNAL";
 
-export const serverHost = "http://localhost:8080";
+export const serverHost = "http://localhost:8081";
 export const clientID = "157567928601-tpi54p30l3rpsdlmrh7on2fmfup3tpct.apps.googleusercontent.com";
 
 export const paths = {
@@ -34,12 +34,11 @@ export const paths = {
 
 export const toastStyle = {style: {background: '#000000'}};
 
-
 export const defaultPersonState = () => {
     return {
         isAuthorized: false,  /* to check if there is a  */
         username: "",
-        privilege: "ADMIN",
+        privilege: "",
         personObj: {}
     }
 }

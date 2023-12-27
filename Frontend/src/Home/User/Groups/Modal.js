@@ -1,6 +1,12 @@
 import { React, useState } from "react";
+import { createGroup } from "../../../Services/Groups/Groups";
+import { GetAuthDataFn } from "../../../Routes/wrapper";
+import { toast, ToastContainer } from "react-toastify";
+import { toastStyle } from "../../../collection";
 
-const Modal = ({ isOpen, closeModal, faqID, func }) => {
+const Modal = ({ isOpen, closeModal, func }) => {
+
+  const { person } = GetAuthDataFn();
   const [groupName, setGroupName] = useState("");
   const [visibility, setVisibility] = useState("public"); // 'public' as the default value
 
@@ -13,10 +19,16 @@ const Modal = ({ isOpen, closeModal, faqID, func }) => {
   };
 
   const handleSave = async () => {
-    console.log(groupName, visibility);
+    const newId = await createGroup({ groupName, isPrivate: visibility === "public" ? 0 : 1, userName: person.username });
+    // check if the newId is not null or undefined
+    console.log("new id = ", newId.Id);
+    if (newId) {
+      toast.success("New Group Id = " + newId, toastStyle);
+    }
     setGroupName("");
     setVisibility("public");
     closeModal();
+    await func();
   };
 
   const cancelSave = () => {

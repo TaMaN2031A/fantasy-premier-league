@@ -2,134 +2,22 @@ import React, { useEffect, useState } from "react";
 import Pagination from "../../Admin/Promotion/Pagination";
 import { useQuery } from "react-query";
 import {
-  GetAllPublicGroups,
+  getAllPublicGroups,
   addUserToGroup,
 } from "../../../Services/Groups/Groups";
 import { GetAuthDataFn } from "../../../Routes/wrapper";
 import logo from "./assets/header.png";
 
-function JoinGroups(props) {
-  const { person, setPerson } = GetAuthDataFn();
+function JoinGroups() {
 
-  useEffect(() => {
-    setPerson({
-      isAuthorized: true,
-      username: "test",
-      privilege: "user",
-      token: "test",
-      personObj: {},
-    });
-  }, []);
-
+  const { person } = GetAuthDataFn();
   const [groupID, setGroupID] = useState("");
-
-  //   const { data, isLoading, error, refetch } = useQuery(
-  //     ["UsersKey"],
-  //     () => [{ groupName: "hello", groupID: 1,  ownerName: "Amr", noParticipants: 12, avgPoints: 123}], //GetAllUsers(PageNo-1),
-  //     { refetchOnWindowFocus: false }
-  //   );
-
-  const data = [
-    {
-      groupName: "hello",
-      groupID: 1,
-      ownerName: "Amr",
-      noParticipants: 12,
-      avgPoints: 123,
-    },
-    {
-      groupName: "hello",
-      groupID: 1,
-      ownerName: "Amr",
-      noParticipants: 12,
-      avgPoints: 123,
-    },
-    {
-      groupName: "hello",
-      groupID: 1,
-      ownerName: "Amr",
-      noParticipants: 12,
-      avgPoints: 123,
-    },
-    {
-      groupName: "hello",
-      groupID: 1,
-      ownerName: "Amr",
-      noParticipants: 12,
-      avgPoints: 123,
-    },
-    {
-      groupName: "hello",
-      groupID: 1,
-      ownerName: "Amr",
-      noParticipants: 12,
-      avgPoints: 123,
-    },
-    {
-      groupName: "hello",
-      groupID: 1,
-      ownerName: "Amr",
-      noParticipants: 12,
-      avgPoints: 123,
-    },
-    {
-      groupName: "hello",
-      groupID: 1,
-      ownerName: "Amr",
-      noParticipants: 12,
-      avgPoints: 123,
-    },
-    {
-      groupName: "hello",
-      groupID: 1,
-      ownerName: "Amr",
-      noParticipants: 12,
-      avgPoints: 123,
-    },
-    {
-      groupName: "hello",
-      groupID: 1,
-      ownerName: "Amr",
-      noParticipants: 12,
-      avgPoints: 123,
-    },
-    {
-      groupName: "hello",
-      groupID: 1,
-      ownerName: "Amr",
-      noParticipants: 12,
-      avgPoints: 123,
-    },
-    {
-      groupName: "hello",
-      groupID: 1,
-      ownerName: "Amr",
-      noParticipants: 12,
-      avgPoints: 123,
-    },
-    {
-      groupName: "hello",
-      groupID: 1,
-      ownerName: "Amr",
-      noParticipants: 12,
-      avgPoints: 123,
-    },
-    {
-      groupName: "hello",
-      groupID: 1,
-      ownerName: "Amr",
-      noParticipants: 12,
-      avgPoints: 123,
-    },
-  ];
-
-  const isLoading = false;
-  const error = false;
+  const { data, isLoading, error, refetch } = useQuery("JoinGroups",() => getAllPublicGroups(person.username),{ refetchOnWindowFocus: false });
 
   const handleButtonClick = async (userName, groupID) => {
-    await addUserToGroup(userName, groupID);
+    await addUserToGroup({ userName, groupID });
     setGroupID("");
-    // await refetch();
+    await refetch();
   };
 
   if (isLoading) {
@@ -181,6 +69,7 @@ function JoinGroups(props) {
       </section>
     );
   }
+
   if (error) {
     return <p>Error loading users</p>;
   }
@@ -232,7 +121,7 @@ function JoinGroups(props) {
           <button
             type="button"
             onClick={() => {
-              handleButtonClick(person.userName, groupID);
+              handleButtonClick(person.username, groupID);
             }}
             className="min-w-full focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-2xl px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
           >
@@ -241,12 +130,6 @@ function JoinGroups(props) {
         </form>
         <hr className="border-b-2 mt-20 mb-10 border-gray-500 w-4/5 mx-auto" />
       </div>
-
-      {/* <div className="items-center">
-        <span className="text-customGreen font-bold items-center">
-          Public Groups
-        </span>{" "}
-      </div> */}
 
       <div className="mx-auto max-w-screen-xl px-4 opacity-75 pb-28 lg:px-12 ">
         <div className="text-5xl mb-8 text-gray-700 bg-gray-50 tracking-widest dark:bg-gray-700 text-center dark:text-gray-400 mt-5 px-4 py-3 rounded-2xl dark:bg-opacity-25">
@@ -296,7 +179,7 @@ function JoinGroups(props) {
                         className="bg-csut items-center p-0.5 text-lg w-2/3 font-medium text-center text-white hover:text-gray-800 rounded-lg dark:text-white dark:bg-customGreen dark:hover:text-black dark:focus:ring-2 dark:focus:ring-slate-500 dark:focus:ring-offset-2"
                         type="button"
                         onClick={(event) => {
-                          handleButtonClick(person.userName, group.code);
+                          handleButtonClick(person.username, group.groupID);
                         }}
                       >
                         Join

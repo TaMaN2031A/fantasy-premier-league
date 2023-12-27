@@ -11,6 +11,7 @@ function CreateGroup(props) {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
   return (
     <div>
       <button
@@ -20,7 +21,7 @@ function CreateGroup(props) {
       >
         Create a new group and invite your friends
       </button>
-      <Modal isOpen={isModalOpen} closeModal={closeModal} />
+      <Modal isOpen={isModalOpen} closeModal={closeModal} func={props.func}/>
     </div>
   );
 }

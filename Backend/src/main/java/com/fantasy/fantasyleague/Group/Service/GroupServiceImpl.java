@@ -50,7 +50,7 @@ public class GroupServiceImpl implements GroupService {
         Map<String, String> response = new HashMap<>();
         try {
             GroupFantasy groupFantasy = new GroupFantasy();
-            User user = userRepository.findByUserName(groupCreatorDTO.getUserName());
+            User user = userRepository.findByEmailOrUserName(groupCreatorDTO.getUserName(), groupCreatorDTO.getUserName());
             System.out.println(isNull(groupCreatorDTO));
             if (!isNull(groupCreatorDTO))
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -81,7 +81,7 @@ public class GroupServiceImpl implements GroupService {
 
     public ResponseEntity<Map<String, String>> addUserToGroup(UserToGroupAdderDTO userToGroupAdderDTO) {
         try {
-            User user = userRepository.findByUserName(userToGroupAdderDTO.getUserName());
+            User user = userRepository.findByEmailOrUserName(userToGroupAdderDTO.getUserName(), userToGroupAdderDTO.getUserName());
             GroupFantasy groupFantasy = groupRepository.getReferenceById(userToGroupAdderDTO.getGroupID());
             ResponseEntity<Map<String, String>> BAD_REQUEST = getMapResponseEntity(userToGroupAdderDTO, groupFantasy);
             if (BAD_REQUEST != null) return BAD_REQUEST;
@@ -96,29 +96,22 @@ public class GroupServiceImpl implements GroupService {
     }
 
     public List<GroupDTO> getGroupsOfUser(String userName) {
-        User user = userRepository.findByUserName(userName);
+        User user = userRepository.findByEmailOrUserName(userName, userName);
         return extracted(user.getGroupFantasies());
     }
 
-    public ResponseEntity<GroupInfoDTO> getSpecificGroupInfo(String groupID, String userName) {
-        try {
-            GroupInfoDTO groupInfoDTO = new GroupInfoDTO();
-            int id = Integer.parseInt(groupID);
-            GroupFantasy groupFantasy = this.groupRepository.getReferenceById(id);
-            int rank = 0;
-            for (; rank < groupFantasy.getUsers().size(); rank++)
-                if (groupFantasy.getUsers().get(rank).getUserName().equals(userName))
-                    break;
-            groupInfoDTO.setRankInGroup(rank + 1);
-            groupInfoDTO.setGroupDTOList(pushToList(groupFantasy.getUsers()));
-            return new ResponseEntity<>(groupInfoDTO, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public List<UserGroupDTO> getSpecificGroupInfo(String groupID, String userName) {
+        int id = Integer.parseInt(groupID);
+        GroupFantasy groupFantasy = this.groupRepository.getReferenceById(id);
+        int rank = 0;
+        for (; rank < groupFantasy.getUsers().size(); rank++)
+            if (groupFantasy.getUsers().get(rank).getUserName().equals(userName))
+                break;
+        return (pushToList(groupFantasy.getUsers()));
     }
 
     public List<GroupDTO> getPublicGroups(String userName) {
-        User user = userRepository.findByUserName(userName);
+        User user = userRepository.findByEmailOrUserName(userName, userName);
         List<GroupFantasy> publicGroups = groupRepository.findPublicGroupsNotContainingUser(user.getUserName());
         return extracted(publicGroups);
     }

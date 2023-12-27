@@ -2,123 +2,26 @@ import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import logo from "./assets/header.png";
 import { GetAuthDataFn } from "../../../Routes/wrapper";
+import { useQuery } from "react-query";
+import { getGroupInfo } from "../../../Services/Groups/Groups";
+import Loading from "../../Common/FAQ/Loading";
 
-function Groups(props) {
+function Groups() {
   const location = useLocation();
   const groupInfo = new URLSearchParams(location.search);
   const groupId = groupInfo.get("id");
   const groupName = groupInfo.get("name");
-
   const { person } = GetAuthDataFn();
 
-  const data = [
-    {
-      firstName: "Amr",
-      lastName: "Ahmed",
-      username: "amrahmed",
-      region: "Europe",
-      points: 1000,
-    },
-    {
-      firstName: "Emily",
-      lastName: "Johnson",
-      username: "emilyj",
-      region: "North America",
-      points: 850,
-    },
-    {
-      firstName: "Luis",
-      lastName: "Garcia",
-      username: "luisg",
-      region: "South America",
-      points: 920,
-    },
-    {
-      firstName: "Amr",
-      lastName: "Ahmed",
-      username: "AmrAhmed",
-      region: "Europe",
-      points: 1000,
-    },
-    {
-      firstName: "Emily",
-      lastName: "Johnson",
-      username: "emilyj",
-      region: "North America",
-      points: 850,
-    },
-    {
-      firstName: "Luis",
-      lastName: "Garcia",
-      username: "luisg",
-      region: "South America",
-      points: 920,
-    },
-    {
-      firstName: "Amr",
-      lastName: "Ahmed",
-      username: "amrahmed",
-      region: "Europe",
-      points: 1000,
-    },
-    {
-      firstName: "Emily",
-      lastName: "Johnson",
-      username: "emilyj",
-      region: "North America",
-      points: 850,
-    },
-    {
-      firstName: "Luis",
-      lastName: "Garcia",
-      username: "luisg",
-      region: "South America",
-      points: 920,
-    },
-    {
-      firstName: "Amr",
-      lastName: "Ahmed",
-      username: "amrahmed",
-      region: "Europe",
-      points: 1000,
-    },
-    {
-      firstName: "Emily",
-      lastName: "Johnson",
-      username: "emilyj",
-      region: "North America",
-      points: 850,
-    },
-    {
-      firstName: "Luis",
-      lastName: "Garcia",
-      username: "luisg",
-      region: "South America",
-      points: 920,
-    },
-    {
-      firstName: "Amr",
-      lastName: "Ahmed",
-      username: "amrahmed",
-      region: "Europe",
-      points: 1000,
-    },
-    {
-      firstName: "Emily",
-      lastName: "Johnson",
-      username: "emilyj",
-      region: "North America",
-      points: 850,
-    },
-    {
-      firstName: "Luis",
-      lastName: "Garcia",
-      username: "luisg",
-      region: "South America",
-      points: 920,
-    },
-    // Add more objects as needed...
-  ];
+  const { data, isLoading, error } = useQuery(
+    "GroupDetails",
+    () => getGroupInfo(groupId, person.username),
+    { refetchOnWindowFocus: false }
+  );
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 min-h-screen">
@@ -155,20 +58,28 @@ function Groups(props) {
                 </tr>
               </thead>
               <tbody>
-                {data.map((user, index) => (
-                  <tr
-                    key={index}
-                    className={`border-b text-lg dark:border-gray-700 text-gray-400 ${
-                      user.username === person.username ? "bg-gray-900" : ""
-                    }`}
-                  >
-                    <td className="px-4 py-3">{user.firstName}</td>
-                    <td className="px-4 py-3">{user.lastName}</td>
-                    <td className="px-4 py-3">{user.username}</td>
-                    <td className="px-4 py-3">{user.region}</td>
-                    <td className="px-4 py-3">{user.points}</td>
-                  </tr>
-                ))}
+                {isLoading ? (
+                  // skeletonLoading
+                  <div className="ml-44">
+                    <Loading />
+                  </div>
+                ) : (
+                  // quetions and answers
+                  data.map((user, index) => (
+                    <tr
+                      key={index}
+                      className={`border-b text-lg dark:border-gray-700 text-gray-400 ${
+                        user.username === person.username ? "bg-gray-900" : ""
+                      }`}
+                    >
+                      <td className="px-4 py-3">{user.firstName}</td>
+                      <td className="px-4 py-3">{user.lastName}</td>
+                      <td className="px-4 py-3">{user.userName}</td>
+                      <td className="px-4 py-3">{user.region}</td>
+                      <td className="px-4 py-3">{user.overallPoints}</td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

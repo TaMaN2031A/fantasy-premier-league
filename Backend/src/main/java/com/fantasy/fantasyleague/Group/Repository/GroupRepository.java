@@ -20,10 +20,11 @@ import java.util.Optional;
 public interface GroupRepository extends
         JpaRepository<GroupFantasy, Integer> {
     Optional<GroupFantasy> findByName(String name);
-    @Query("SELECT g FROM GroupFantasy g LEFT JOIN g.users u " +
-            "WHERE g.isPrivate = 0 AND u.userName <> :userName OR u IS NULL")
-    List<GroupFantasy> findPublicGroupsNotContainingUser(@Param("userName") String userName);
 
-
+    @Query("SELECT g FROM GroupFantasy g " +
+            "WHERE g.isPrivate = 0 AND " +
+            "g NOT IN (SELECT gf FROM GroupFantasy gf JOIN gf.users u " +
+            "WHERE (u.userName = :username OR u.email = :username))")
+    List<GroupFantasy> findPublicGroupsNotContainingUser(@Param("username") String userName);
 
 }

@@ -1,9 +1,6 @@
 package com.fantasy.fantasyleague.Group.Controller;
 
-import com.fantasy.fantasyleague.Group.DTO.GroupCreatorDTO;
-import com.fantasy.fantasyleague.Group.DTO.GroupDTO;
-import com.fantasy.fantasyleague.Group.DTO.GroupInfoDTO;
-import com.fantasy.fantasyleague.Group.DTO.UserToGroupAdderDTO;
+import com.fantasy.fantasyleague.Group.DTO.*;
 import com.fantasy.fantasyleague.Group.Model.GroupFantasy;
 import com.fantasy.fantasyleague.Group.Service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +20,19 @@ public class GroupController {
 
     @GetMapping("/getUserGroups/{userName}")
     public List<GroupDTO> getUserGroups(@PathVariable String userName) {
+        System.out.println(userName);
         return groupService.getGroupsOfUser(userName);
     }
 
     @GetMapping("/getPublicGroups/{userName}")
     public List<GroupDTO> getPublicGroups(@PathVariable String userName) {
+        System.out.println(userName);
         return groupService.getPublicGroups(userName);
     }
 
     @GetMapping("/getSpecificGroupInfo/{groupID}/{userName}")
-    public ResponseEntity<GroupInfoDTO> getSpecificGroupInfo(@PathVariable String groupID,
-                                                             @PathVariable String userName) {
+    public List<UserGroupDTO> getSpecificGroupInfo(@PathVariable String groupID,
+                                                   @PathVariable String userName) {
         return groupService.getSpecificGroupInfo(groupID, userName);
     }
 

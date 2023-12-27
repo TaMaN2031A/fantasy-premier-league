@@ -1,9 +1,6 @@
 package com.fantasy.fantasyleague.Group.Service;
 
-import com.fantasy.fantasyleague.Group.DTO.GroupCreatorDTO;
-import com.fantasy.fantasyleague.Group.DTO.GroupDTO;
-import com.fantasy.fantasyleague.Group.DTO.GroupInfoDTO;
-import com.fantasy.fantasyleague.Group.DTO.UserToGroupAdderDTO;
+import com.fantasy.fantasyleague.Group.DTO.*;
 import com.fantasy.fantasyleague.Group.Model.GroupFantasy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,6 +13,6 @@ public interface GroupService {
     List<GroupFantasy> getAll();
     ResponseEntity<Map<String, String>> addUserToGroup(UserToGroupAdderDTO userToGroupAdderDTO);
     List<GroupDTO> getGroupsOfUser(String userName);
-    ResponseEntity<GroupInfoDTO> getSpecificGroupInfo(String groupID, String userName);
+    List<UserGroupDTO> getSpecificGroupInfo(String groupID, String userName);
     List<GroupDTO> getPublicGroups(String userName);
 }

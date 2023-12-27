@@ -3,67 +3,18 @@ import logo from "./assets/header.png";
 import GroupCard from "./GroupCard";
 import CreateGroup from "./CreateGroup";
 import Loading from "../../Common/FAQ/Loading";
+import { useQuery } from "react-query";
+import { fetchYourGroups } from "../../../Services/Groups/Groups";
+import { GetAuthDataFn } from "../../../Routes/wrapper";
 
-function UserGroups(props) {
-  const data = [
-    {
-      groupName: "Codeforces",
-      groupId: 1,
-      OwnerUsername: "Amr Ahmed",
-      participantsNo: 5,
-      avgPoints: 1000,
-    },
-    {
-      groupName: "Leetcode",
-      groupId: 2,
-      OwnerUsername: "Amr Ahmed",
-      participantsNo: 5,
-      avgPoints: 1000,
-    },
-    {
-      groupName: "Atcoder",
-      groupId: 1,
-      OwnerUsername: "Amr Ahmed",
-      participantsNo: 5,
-      avgPoints: 1000,
-    },
-    {
-      groupName: "Algorithms",
-      groupId: 1,
-      OwnerUsername: "Amr Ahmed",
-      participantsNo: 5,
-      avgPoints: 1000,
-    },
-    {
-      groupName: "Database",
-      groupId: 1,
-      OwnerUsername: "Amr Ahmed",
-      participantsNo: 5,
-      avgPoints: 1000,
-    },
-    {
-      groupName: "Software",
-      groupId: 1,
-      OwnerUsername: "Amr Ahmed",
-      participantsNo: 5,
-      avgPoints: 1000,
-    },
-    {
-      groupName: "Networks",
-      groupId: 1,
-      OwnerUsername: "Amr Ahmed",
-      participantsNo: 5,
-      avgPoints: 1000,
-    },
-    {
-      groupName: "AI",
-      groupId: 1,
-      OwnerUsername: "Amr Ahmed",
-      participantsNo: 5,
-      avgPoints: 1000,
-    },
-  ];
-  let isLoading = false;
+function UserGroups() {
+
+  const { person } = GetAuthDataFn();
+  const { data, isLoading, error, refetch } = useQuery("UserGroups", () => fetchYourGroups(person.username), {refetchOnWindowFocus: false});
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
   return (
     <div className="bg-gradient-to-r from-slate-800 to-gray-900 min-h-screen min-w-full">
@@ -93,7 +44,7 @@ function UserGroups(props) {
             <span>your friends and compete together for higher ranking.</span>
           </div>
 
-          <CreateGroup />
+          <CreateGroup func={refetch}/>
         </div>
         <img
           src={logo}
@@ -115,9 +66,9 @@ function UserGroups(props) {
             <li className="text-left mb-16">
               <GroupCard
                 groupName={item.groupName}
-                groupId={item.groupId}
-                OwnerUsername={item.OwnerUsername}
-                participantsNo={item.participantsNo}
+                groupId={item.groupID}
+                OwnerUsername={item.ownerName}
+                participantsNo={item.noParticipants}
                 avgPoints={item.avgPoints}
               />{" "}
             </li>
