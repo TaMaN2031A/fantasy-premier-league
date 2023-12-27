@@ -33,6 +33,9 @@ public class TestSignInAndSignUp {
     private AdminRepository adminRepo;
 
     @Autowired
+    private UserRepository userRepo;
+
+    @Autowired
     PasswordEncoder passwordEncoder;
 
     @Test

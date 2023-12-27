@@ -3,15 +3,7 @@ package com.fantasy.fantasyleague.RealLeague.Controller;
 import com.fantasy.fantasyleague.RealLeague.DTO.TopPlayer;
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
 import com.fantasy.fantasyleague.RealLeague.Model.Team;
-import com.fantasy.fantasyleague.RealLeague.Repository.PlayerRepository;
-import com.fantasy.fantasyleague.RealLeague.Repository.TeamRepository;
 import com.fantasy.fantasyleague.RealLeague.Service.LeagueStatisticsService;
-import com.fantasy.fantasyleague.Registiration.DTO.SignInDTO;
-import com.fantasy.fantasyleague.Registiration.Model.Role;
-import com.fantasy.fantasyleague.Registiration.Model.User;
-import com.fantasy.fantasyleague.Registiration.Repository.UserRepository;
-import com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam.FormationHistory;
-import com.fantasy.fantasyleague.fantasyGame.Repository.FormationHistoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,18 +18,7 @@ import java.util.List;
 public class LeagueStatisticsController {
     @Autowired
     LeagueStatisticsService leagueStatisticsService;
-    @Autowired
-    private UserRepository userRepository;
 
-    @Autowired
-    private FormationHistoryRepo formationHistoryRepo;
-
-
-    @Autowired
-    private TeamRepository teamRepository;
-
-    @Autowired
-    private PlayerRepository playerRepository;
     @GetMapping("/getLeagueStandings")
     public List<Team> getLeagueStandings() {
         return leagueStatisticsService.getLeagueStandings();
@@ -57,6 +38,4 @@ public class LeagueStatisticsController {
     public List<TopPlayer> getTopCleanSheets() {
         return leagueStatisticsService.getTopCleanSheets();
     }
-
-
 }

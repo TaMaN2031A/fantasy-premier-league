@@ -44,6 +44,7 @@ public class LeagueStatisticsServiceTest {
 
     @Test
     public void testGetTop() {
+        MockitoAnnotations.openMocks(this);
 
         // Sample players for testing
         Player player1 = new Player();
