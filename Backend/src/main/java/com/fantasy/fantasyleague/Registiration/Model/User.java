@@ -1,10 +1,41 @@
 package com.fantasy.fantasyleague.Registiration.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.fantasy.fantasyleague.RealLeague.Model.Player;
+import com.fantasy.fantasyleague.fantasyGame.Model.Formation.CurrentFormation;
+import com.fantasy.fantasyleague.fantasyGame.Model.FormationStatusHistory.FormationStatusHistory;
+import com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam.FormationHistory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "users")
-public class User extends Person {
+public class User extends Person implements Serializable {
+    // @OneToOne(mappedBy = "userName", cascade = CascadeType.ALL)
+    // private UserTeam team;
+    @Column(nullable = true)
+    private Boolean benchBoost = false;
+    @Column(nullable = true)
+    private Boolean tripleCaptain = false;
+    @Column(nullable = true)
+    private Double moneyRemaining = 100.0;
+    @Column(nullable = true,name = "free_transfers")
+    private int freeTransfers = 2;
+    @Column(nullable = true,name = "points")
+    private int points = 0;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "captain_id", referencedColumnName = "id")
+    private Player captain ;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vice_captain_id", referencedColumnName = "id")
+    private Player viceCaptain ;
 
 }
