@@ -5,11 +5,15 @@ import com.fantasy.fantasyleague.fantasyGame.Model.Formation.CurrentFormation;
 import com.fantasy.fantasyleague.fantasyGame.Model.FormationStatusHistory.FormationStatusHistory;
 import com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam.Formation;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "users")
 public class User extends Person implements Serializable {
     // @OneToOne(mappedBy = "userName", cascade = CascadeType.ALL)

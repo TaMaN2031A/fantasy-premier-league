@@ -13,16 +13,9 @@ import lombok.NoArgsConstructor;
 @Getter
 public class WeekNo {
 
-    public enum Lock {
-        X("X");
-
-        Lock(String x) {
-        }
-    }
-
     @Id
     @Enumerated(EnumType.STRING)
-    @Column(name = "`Lock`", nullable = false, length = 1)
+    @Column(name = "`Lock`", nullable = false)
     private Lock lock = Lock.X;
 
     @Column(nullable = false)
