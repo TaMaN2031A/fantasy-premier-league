@@ -102,16 +102,16 @@ public class GroupServiceImpl implements GroupService {
 
     public ResponseEntity<GroupInfoDTO> getSpecificGroupInfo(String groupID, String userName) {
         try {
-        GroupInfoDTO groupInfoDTO = new GroupInfoDTO();
-        GroupFantasy groupFantasy = this.groupRepository.getReferenceById(Integer.valueOf(groupID));
-        int rank = 0;
-        for (; rank < groupFantasy.getUsers().size(); rank++) {
-            if (groupFantasy.getUsers().get(rank).getUserName().equals(userName))
-                break;
-        }
-        groupInfoDTO.setRankInGroup(rank + 1);
-        groupInfoDTO.setGroupDTOList(pushToList(groupFantasy.getUsers()));
-        return new ResponseEntity<>(groupInfoDTO, HttpStatus.OK);
+            GroupInfoDTO groupInfoDTO = new GroupInfoDTO();
+            int id = Integer.parseInt(groupID);
+            GroupFantasy groupFantasy = this.groupRepository.getReferenceById(id);
+            int rank = 0;
+            for (; rank < groupFantasy.getUsers().size(); rank++)
+                if (groupFantasy.getUsers().get(rank).getUserName().equals(userName))
+                    break;
+            groupInfoDTO.setRankInGroup(rank + 1);
+            groupInfoDTO.setGroupDTOList(pushToList(groupFantasy.getUsers()));
+            return new ResponseEntity<>(groupInfoDTO, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
