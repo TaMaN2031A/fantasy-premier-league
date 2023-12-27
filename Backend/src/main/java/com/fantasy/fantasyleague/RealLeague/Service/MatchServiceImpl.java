@@ -3,6 +3,7 @@ package com.fantasy.fantasyleague.RealLeague.Service;
 import com.fantasy.fantasyleague.RealLeague.DTO.MatchStatisticsDTO;
 import com.fantasy.fantasyleague.RealLeague.Model.*;
 import com.fantasy.fantasyleague.RealLeague.Repository.*;
+import com.fantasy.fantasyleague.fantasyGame.Service.PointsCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,14 +28,23 @@ public class MatchServiceImpl implements MatchService{
     final
     TeamRepository teamRepository;
 
+    final PointsCalculator pointsCalculator;
+
     @Autowired
-    public MatchServiceImpl(PlayerStatisticsRepoository playerStatisticsRepoository, MatchRepository matchRepository, UpcomingMatchRepository upcomingMatchRepository, PlayerRepository playerRepository, TeamRepository teamRepository) {
+    public MatchServiceImpl(PlayerStatisticsRepoository playerStatisticsRepoository,
+                            MatchRepository matchRepository,
+                            UpcomingMatchRepository upcomingMatchRepository,
+                            PlayerRepository playerRepository,
+                            TeamRepository teamRepository,
+                            PointsCalculator pointsCalculator) {
         this.playerStatisticsRepoository = playerStatisticsRepoository;
         this.matchRepository = matchRepository;
         this.upcomingMatchRepository = upcomingMatchRepository;
         this.playerRepository = playerRepository;
         this.teamRepository = teamRepository;
+        this.pointsCalculator = pointsCalculator;
     }
+
 
 
     @Override
@@ -46,6 +56,9 @@ public class MatchServiceImpl implements MatchService{
         }
         UpcomingMatch upcomingMatch = upcomingMatchRepository.findByHomeAndAway(home , away) ;
         if(upcomingMatch == null) return "Match is not in this week.";
+
+        // calculate points given players performance and stats.
+        pointsCalculator.execute(playedMatchDTO);
 
         PlayedMatch match = UpcomingMatchToPlayedMatch(upcomingMatch , playedMatchDTO);
         matchRepository.save(match);

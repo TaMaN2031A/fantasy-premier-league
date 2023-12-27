@@ -5,6 +5,7 @@ import com.fantasy.fantasyleague.Registiration.DTO.GoogleDTO;
 import com.fantasy.fantasyleague.Registiration.DTO.SignInDTO;
 
 import com.fantasy.fantasyleague.Registiration.Model.Admin;
+import com.fantasy.fantasyleague.Registiration.Model.Response;
 import com.fantasy.fantasyleague.Registiration.Model.Role;
 import com.fantasy.fantasyleague.Registiration.Model.User;
 import com.fantasy.fantasyleague.Registiration.Repository.AdminRepository;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
@@ -33,6 +35,9 @@ public class TestSignInAndSignUp {
     private AdminRepository adminRepo;
 
     @Autowired
+    private UserRepository userRepo;
+
+    @Autowired
     PasswordEncoder passwordEncoder;
 
     @Test
@@ -48,8 +53,8 @@ public class TestSignInAndSignUp {
         signup.setEmail("mohamed.arous9401@gmail.com");
         signup.setPassword("12259861");
         signup.setUserName("mohamed_arous1");
-        assertEquals(service.addUser(signup), "Sign up successful");
-        assertEquals(service.validate(signin) , "Login successful");
+        assertEquals(service.addUser(signup), ResponseEntity.ok("mohamed_arous1"));
+        assertEquals(service.validate(signin) , ResponseEntity.ok("mohamed_arous1"));
     }
 
     @Test
@@ -66,7 +71,7 @@ public class TestSignInAndSignUp {
         admin.setPassword(passwordEncoder.encode("12259861"));
         admin.setUserName("mohamed_arous");
         adminRepo.save(admin);
-        assertEquals(service.validate(signin) , "Login successful");
+        assertEquals(service.validate(signin) , ResponseEntity.ok("mohamed_arous"));
     }
 
     @Test
@@ -83,7 +88,7 @@ public class TestSignInAndSignUp {
         admin.setPassword(passwordEncoder.encode("12315445"));
         admin.setUserName("mohamed_arous5");
         adminRepo.save(admin);
-        assertEquals(service.validate(signin) , "Incorrect username or password");
+        assertEquals(service.validate(signin) , ResponseEntity.internalServerError().body(Response.wrongCredentials));
     }
 
     @Test
@@ -94,7 +99,7 @@ public class TestSignInAndSignUp {
         signin.setUserNameOrEmail("amr_ahmed");
         signin.setPassword("123456789");
         signin.setRole(Role.ADMIN);
-        assertEquals(service.validate(signin) , "User does not exist");
+        assertEquals(service.validate(signin) , ResponseEntity.notFound().build());
     }
 
     @Test
@@ -105,7 +110,7 @@ public class TestSignInAndSignUp {
         signin.setUserNameOrEmail("amr_ahmed");
         signin.setPassword("123456789");
         signin.setRole(Role.USER);
-        assertEquals(service.validate(signin) , "User does not exist");
+        assertEquals(service.validate(signin) , ResponseEntity.notFound().build());
     }
 
     @Test
@@ -121,8 +126,8 @@ public class TestSignInAndSignUp {
         signup.setEmail("mohamed.arous9402@gmail.com");
         signup.setPassword("arousss2");
         signup.setUserName("mohamed_arous2");
-        assertEquals(service.addUser(signup), "Sign up successful");
-        assertEquals(service.validate(signin) , "Login successful");
+        assertEquals(service.addUser(signup), ResponseEntity.ok("mohamed_arous2"));
+        assertEquals(service.validate(signin) , ResponseEntity.ok("mohamed_arous2"));
     }
 
 
@@ -140,7 +145,7 @@ public class TestSignInAndSignUp {
         admin.setPassword(passwordEncoder.encode("arousss3"));
         admin.setUserName("mohamed_arous3");
         adminRepo.save(admin);
-        assertEquals(service.validate(signin) , "Login successful");
+        assertEquals(service.validate(signin) , ResponseEntity.ok("mohamed_arous3"));
     }
 
     @Test
@@ -153,7 +158,7 @@ public class TestSignInAndSignUp {
         signup.setEmail("mohamed.arous9401@gmail.com");
         signup.setPassword("12259861");
         signup.setUserName("mohamed_arous11");
-        assertEquals(service.addUser(signup), "credentials already exists");
+        assertEquals(service.addUser(signup), ResponseEntity.badRequest().body(Response.dataExist));
     }
     @Test
     void checkSignInAndSignUp9() {
@@ -165,7 +170,7 @@ public class TestSignInAndSignUp {
         signup.setEmail("mohamed.arous9422@gmail.com");
         signup.setPassword("12259861");
         signup.setUserName("mohamed_arous1");
-        assertEquals(service.addUser(signup), "credentials already exists");
+        assertEquals(service.addUser(signup), ResponseEntity.badRequest().body(Response.dataExist));
     }
 
 }

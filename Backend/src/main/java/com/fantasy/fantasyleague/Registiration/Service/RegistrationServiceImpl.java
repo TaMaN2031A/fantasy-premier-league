@@ -7,6 +7,7 @@ import com.fantasy.fantasyleague.Registiration.Repository.UserRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -32,47 +33,50 @@ public class RegistrationServiceImpl implements RegistrationService {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
     @Override
-    public String addUser(User user) {
+    public ResponseEntity<String> addUser(User user) {
         Person retrievedUser = findEntity(adminRepository,userRepository,user.getEmail(), user.getUserName(), Role.USER);
         Person retrievedAdmin = findEntity(adminRepository,userRepository,user.getEmail(), user.getUserName(), Role.ADMIN);
         if(retrievedUser != null || retrievedAdmin != null)
-            return Response.dataExist;
+            return ResponseEntity.badRequest().body(Response.dataExist);
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        return Response.signUpSuccessfully;
+        return ResponseEntity.ok(user.getUserName());
     }
 
     @Override
-    public String validate(SignInDTO signInDTO) {
+    public ResponseEntity<String> validate(SignInDTO signInDTO) {
         Person entity = findEntity(adminRepository,userRepository,signInDTO.getUserNameOrEmail(), signInDTO.getUserNameOrEmail(), signInDTO.getRole());
         if(entity == null)
-            return Response.noUser;
+            return ResponseEntity.notFound().build();
         Boolean response = checkPassword(signInDTO.getPassword(), entity.getPassword());
-        return response == Boolean.TRUE ? Response.loginSuccessfully : Response.wrongCredentials;
+        return response == Boolean.TRUE ? ResponseEntity.ok(entity.getUserName()) : ResponseEntity.internalServerError().body(Response.wrongCredentials);
     }
 
     @Override
-    public String validateGoogle(GoogleDTO googleDTO) {
+    public ResponseEntity<String> validateGoogle(GoogleDTO googleDTO) {
         return googleDTO.getRole() == Role.ADMIN ?
                 validateAdminUsingGoogle(googleDTO.getEmail()):
                 validateUserUsingGoogle(googleDTO);
     }
 
-    private String validateUserUsingGoogle(GoogleDTO googleDTO) {
+    private ResponseEntity<String> validateUserUsingGoogle(GoogleDTO googleDTO) {
 
         Optional<User> retrievedUser = userRepository.findByEmail(googleDTO.getEmail());
         if(retrievedUser.isEmpty()) {
             User user = googleDTO.userMapper(this.passwordEncoder.encode(RandomString.make(8)));
             userRepository.save(user);
+            return ResponseEntity.ok(user.getUserName());
         }
-        return Response.loginSuccessfully;
+        return ResponseEntity.ok(retrievedUser.get().getUserName());
     }
 
-    private String validateAdminUsingGoogle(String email) {
+    private ResponseEntity<String> validateAdminUsingGoogle(String email) {
         Optional<Admin> retrievedAdmin = adminRepository.findByEmail(email);
-        if(retrievedAdmin.isPresent())
-            return Response.loginSuccessfully;
-        return Response.noUser;
+        return
+                retrievedAdmin.map(
+                                admin -> ResponseEntity.ok(admin.getUserName()))
+                        .orElseGet(() -> ResponseEntity.notFound().build()
+                        );
     }
 
     @Override
@@ -119,6 +123,7 @@ public class RegistrationServiceImpl implements RegistrationService {
                 if (retrievedUser == null) {
                     adminRepository.save((Admin) user);
                 } else {
+                    System.out.println("hena"+user);
                     userRepository.save((User) user);
                 }
                 return Response.MailSentSuccessfully;
@@ -127,6 +132,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             }
         }
         catch (Exception e){
+            System.out.println(e.toString());
             return Response.ErrorOccurred;
         }
     }

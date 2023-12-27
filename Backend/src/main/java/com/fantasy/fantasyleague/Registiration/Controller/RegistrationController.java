@@ -22,24 +22,18 @@ public class RegistrationController {
     }
 
     @PostMapping("/sign-up")
-    public String saveUser(@RequestBody User user) {
-        String response = registrationService.addUser(user);
-        System.out.println(response);
-        return response;
+    public ResponseEntity<String> saveUser(@RequestBody User user) {
+        return registrationService.addUser(user);
     }
 
     @PostMapping("/sign-in")
-    public String signIn(@RequestBody SignInDTO signInDTO) {
-        String response = registrationService.validate(signInDTO);
-        System.out.println(response);
-        return response;
+    public ResponseEntity<String> signIn(@RequestBody SignInDTO signInDTO) {
+        return registrationService.validate(signInDTO);
     }
 
     @PostMapping("/oauth/google")
-    public String signInWithGoogle(@RequestBody GoogleDTO googleDTO) {
-        String response = registrationService.validateGoogle(googleDTO);
-        System.out.println(response);
-        return response;
+    public ResponseEntity<String> signInWithGoogle(@RequestBody GoogleDTO googleDTO) {
+        return registrationService.validateGoogle(googleDTO);
     }
     @PostMapping("/ForgetPassword")
     public String forgetPassword(@RequestBody JsonNode emailDetails){

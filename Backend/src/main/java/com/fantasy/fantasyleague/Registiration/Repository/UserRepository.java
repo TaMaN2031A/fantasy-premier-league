@@ -12,12 +12,12 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, String> {
 
     Optional<User> findByEmail(String email);
-
+    Optional<User> findByUserName(String userName);
     @Query("SELECT u FROM User u WHERE u.email = :email OR u.userName = :userName")
     User findByEmailOrUserName(String email, String userName);
-// get all users
+    // get all users
     @Query("SELECT new com.fantasy.fantasyleague.Registiration.DTO.AdminPromotionDTO(u.email, u.userName) FROM User u")
     Page<User> findAllUsers(Pageable pageable);
-// search by specification
+    // search by specification
     Page<User> findAll(Specification<User> spec, Pageable pageable);
 }
