@@ -18,28 +18,28 @@ public class WeekNoRepoTest {
 
     @Test
     void InsertTest(){
-        WeekNo weekNo = new WeekNo(Lock.X,5);
+        WeekNo weekNo = new WeekNo(Lock.X,1);
         weekNoRepo.save(weekNo);
-        weekNoRepo.incrementWeek();
         assertEquals(weekNoRepo.count(),1);
     }
 
-//    @Test
-//    void GetTest(){
-////        int weekNo = this.weekNoRepo.findByLock(WeekNo.Lock.X).getWeekNo();
-//        assertEquals(weekNo, 0);
-//    }
+    @Test
+    void GetTest(){
+        weekNoRepo.save(new WeekNo(Lock.X, 0));
+        int weekNo = this.weekNoRepo.findById(Lock.X).get().getWeekNo();
+        assertEquals(weekNo, 0);
+    }
 
-//    @Test
-//    void UpdateTest(){
-//        WeekNo initialWeekNo = new WeekNo(WeekNo.Lock.X, 1);
-//        weekNoRepo.save(initialWeekNo);
-//
-//        WeekNo updatedWeekNo = new WeekNo(WeekNo.Lock.X, 2);
-//        weekNoRepo.save(updatedWeekNo);
-//
-////        int weekNo = this.weekNoRepo.findByLock(WeekNo.Lock.X).getWeekNo();
-//
-//        assertEquals(weekNo, 2);
-//    }
+    @Test
+    void ResetTest(){
+        weekNoRepo.save(new WeekNo(Lock.X, 39));
+        int weekNo = weekNoRepo.findById(Lock.X).get().getWeekNo();
+        assertEquals(weekNo, 39);
+        if(weekNo>38){
+            weekNoRepo.save(new WeekNo(Lock.X, 0));
+        }
+        assertEquals(weekNoRepo.findById(Lock.X).get().getWeekNo(), 0);
+    }
+
+
 }

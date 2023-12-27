@@ -18,7 +18,7 @@ public class PointHistory {
     @Id
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL )
     @JoinColumn(name = "player_id", referencedColumnName = "id",updatable = false)
-    private Player playerPoint;
+    private Player player;
 
     @Id
     private int week_no;

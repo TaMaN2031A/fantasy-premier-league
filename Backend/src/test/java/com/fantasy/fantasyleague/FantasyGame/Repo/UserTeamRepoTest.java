@@ -8,10 +8,10 @@ import com.fantasy.fantasyleague.Registiration.DTO.SignInDTO;
 import com.fantasy.fantasyleague.Registiration.Model.Role;
 import com.fantasy.fantasyleague.Registiration.Model.User;
 import com.fantasy.fantasyleague.Registiration.Repository.UserRepository;
-import com.fantasy.fantasyleague.Registiration.Service.RegistrationService;
-import com.fantasy.fantasyleague.fantasyGame.Model.Formation.CurrentFormation;
-import com.fantasy.fantasyleague.fantasyGame.Model.FormationStatusHistory.FormationStatusHistory;
-import com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam.Formation;
+import com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam.FormationHistory;
+import com.fantasy.fantasyleague.fantasyGame.Repository.CurrentFormationRepo;
+import com.fantasy.fantasyleague.fantasyGame.Repository.FormationHistoryRepo;
+import com.fantasy.fantasyleague.fantasyGame.Repository.FormationStatusHistoryRepo;
 import com.fantasy.fantasyleague.fantasyGame.Repository.PointHistoryRepo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,10 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
@@ -31,7 +32,8 @@ public class UserTeamRepoTest {
     private UserRepository userRepository;
 
     @Autowired
-    private PointHistoryRepo pointHistoryRepo;
+    private FormationHistoryRepo formationHistoryRepo;
+
 
     @Autowired
     private TeamRepository teamRepository;
@@ -52,34 +54,27 @@ public class UserTeamRepoTest {
         signin.setRole(Role.USER);
         signup.setFirstName("mohamed1");
         signup.setLastName("arous1");
+        signup.setRegion("egypt");
         signup.setEmail("mohamed.arous9401@gmail.com");
         signup.setPassword("12259861");
         signup.setUserName("mohamed_arous1");
-        signup.setBenchBoost(false);
-        signup.setTripleCaptain(false);
+        signup.setBenchBoost(true);
+        signup.setTripleCaptain(true);
         signup.setMoneyRemaining(100.0);
-        ArrayList<Formation>formations = new ArrayList<>();
-        ArrayList<CurrentFormation>currentFormations = new ArrayList<>();
-        ArrayList<FormationStatusHistory> formationStatusHistories = new ArrayList<>();
-        for(int i = 0;i<11;i++){
-            Player player = new Player("player"+i,"ST",i,1);
-            playerRepository.save(player);
-            Formation formation = new Formation(player,signup,1,false);
-            formations.add(formation);
-//            formationRepository.save(formation)
-            CurrentFormation currentFormation = new CurrentFormation(player,signup,false);
-            currentFormations.add(currentFormation);
-//            formationRepository.save(currentFormation);
-        }
+        userRepository.save(signup);
+        User user1 = userRepository.findByEmailOrUserName("mohamed_arous1","mohamed_arous1");
         Player player1 = new Player("player1","ST",1,1);
         Player player2 = new Player("player2","ST",2,1);
-        FormationStatusHistory formationStatusHistory = new FormationStatusHistory(signup,0,player1,player2,false,false);
-//        formationStatusHistoryRepository.save(formationStatusHistory);
-        formationStatusHistories.add(formationStatusHistory);
-        signup.setFormations(formations);
-        signup.setCurrentFormations(currentFormations);
-        signup.setFormationStatusHistory(formationStatusHistories);
-        userRepository.save(signup);
-//        userRepository.findByEmailOrUserName();
+        playerRepository.save(player1);
+        playerRepository.save(player2);
+        signup.setCaptain(player1);
+        signup.setViceCaptain(player2);
+        userRepository.save(user1);
+        User user2 = userRepository.findByEmailOrUserName("mohamed_arous1","mohamed_arous1");
+        assertTrue(user2.getBenchBoost());
+        assertTrue(user2.getTripleCaptain());
+        assertEquals(signup.getUserName(),"mohamed_arous1");
+        assertEquals(signup.getCaptain(),player1);
+        assertEquals(signup.getViceCaptain(),player2);
     }
 }

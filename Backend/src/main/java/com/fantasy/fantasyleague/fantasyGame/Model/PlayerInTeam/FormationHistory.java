@@ -14,15 +14,15 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@IdClass(FormationComposite.class)
-public class Formation {
+@IdClass(FormationHistoryComposite.class)
+public class FormationHistory {
     @Id
     @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.MERGE)
     @JoinColumn(name = "player_id", referencedColumnName = "id")
     private Player player;
 
     @Id
-    @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.MERGE )
+    @ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.MERGE )
     @JoinColumn(name = "UserName", referencedColumnName = "userName")
     private User user;
 

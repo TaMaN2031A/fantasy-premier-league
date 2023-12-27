@@ -29,34 +29,20 @@ public class PointHistoryRepoTest {
     private PlayerRepository playerRepository;
 
     @Test
-    void InsertTest() {
+    void InsertAndGetTest() {
         Team team = new Team("ahmed");
         Player player = new Player("abdo", "ST", 1, 1);
-
         teamRepository.save(team);
         playerRepository.save(player);
-
         PointHistory pointHistory = new PointHistory(player, 0 , 1);
         pointHistoryRepo.save(pointHistory);
-
         PointHistory pointHistory1 = pointHistoryRepo.findAllByWeekNo(0).get(0);
-
-        assertEquals(0,pointHistory1.getPoints());
-        assertEquals(player,pointHistory1.getPlayerPoint());
         assertEquals(1,pointHistory1.getPoints());
+        assertEquals(player,pointHistory1.getPlayer());
+        assertEquals(0,pointHistory1.getWeek_no());
+        PointHistory pointHistory2 = pointHistoryRepo.findByPlayerPointAndWeekNo(player.getID(),0);
+        assertEquals(pointHistory2,pointHistory1);
     }
-    @Test
-    void GetTest() {
-        Team team = new Team("ahmed");
-        Player player = new Player("abdo", "ST", 1, 1);
 
-        teamRepository.save(team);
-        playerRepository.save(player);
-
-        PointHistory pointHistory = new PointHistory(player, 0 , 1);
-
-        pointHistoryRepo.save(pointHistory);
-        pointHistoryRepo.findByPlayerPointAndWeekNo(1,0);
-    }
 
 }

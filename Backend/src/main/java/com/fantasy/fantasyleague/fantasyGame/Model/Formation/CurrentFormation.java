@@ -1,7 +1,5 @@
 package com.fantasy.fantasyleague.fantasyGame.Model.Formation;
-//
-//import com.fantasy.fantasyleague.RealLeague.Model.Player;
-//import com.fantasy.fantasyleague.fantasyGame.Model.UserTeam;
+
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
 import com.fantasy.fantasyleague.Registiration.Model.User;
 import jakarta.persistence.*;
@@ -9,12 +7,11 @@ import lombok.*;
 
 /*
 * - a problem is raised:
-*       how to store formulations efficiently.
+*       how to store formations efficiently.
 * */
 
 @EqualsAndHashCode
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

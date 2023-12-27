@@ -3,7 +3,8 @@ package com.fantasy.fantasyleague.Registiration.Model;
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
 import com.fantasy.fantasyleague.fantasyGame.Model.Formation.CurrentFormation;
 import com.fantasy.fantasyleague.fantasyGame.Model.FormationStatusHistory.FormationStatusHistory;
-import com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam.Formation;
+import com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam.FormationHistory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,25 +19,23 @@ import java.util.List;
 public class User extends Person implements Serializable {
     // @OneToOne(mappedBy = "userName", cascade = CascadeType.ALL)
     // private UserTeam team;
-
+    @Column(nullable = true)
     private Boolean benchBoost = false;
+    @Column(nullable = true)
     private Boolean tripleCaptain = false;
-    private Double moneyRemaining;
+    @Column(nullable = true)
+    private Double moneyRemaining = 100.0;
+    @Column(nullable = true,name = "free_transfers")
+    private int freeTransfers = 2;
+    @Column(nullable = true,name = "points")
+    private int points = 0;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "captain_id", referencedColumnName = "id")
-    private Player captain;
+    private Player captain ;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vice_captain_id", referencedColumnName = "id")
-    private Player viceCaptain;
+    private Player viceCaptain ;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Formation> formations;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<CurrentFormation> currentFormations;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<FormationStatusHistory> formationStatusHistory;
 }

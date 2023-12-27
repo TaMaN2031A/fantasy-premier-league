@@ -3,7 +3,7 @@ package com.fantasy.fantasyleague.RealLeague.Model;
 import com.fantasy.fantasyleague.Registiration.Model.User;
 import com.fantasy.fantasyleague.fantasyGame.Model.Formation.CurrentFormation;
 import com.fantasy.fantasyleague.fantasyGame.Model.FormationStatusHistory.FormationStatusHistory;
-import com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam.Formation;
+import com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam.FormationHistory;
 import com.fantasy.fantasyleague.fantasyGame.Model.PointHistory.PointHistory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -44,7 +44,7 @@ public class Player {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
-    private List<Formation> formations;
+    private List<FormationHistory> formationHistories;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
@@ -56,7 +56,7 @@ public class Player {
     @OneToMany(mappedBy = "viceCaptain")
     private List<User> viceCaptainOfTeam;
 
-    @OneToMany(mappedBy = "playerPoint")
+    @OneToMany(mappedBy = "player")
     private List<PointHistory> pointHistory;
 
     @OneToMany(mappedBy = "captain")

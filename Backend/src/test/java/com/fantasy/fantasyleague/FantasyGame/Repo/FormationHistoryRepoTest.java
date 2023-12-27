@@ -6,8 +6,8 @@ import com.fantasy.fantasyleague.RealLeague.Repository.PlayerRepository;
 import com.fantasy.fantasyleague.RealLeague.Repository.TeamRepository;
 import com.fantasy.fantasyleague.Registiration.Model.User;
 import com.fantasy.fantasyleague.Registiration.Repository.UserRepository;
-import com.fantasy.fantasyleague.fantasyGame.Model.Formation.CurrentFormation;
-import com.fantasy.fantasyleague.fantasyGame.Repository.CurrentFormationRepo;
+import com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam.FormationHistory;
+import com.fantasy.fantasyleague.fantasyGame.Repository.FormationHistoryRepo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
@@ -18,14 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.fantasy.fantasyleague.Registiration.SharedServices.SharedServices.generateUser;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-public class CurrentFormationRepoTest {
+public class FormationHistoryRepoTest {
     @Autowired
-    private CurrentFormationRepo currentFormationRepo;
+    private FormationHistoryRepo formationHistoryRepo;
 
     @Autowired
     private PlayerRepository playerRepository;
@@ -45,15 +44,16 @@ public class CurrentFormationRepoTest {
         // user sign in using username
         User user = generateUser("madyelzainy@gmail.com", "madyelzainy", "Egypt", "mady", "elzainy", "123456");
         userRepository.save(user);
-        List<CurrentFormation> formationHistories = new ArrayList<>();
-        CurrentFormation formationHistory = new CurrentFormation(player,user,true);
-        CurrentFormation formationHistory1 = new CurrentFormation(player,user,true);
+        List<FormationHistory>formationHistories = new ArrayList<>();
+        FormationHistory formationHistory = new FormationHistory(player,user,0,true);
+        FormationHistory formationHistory1 = new FormationHistory(player,user,0,true);
         formationHistories.add(formationHistory);
         formationHistories.add(formationHistory1);
-        currentFormationRepo.saveAll(formationHistories);
-        CurrentFormation formationHistory2 = currentFormationRepo.findByUser(user.getUserName()).get(0);
-        assertEquals(user,formationHistory2.getUser());
+        formationHistoryRepo.saveAll(formationHistories);
+        FormationHistory formationHistory2 = formationHistoryRepo.findByPlayerAndUserAndWeekNum(player.getID(),user.getUserName(),0);
+        assertEquals(0,formationHistory2.getWeekNum());
         assertEquals(player,formationHistory2.getPlayer());
+        assertEquals(user,formationHistory2.getUser());
         assertTrue(formationHistory2.isStarter());
     }
 
@@ -66,9 +66,10 @@ public class CurrentFormationRepoTest {
         // user sign in using username
         User user = generateUser("madyelzainy@gmail.com", "madyelzainy", "Egypt", "mady", "elzainy", "123456");
         userRepository.save(user);
-        CurrentFormation formationHistory = new CurrentFormation(player,user,true);
-        currentFormationRepo.save(formationHistory);
-        CurrentFormation formationHistory1 = currentFormationRepo.findByUser(user.getUserName()).get(0);
+        FormationHistory formationHistory = new FormationHistory(player,user,0,true);
+        formationHistoryRepo.save(formationHistory);
+        FormationHistory formationHistory1 = formationHistoryRepo.findByPlayerAndUserAndWeekNum(player.getID(),user.getUserName(),0);
+        assertEquals(0,formationHistory1.getWeekNum());
         assertEquals(user,formationHistory1.getUser());
         assertTrue(formationHistory1.isStarter());
     }
@@ -88,20 +89,21 @@ public class CurrentFormationRepoTest {
         User user1 = generateUser("madyelzain@gmail.com", "madyelzainy1", "Egypt", "mady", "elzainy", "123456");
         userRepository.save(user);
         userRepository.save(user1);
-        List<CurrentFormation> formationHistories = new ArrayList<>();
-        CurrentFormation formationHistory = new CurrentFormation(player,user,true);
-        CurrentFormation formationHistory1 = new CurrentFormation(player1,user,true);
-        CurrentFormation formationHistory2 = new CurrentFormation(player2,user1,true);
+        List<FormationHistory> formationHistories = new ArrayList<>();
+        FormationHistory formationHistory = new FormationHistory(player,user,0,true);
+        FormationHistory formationHistory1 = new FormationHistory(player1,user,0,true);
+        FormationHistory formationHistory2 = new FormationHistory(player2,user1,0,true);
         formationHistories.add(formationHistory);
         formationHistories.add(formationHistory1);
         formationHistories.add(formationHistory2);
-        currentFormationRepo.saveAll(formationHistories);
-        List<CurrentFormation> formationHistories1 = currentFormationRepo.findByUser(user.getUserName());
-        List<CurrentFormation> formationHistories2 = currentFormationRepo.findByUser(user1.getUserName());
+        formationHistoryRepo.saveAll(formationHistories);
+        List<FormationHistory> formationHistories1 = formationHistoryRepo.findByUserAndWeekNum(user.getUserName(),0);
+        List<FormationHistory> formationHistories2 = formationHistoryRepo.findByUserAndWeekNum(user1.getUserName(),0);
         assertEquals(2,formationHistories1.size());
         assertEquals(1,formationHistories2.size());
-        for (CurrentFormation history : formationHistories1) {
+        for (FormationHistory history : formationHistories1) {
             assertEquals(user, history.getUser());
+            assertEquals(0, history.getWeekNum());
             assertTrue(history.isStarter());
         }
     }
