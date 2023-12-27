@@ -2,9 +2,10 @@ import React from "react";
 import logo from "./assets/header.png";
 import GroupCard from "./GroupCard";
 import CreateGroup from "./CreateGroup";
+import Loading from "../../Common/FAQ/Loading";
 
 function UserGroups(props) {
-  const items = [
+  const data = [
     {
       groupName: "Codeforces",
       groupId: 1,
@@ -14,7 +15,7 @@ function UserGroups(props) {
     },
     {
       groupName: "Leetcode",
-      groupId: 1,
+      groupId: 2,
       OwnerUsername: "Amr Ahmed",
       participantsNo: 5,
       avgPoints: 1000,
@@ -62,16 +63,7 @@ function UserGroups(props) {
       avgPoints: 1000,
     },
   ];
-
-  const jsxList = items.map((item) => (
-    <GroupCard
-      groupName={item.groupName}
-      groupId={item.groupId}
-      OwnerUsername={item.OwnerUsername}
-      participantsNo={item.participantsNo}
-      avgPoints={item.avgPoints}
-    />
-  ));
+  let isLoading = false;
 
   return (
     <div className="bg-gradient-to-r from-slate-800 to-gray-900 min-h-screen min-w-full">
@@ -102,21 +94,36 @@ function UserGroups(props) {
           </div>
 
           <CreateGroup />
-
         </div>
-        <div>
-          <img
-            src={logo}
-            alt="Logo"
-            className="absolute right-80 opacity-25 blur-3xl"
-          />
-        </div>
+        <img
+          src={logo}
+          alt="Logo"
+          className="fixed pointer-events-none left-80 opacity-25 blur-3xl h-screen"
+        />
       </div>
 
       <hr className="border-b-2 mb-20 border-gray-500 w-4/5 mx-auto" />
-
-      <li className=" space-y-14 pb-14">{jsxList}</li>
-
+      <ul className="pb-20">
+        {isLoading ? (
+          // skeletonLoading
+          <div className="ml-44">
+            <Loading />
+          </div>
+        ) : (
+          // quetions and answers
+          data.map((item, index) => (
+            <li className="text-left mb-16">
+              <GroupCard
+                groupName={item.groupName}
+                groupId={item.groupId}
+                OwnerUsername={item.OwnerUsername}
+                participantsNo={item.participantsNo}
+                avgPoints={item.avgPoints}
+              />{" "}
+            </li>
+          ))
+        )}
+      </ul>
     </div>
   );
 }

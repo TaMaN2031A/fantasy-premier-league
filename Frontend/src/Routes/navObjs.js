@@ -145,7 +145,7 @@ export const nav = [
         path: paths.groups,
         Title: "Groups",
         description: "Engage with fellow enthusiasts, form leagues, and join competitive groups.",
-        element: <Groups />,
+        element: <Groups  />,
         status: userPrivilege
     },
     {

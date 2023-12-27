@@ -1,22 +1,30 @@
 import React from "react";
 import logo from "./assets/cup.png";
 import "./../../Home Page/Card.css";
+import { useNavigate } from "react-router-dom";
 
 function GroupCard(props) {
+  const nav = useNavigate();
+
+  function handleClick(name, id) {
+    nav(`/groups?name=${name}&id=${id}`);
+  }
+
   return (
     <div className="relative w-full h-40 flex justify-center ">
       <button
         className="w-4/5 relative rounded-3xl text-gray-200 font-light shadow-2xl flex flex-row items-center group
         border-8 border-grey p-4 transition-all duration-1000 hover:scale-105 hover:ring-4 hover:bg-customGreen ring-gold card-shine-effect"
+        onClick={() => handleClick(props.groupName, props.groupId)}
       >
         <div className="px-16 text-7xl tracking-widest group-hover:text-black transition-all duration-1000">
           {props.groupName}
         </div>
-        <div className="flex ml-auto space-x-4 pr-60">
+        <div className="flex ml-auto space-x-4 pr-2 mt-6">
           <span class="material-symbols-outlined mt-6 text-4xl text-customGreen group-hover:text-white transition-all duration-1000">
             engineering
           </span>
-          <div className="px-4 text-3xl font-medium  tracking-wide mt-6 group-hover:text-black transition-all duration-1000">
+          <div className="px-4 text-3xl font-medium tracking-wide mt-6 group-hover:text-black transition-all duration-1000">
             {props.OwnerUsername}
           </div>
           <span class="material-symbols-outlined mt-6 text-5xl px-8 text-customGreen group-hover:text-white transition-all duration-1000">
