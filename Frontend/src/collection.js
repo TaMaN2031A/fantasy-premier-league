@@ -22,6 +22,7 @@ export const paths = {
     pickTeam: "/pickTeam",
     transfer: "/transfer",
     history: "/history",
+    groups: "/groups",
     userGroups: "/userGroups",
     joinGroups: "/joinGroups",
     players: "/players",

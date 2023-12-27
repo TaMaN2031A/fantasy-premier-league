@@ -20,3 +20,15 @@ export const addUserToGroup = async (userName , groupID) => {
     axios.get(serverHost+'/group/getPublicGroups?userName='+userName + "&groupID=" + groupID)
     );
 };
+
+export const fetchYourGroups = async (username) => {
+    return handleRequest(axios.get(serverHost + "/groups/yourgrous", username));
+};
+
+export const createGroup = async (data) => {
+    return handleRequest(axios.post(serverHost + "/groups/create", data));
+};
+
+export const getGroupInfo = async (id) => {
+    return handleRequest(axios.get(serverHost + "/groups/getGroupInfo", id));
+};
