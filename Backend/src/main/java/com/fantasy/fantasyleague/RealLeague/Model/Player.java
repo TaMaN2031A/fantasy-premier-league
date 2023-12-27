@@ -1,5 +1,10 @@
 package com.fantasy.fantasyleague.RealLeague.Model;
 
+import com.fantasy.fantasyleague.Registiration.Model.User;
+import com.fantasy.fantasyleague.fantasyGame.Model.Formation.CurrentFormation;
+import com.fantasy.fantasyleague.fantasyGame.Model.FormationStatusHistory.FormationStatusHistory;
+import com.fantasy.fantasyleague.fantasyGame.Model.PlayerInTeam.FormationHistory;
+import com.fantasy.fantasyleague.fantasyGame.Model.PointHistory.PointHistory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,6 +41,30 @@ public class Player {
     private List<PlayerStatistics> playersStatistics;
     private String photo_link;
     private double price;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
+    private List<FormationHistory> formationHistories;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
+    private List<CurrentFormation> currentFormations;
+
+    @OneToMany(mappedBy = "captain")
+    private List<User> captainOfTeam;
+
+    @OneToMany(mappedBy = "viceCaptain")
+    private List<User> viceCaptainOfTeam;
+
+    @OneToMany(mappedBy = "player")
+    private List<PointHistory> pointHistory;
+
+    @OneToMany(mappedBy = "captain")
+    private List<FormationStatusHistory> captainOfTeam1;
+
+    @OneToMany(mappedBy = "viceCaptain")
+    private List<FormationStatusHistory> viceCaptainOfTeam1;
+
     public Player(String name, String position, int number_in_team, int id_of_team) {
         this.name = name;
         this.red_cards = 0;
@@ -49,6 +78,4 @@ public class Player {
         this.price = 0;
         this.id_of_team = id_of_team;
     }
-
-
 }
