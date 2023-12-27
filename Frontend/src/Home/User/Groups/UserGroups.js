@@ -8,9 +8,12 @@ import { fetchYourGroups } from "../../../Services/Groups/Groups";
 import { GetAuthDataFn } from "../../../Routes/wrapper";
 
 function UserGroups() {
-
   const { person } = GetAuthDataFn();
-  const { data, isLoading, error, refetch } = useQuery("UserGroups", () => fetchYourGroups(person.username), {refetchOnWindowFocus: false});
+  const { data, isLoading, error, refetch } = useQuery(
+    "UserGroups",
+    () => fetchYourGroups(person.username),
+    { refetchOnWindowFocus: false }
+  );
 
   if (error) {
     return <p>Error: {error.message}</p>;
@@ -44,7 +47,7 @@ function UserGroups() {
             <span>your friends and compete together for higher ranking.</span>
           </div>
 
-          <CreateGroup func={refetch}/>
+          <CreateGroup func={refetch} />
         </div>
         <img
           src={logo}

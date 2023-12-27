@@ -21,7 +21,7 @@ function CreateGroup(props) {
       >
         Create a new group and invite your friends
       </button>
-      <Modal isOpen={isModalOpen} closeModal={closeModal} func={props.func}/>
+      <Modal isOpen={isModalOpen} closeModal={closeModal} func={props.func} />
     </div>
   );
 }

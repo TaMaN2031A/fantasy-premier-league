@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import Pagination from "../../Admin/Promotion/Pagination";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import {
   getAllPublicGroups,
@@ -9,10 +8,13 @@ import { GetAuthDataFn } from "../../../Routes/wrapper";
 import logo from "./assets/header.png";
 
 function JoinGroups() {
-
   const { person } = GetAuthDataFn();
   const [groupID, setGroupID] = useState("");
-  const { data, isLoading, error, refetch } = useQuery("JoinGroups",() => getAllPublicGroups(person.username),{ refetchOnWindowFocus: false });
+  const { data, isLoading, error, refetch } = useQuery(
+    "JoinGroups",
+    () => getAllPublicGroups(person.username),
+    { refetchOnWindowFocus: false }
+  );
 
   const handleButtonClick = async (userName, groupID) => {
     await addUserToGroup({ userName, groupID });

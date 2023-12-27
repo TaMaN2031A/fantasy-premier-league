@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import logo from "./assets/header.png";
 import { GetAuthDataFn } from "../../../Routes/wrapper";
