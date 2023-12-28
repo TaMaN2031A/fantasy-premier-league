@@ -4,30 +4,33 @@ import {fetchFAQData} from "../../../Services/FAQ/Faq_Rule";
 import {GetAuthDataFn} from "../../../Routes/wrapper";
 import {fetchplayerByPosition} from "../../../Services/Transfers/Transfers";
 import {LineUpContextContextFn} from "./Transfers";
+import {select} from "@material-tailwind/react";
 
 
-const PlayerModal = ({ isOpen, closeModal, position }) => {
+const PlayerModal = ({ isOpen, closeModal, position, number }) => {
 
 	const { data, isLoading, error} =
 		useQuery("fetchPlayersByPosition", () => fetchplayerByPosition(position), {refetchOnWindowFocus: false});
 
 	const { person } = GetAuthDataFn();
 	const { lineUp, setLineUp } = LineUpContextContextFn();
-	const { allowablePlayers, setAllowablePlayers } = useState();
+	const [selectedPlayer, setSelectedPlayer] = useState("");
+
+	const handleSelectChange = (e) => {
+		setSelectedPlayer(e.target.value);
+	}
 
 	useEffect(() => {
-		console.log(data);
 		// iterate on data and search for player in lineUp if exists delete it form data
-		if (data) {
-			// Create a new array by filtering out players that exist in playerList
-			const filteredData = data.filter((player) => {
-				const isPlayerInList = lineUp.some(
-					(listPlayer) => (listPlayer.player.name === player.player.name)
-				);
-				return !isPlayerInList;
-			});
-			setAllowablePlayers(filteredData);
-		}
+		if (!(data && Array.isArray(data))) return;
+		// Create a new array by filtering out players that exist in playerList
+		// const filteredData = data.filter((player) => {
+		// 	const isPlayerInList = lineUp.some(
+		// 		(listPlayer) => (listPlayer.player.name === player.player.name)
+		// 	);
+		// 	return !isPlayerInList;
+		// });
+		// setAllowablePlayers(filteredData);
 	}, [data]);
 
 
@@ -36,12 +39,15 @@ const PlayerModal = ({ isOpen, closeModal, position }) => {
 
 
 	const handleSave = async () => {
-
+		let arr = lineUp;
+		arr[number] = selectedPlayer;
+		console.log(arr[number])
+		setLineUp(arr);
 		closeModal();
 	};
 
 	const cancelSave = () => {
-
+		setSelectedPlayer("");
 		closeModal();
 	};
 
@@ -67,20 +73,34 @@ const PlayerModal = ({ isOpen, closeModal, position }) => {
 					aria-modal="true"
 					aria-labelledby="modal-headline"
 				>
-					<div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-						<div className="sm:flex sm:items-start">
-							<div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-								<h3
-									className="text-lg leading-6 font-medium text-gray-900"
-									id="modal-headline"
-								>
-									Choose player
-								</h3>
-								<div className="mt-2">
 
-								</div>
+					{/*--------------------------------------------drop down list-------------------------------------*/}
+					<div className="my-4">
+						<label htmlFor="playerDropdown" className="text-sm font-semibold">
+							Select a Player:
+						</label>
+						<select
+							id="playerDropdown"
+							onChange={handleSelectChange}
+							value={selectedPlayer}
+							className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+						>
+							<option value="" disabled>
+								Select a player
+							</option>
+							{data.map((player) => (
+								<option key={player.id} value={player.name}>
+									{player.name}
+								</option>
+							))}
+						</select>
+
+						{selectedPlayer && (
+							<div className="mt-4">
+								<p className="text-lg font-semibold">You selected: {selectedPlayer}</p>
+								{/* Add additional content or actions based on the selected player */}
 							</div>
-						</div>
+						)}
 					</div>
 
 					<div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">

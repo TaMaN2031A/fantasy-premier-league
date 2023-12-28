@@ -11,12 +11,13 @@ const handleRequest = async (requestPromise) => {
 };
 
 export const fetchplayerByPosition = async (position) => {
+	console.log(position)
 	return handleRequest(axios.get(serverHost + "/transfer/getPlayer/" + position));
 };
 
-// need to change request URL
-export const fetchCurrentFormation = async () => {
-	return handleRequest(axios.get(serverHost + "/transfer/getCurrentFormation"));
+// need to handle responseEntity cases.
+export const fetchCurrentFormation = async (username) => {
+	return handleRequest(axios.get(serverHost + "/pickTeam/getCurrentFormation/" + username));
 }
 
 // need to handle responseEntity cases.

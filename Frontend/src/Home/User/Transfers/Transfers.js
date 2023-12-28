@@ -1,8 +1,10 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import PlayerCard from "./PlayerCard";
-import {position} from "../../../collection";
+import {position, responses, toastStyle} from "../../../collection";
 import {useQuery} from "react-query";
-import {fetchCurrentFormation} from "../../../Services/Transfers/Transfers";
+import {fetchCurrentFormation, updateTransfer} from "../../../Services/Transfers/Transfers";
+import {GetAuthDataFn} from "../../../Routes/wrapper";
+import {toast, ToastContainer} from "react-toastify";
 
 
 const LineUpContext = createContext();
@@ -21,18 +23,30 @@ class PlayerWithoutPoints {
 
 
 function Transfers() {
+    const { person } = GetAuthDataFn();
+
+    // list of (players without points) >> (player, teamName, isStarter)
+    // captain, viceCaptain
+    // bench boost, tripleCaptain
     const { data, isLoading, error} =
-        useQuery("fetchPlayers", () => fetchCurrentFormation, {refetchOnWindowFocus: false});
+        useQuery("fetchPlayers", () => fetchCurrentFormation(person.username), {refetchOnWindowFocus: false});
 
 
-    const [lineUp, setLineUp] = useState(
-        new Array(15).fill(new PlayerWithoutPoints(null, null, false))
-    );
+    const [lineUp, setLineUp] = useState([
+        null, null, null, null, null,
+        null, null, null, null, null,
+        null, null, null, null, null
+    ]);
+
+    // case of team is complete.
     useEffect(() => {
-        const goalkeepers = data.filter(playerWithoutPoints => playerWithoutPoints.player.position === position.GK);
-        const defenders = data.filter(playerWithoutPoints => playerWithoutPoints.player.position === position.DEF);
-        const midfielders = data.filter(playerWithoutPoints => playerWithoutPoints.player.position === position.MID);
-        const forwards = data.filter(playerWithoutPoints => playerWithoutPoints.player.position === position.FWD);
+        if (!(data && Array.isArray(data))) return;
+        console.log(data);
+        let listOfPlayersData = data.players;
+        const goalkeepers = listOfPlayersData.filter(p => p.player.position === position.GK);
+        const defenders = listOfPlayersData.filter(p => p.player.position === position.DEF);
+        const midfielders = listOfPlayersData.filter(p => p.player.position === position.MID);
+        const forwards = listOfPlayersData.filter(p => p.player.position === position.FWD);
 
         // firstly append goalkeepers to lineUp then defenders then midfielders then forwards
         let lineUp = [];
@@ -46,63 +60,84 @@ function Transfers() {
     if (error) return <p>Error: {error.message}</p>;
     if(isLoading) return (<p>is loading....</p>);
 
+    let handleSaveTeam = async () => {
+        let data = {
+            username: person.username,
+            players: lineUp
+        }
+        let ret = await updateTransfer(data);
+        if(ret === responses.updateTransferSuccessfully){
+            toast.success(ret, toastStyle);
+        } else {
+            toast.error(ret, toastStyle);
+        }
+    }
+
     /*
 	* span >> make the area of div of size x >> break new line
 	* end >> create area up to index y-1 in current row
 	* */
     return (
-        <LineUpContext.Provider value={{lineUp, setLineUp}}>
-            <div className="grid grid-cols-5 gap-4">
-                <div className="col-start-2 col-end-3 ...">
-                    <PlayerCard number={0} />
-                </div>
-                <div className="col-start-4 col-span-1 ...">
-                    <PlayerCard number={1} />
-                </div>
+        <>
+            <ToastContainer/>
+            <LineUpContext.Provider value={{lineUp, setLineUp}}>
+                <div className="grid grid-cols-5 gap-4">
+                    <div className="col-start-2 col-end-3 ...">
+                        <PlayerCard number={0} givenPosition={"GK"}/>
+                    </div>
+                    <div className="col-start-4 col-span-1 ...">
+                        <PlayerCard number={1} givenPosition={"GK"}/>
+                    </div>
 
-                <div className="col-start-1 col-end-2 ...">
-                    <PlayerCard number={2} />
-                </div>
-                <div className="col-start-2 col-end-3 ...">
-                    <PlayerCard number={3} />
-                </div>
-                <div className="col-start-3 col-end-4 ...">
-                    <PlayerCard number={4} />
-                </div>
-                <div className="col-start-4 col-end-5 ...">
-                    <PlayerCard number={5} />
-                </div>
-                <div className="col-start-5 col-span-1 ...">
-                    <PlayerCard number={6} />
-                </div>
+                    <div className="col-start-1 col-end-2 ...">
+                        <PlayerCard number={2} givenPosition={"DEF"}/>
+                    </div>
+                    <div className="col-start-2 col-end-3 ...">
+                        <PlayerCard number={3} givenPosition={"DEF"}/>
+                    </div>
+                    <div className="col-start-3 col-end-4 ...">
+                        <PlayerCard number={4} givenPosition={"DEF"}/>
+                    </div>
+                    <div className="col-start-4 col-end-5 ...">
+                        <PlayerCard number={5} givenPosition={"DEF"}/>
+                    </div>
+                    <div className="col-start-5 col-span-1 ...">
+                        <PlayerCard number={6} givenPosition={"DEF"}/>
+                    </div>
 
-                <div className="col-start-1 col-end-2 ...">
-                    <PlayerCard  number={7} />
-                </div>
-                <div className="col-start-2 col-end-3 ...">
-                    <PlayerCard  number={8} />
-                </div>
-                <div className="col-start-3 col-end-4 ...">
-                    <PlayerCard  number={9} />
-                </div>
-                <div className="col-start-4 col-end-5 ...">
-                    <PlayerCard  number={10} />
-                </div>
-                <div className="col-start-5 col-span-1 ...">
-                    <PlayerCard  number={11} />
-                </div>
+                    <div className="col-start-1 col-end-2 ...">
+                        <PlayerCard number={7} givenPosition={"MID"}/>
+                    </div>
+                    <div className="col-start-2 col-end-3 ...">
+                        <PlayerCard number={8} givenPosition={"MID"}/>
+                    </div>
+                    <div className="col-start-3 col-end-4 ...">
+                        <PlayerCard number={9} givenPosition={"MID"}/>
+                    </div>
+                    <div className="col-start-4 col-end-5 ...">
+                        <PlayerCard number={10} givenPosition={"MID"}/>
+                    </div>
+                    <div className="col-start-5 col-span-1 ...">
+                        <PlayerCard number={11} givenPosition={"MID"}/>
+                    </div>
 
-                <div className="col-start-2 col-end-3 ...">
-                    <PlayerCard  number={12} />
+                    <div className="col-start-2 col-end-3 ...">
+                        <PlayerCard number={12} givenPosition={"FWD"}/>
+                    </div>
+                    <div className="col-start-3 col-end-4 ...">
+                        <PlayerCard number={13} givenPosition={"FWD"}/>
+                    </div>
+                    <div className="col-start-4 col-span-1 ...">
+                        <PlayerCard number={14} givenPosition={"FWD"}/>
+                    </div>
                 </div>
-                <div className="col-start-3 col-end-4 ...">
-                    <PlayerCard  number={13} />
-                </div>
-                <div className="col-start-4 col-span-1 ...">
-                    <PlayerCard  number={14} />
-                </div>
-            </div>
-        </LineUpContext.Provider>
+            </LineUpContext.Provider>
+            <button onClick={handleSaveTeam}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-auto block">
+                Save
+            </button>
+
+        </>
     );
 }
 

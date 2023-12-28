@@ -59,6 +59,13 @@ export const responses = {
     PassUpdateFailed: "Password Update Failed Try again",
     MaliciousPasswordUpdate: "didn't enter email in first place",
     InvalidToken: "Invalid Token Try again",
-    PassUpdateSuccessfully: "password update successful"
+    PassUpdateSuccessfully: "password update successful",
+    updateTransferSuccessfully: "Transfer updated successfully"
 }
 
+export const position = {
+    GK: 'GK',
+    DEF: 'DEF',
+    MID: 'MID',
+    FWD: 'FWD',
+};
