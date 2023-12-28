@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,24 +16,9 @@ public class TransferController {
     @Autowired
     private TransferService transferService;
 
-    @GetMapping("/getGoalKeepers")
-    public List<Player> getGoalKeepers() {
-        return transferService.getGoalKeepers();
-    }
-
-    @GetMapping("/getDefenders")
-    public List<Player> getDefenders() {
-        return transferService.getDefenders();
-    }
-
-    @GetMapping("/getMidfielders")
-    public List<Player> getMidfielders() {
-        return transferService.getMidfielders();
-    }
-
-    @GetMapping("/getForwards")
-    public List<Player> getForwards() {
-        return transferService.getForwards();
+    @GetMapping("/getPlayer/{position}")
+    public List<Player> getPlayer(@PathVariable String position) {
+        return transferService.getPlayers(position);
     }
 
     @PutMapping("/update")
