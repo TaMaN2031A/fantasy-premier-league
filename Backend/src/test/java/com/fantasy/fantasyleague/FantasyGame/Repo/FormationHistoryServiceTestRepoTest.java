@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-public class FormationHistoryRepoTest {
+public class FormationHistoryServiceTestRepoTest {
     @Autowired
     private FormationHistoryRepo formationHistoryRepo;
 

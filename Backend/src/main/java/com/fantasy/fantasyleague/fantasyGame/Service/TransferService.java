@@ -1,5 +1,4 @@
 package com.fantasy.fantasyleague.fantasyGame.Service;
-
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
 import com.fantasy.fantasyleague.RealLeague.Model.Position;
 import com.fantasy.fantasyleague.RealLeague.Repository.PlayerRepository;
@@ -32,21 +31,7 @@ public class TransferService {
 
     @Autowired
     private FormationHistoryRepo formationHistoryRepo;
-    public List<Player> getGoalKeepers() {
-        return playerRepo.findByPosition(Position.GK.toString());
-    }
 
-    public List<Player> getDefenders() {
-        return playerRepo.findByPosition(Position.DEF.toString());
-    }
-
-    public List<Player> getMidfielders() {
-        return playerRepo.findByPosition(Position.MID.toString());
-    }
-
-    public List<Player> getForwards() {
-        return playerRepo.findByPosition(Position.FWD.toString());
-    }
 
     public ResponseEntity<String> confirmTransfer(CompleteTeam completeTeam) {
         Optional<User> user = userRepo.findByUserName(completeTeam.getUsername());
@@ -97,5 +82,30 @@ public class TransferService {
             if(player != null) players.add(player);
         });
         return players;
+    }
+
+    public List<Player> getPlayers(String position) {
+        return switch (position) {
+            case "GK" -> getGoalKeepers();
+            case "DF" -> getDefenders();
+            case "MF" -> getMidfielders();
+            case "FW" -> getForwards();
+            default -> null;
+        };
+    }
+    private List<Player> getGoalKeepers() {
+        return playerRepo.findByPosition(Position.GK.toString());
+    }
+
+    private List<Player> getDefenders() {
+        return playerRepo.findByPosition(Position.DEF.toString());
+    }
+
+    private List<Player> getMidfielders() {
+        return playerRepo.findByPosition(Position.MID.toString());
+    }
+
+    private List<Player> getForwards() {
+        return playerRepo.findByPosition(Position.FWD.toString());
     }
 }

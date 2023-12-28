@@ -4,12 +4,16 @@ package com.fantasy.fantasyleague.fantasyGame.Service;
 import com.fantasy.fantasyleague.RealLeague.DTO.MatchStatisticsDTO;
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
 import com.fantasy.fantasyleague.RealLeague.Repository.PlayerRepository;
+import com.fantasy.fantasyleague.Registiration.Model.Response;
 import com.fantasy.fantasyleague.fantasyGame.Model.Lock;
 import com.fantasy.fantasyleague.fantasyGame.Model.PointHistory.PointHistory;
 import com.fantasy.fantasyleague.fantasyGame.Model.WeekNo;
 import com.fantasy.fantasyleague.fantasyGame.Repository.PointHistoryRepo;
 import com.fantasy.fantasyleague.fantasyGame.Repository.WeekNoRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,6 +35,9 @@ public class PointsCalculator {
 
     @Autowired
     private PlayerRepository playerRepo;
+
+    @Autowired
+    private PointHistoryService pointHistoryService;
 
     public Map<String, Long> convertToCountMap(List<String> playerExists) {
         return playerExists.stream()
@@ -90,6 +97,10 @@ public class PointsCalculator {
 
         List<PointHistory> homeList = storePoints(totalHomePoints, currentWeek);
         List<PointHistory> awayList = storePoints(totalAwayPoints, currentWeek);
+
+        pointHistoryService.SavePointHistory(homeList);
+        pointHistoryService.SavePointHistory(awayList);
+
     }
 
     public List<PointHistory> storePoints(Map<String, Integer> totalPoints, int currentWeek) {

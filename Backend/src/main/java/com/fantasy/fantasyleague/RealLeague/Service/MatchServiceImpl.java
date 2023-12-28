@@ -60,6 +60,7 @@ public class MatchServiceImpl implements MatchService{
         // calculate points given players performance and stats.
         pointsCalculator.execute(playedMatchDTO);
 
+
         PlayedMatch match = UpcomingMatchToPlayedMatch(upcomingMatch , playedMatchDTO);
         matchRepository.save(match);
         generatePlayerStatistics(playedMatchDTO, match);

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
@@ -45,7 +44,7 @@ public class TestGoogleOauth {
         obj.setLastName("Ahmed");
         obj.setRole(Role.USER);
         assertEquals(userRepo.findByEmail(obj.getEmail()).isPresent(), false);
-        assertEquals(service.validateGoogle(obj) , ResponseEntity.ok(obj.getEmail()));
+        assertEquals(service.validateGoogle(obj) , "Login successful");
         assertEquals(userRepo.findByEmail(obj.getEmail()).isPresent(), true);
 
     }
@@ -60,7 +59,7 @@ public class TestGoogleOauth {
         obj.setLastName("Ahmed");
         obj.setRole(Role.USER);
         assertEquals(userRepo.findByEmail(obj.getEmail()).isPresent(), true);
-        assertEquals(service.validateGoogle(obj) , ResponseEntity.ok(obj.getEmail()));
+        assertEquals(service.validateGoogle(obj) , "Login successful");
     }
 
     @Test
@@ -74,7 +73,7 @@ public class TestGoogleOauth {
         obj.setRole(Role.ADMIN);
         assertEquals(adminRepo.findByEmail(obj.getEmail()).isPresent(), false);
         assertEquals(userRepo.findByEmail(obj.getEmail()).isPresent(), false);
-        assertEquals(service.validateGoogle(obj) , ResponseEntity.notFound().build());
+        assertEquals(service.validateGoogle(obj) , "User does not exist");
         assertEquals(adminRepo.findByEmail(obj.getEmail()).isPresent(), false);
     }
 
