@@ -12,7 +12,9 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -40,9 +42,10 @@ public class PointHistoryRepoTest {
         assertEquals(1,pointHistory1.getPoints());
         assertEquals(player,pointHistory1.getPlayer());
         assertEquals(0,pointHistory1.getWeek_no());
-        PointHistory pointHistory2 = pointHistoryRepo.findByPlayerPointAndWeekNo(player.getID(),0);
+        PointHistory pointHistory2 = pointHistoryRepo.findByPlayerAndWeekNo(player.getID(),0);
         assertEquals(pointHistory2,pointHistory1);
     }
+
 
 
 }
