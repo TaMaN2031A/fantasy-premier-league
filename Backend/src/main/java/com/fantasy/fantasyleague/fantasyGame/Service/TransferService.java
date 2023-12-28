@@ -68,10 +68,10 @@ public class TransferService {
 
     public boolean manageTransferConditions(List<Player> players) {
         if(players.stream().map(Player::getID).distinct().count() != 15) return false;
-        if(players.stream().filter(p -> p.getPosition().equals(Position.GK.toString())).count() != 2) return false;
-        if(players.stream().filter(p -> p.getPosition().equals(Position.DEF.toString())).count() != 5) return false;
-        if(players.stream().filter(p -> p.getPosition().equals(Position.MID.toString())).count() != 5) return false;
-        if(players.stream().filter(p -> p.getPosition().equals(Position.FWD.toString())).count() != 3) return false;
+        if(players.stream().filter(p -> p.getPosition().equals("GK")).count() != 2) return false;
+        if(players.stream().filter(p -> p.getPosition().equals("DEF")).count() != 5) return false;
+        if(players.stream().filter(p -> p.getPosition().equals("MID")).count() != 5) return false;
+        if(players.stream().filter(p -> p.getPosition().equals("FWD")).count() != 3) return false;
         return (players.stream().mapToDouble(Player::getPrice).sum() <= 100.0);
     }
 
@@ -85,27 +85,28 @@ public class TransferService {
     }
 
     public List<Player> getPlayers(String position) {
+        System.out.println(position);
         return switch (position) {
             case "GK" -> getGoalKeepers();
-            case "DF" -> getDefenders();
-            case "MF" -> getMidfielders();
-            case "FW" -> getForwards();
+            case "DEF" -> getDefenders();
+            case "MID" -> getMidfielders();
+            case "FWD" -> getForwards();
             default -> null;
         };
     }
     private List<Player> getGoalKeepers() {
-        return playerRepo.findByPosition(Position.GK.toString());
+        return playerRepo.findByPosition("GK");
     }
 
     private List<Player> getDefenders() {
-        return playerRepo.findByPosition(Position.DEF.toString());
+        return playerRepo.findByPosition("DEF");
     }
 
     private List<Player> getMidfielders() {
-        return playerRepo.findByPosition(Position.MID.toString());
+        return playerRepo.findByPosition("MID");
     }
 
     private List<Player> getForwards() {
-        return playerRepo.findByPosition(Position.FWD.toString());
+        return playerRepo.findByPosition("FWD");
     }
 }

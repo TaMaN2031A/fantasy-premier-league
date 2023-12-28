@@ -34,7 +34,7 @@ public class StartingWeekService{
             }
         }
         catch (Exception e){
-            System.out.println("WeekNo not found");
+            weekNoRepo.save(new WeekNo(Lock.X,1));
         }
     }
 }
