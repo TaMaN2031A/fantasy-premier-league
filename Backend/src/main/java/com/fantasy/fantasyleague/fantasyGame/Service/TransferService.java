@@ -59,7 +59,6 @@ public class TransferService {
                     userRepo.save(user.get());
                 }
             }
-
             return ResponseEntity.ok("transfer successful");
         } else {
             return ResponseEntity.internalServerError().body("no such user");
@@ -85,7 +84,6 @@ public class TransferService {
     }
 
     public List<Player> getPlayers(String position) {
-        System.out.println(position);
         return switch (position) {
             case "GK" -> getGoalKeepers();
             case "DEF" -> getDefenders();

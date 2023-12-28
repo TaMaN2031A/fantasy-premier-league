@@ -20,7 +20,7 @@ public class StartWeekController {
     }
 
     @PutMapping("/Update")
-    public void getPlayer() {
+    public void startNewWeek() {
          startingWeekService.StartWeek();
     }
 

@@ -18,9 +18,7 @@ public class TransferController {
 
     @GetMapping("/getPlayer/{position}")
     public List<Player> getPlayer(@PathVariable String position) {
-        List<Player> pl = transferService.getPlayers(position);
-        System.out.println(pl.toString());
-        return pl;
+        return transferService.getPlayers(position);
     }
 
     @PutMapping("/update")
