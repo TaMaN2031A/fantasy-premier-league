@@ -21,16 +21,20 @@ public class StartingWeekService{
     }
 
     public void StartWeek(){
-        Optional<WeekNo> weekNo = weekNoRepo.findById(Lock.X);
-        int WeekNo = weekNo.get().getWeekNo();
-        formationHistoryService.SaveFormationHistory(WeekNo);
-        if(WeekNo>38){
-            weekNo.get().setWeekNo(0);
-            weekNoRepo.save(weekNo.get());
+        try {
+            Optional<WeekNo> weekNo = weekNoRepo.findById(Lock.X);
+            int WeekNo = weekNo.get().getWeekNo();
+            formationHistoryService.SaveFormationHistory(WeekNo);
+            if (WeekNo > 38) {
+                weekNo.get().setWeekNo(0);
+                weekNoRepo.save(weekNo.get());
+            } else {
+                weekNo.get().setWeekNo(WeekNo + 1);
+                weekNoRepo.save(weekNo.get());
+            }
         }
-        else {
-            weekNo.get().setWeekNo(WeekNo + 1);
-            weekNoRepo.save(weekNo.get());
+        catch (Exception e){
+            System.out.println("WeekNo not found");
         }
     }
 }

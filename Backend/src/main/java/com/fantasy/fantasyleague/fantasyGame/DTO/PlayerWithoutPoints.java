@@ -1,5 +1,6 @@
 package com.fantasy.fantasyleague.fantasyGame.DTO;
 
+import com.fantasy.fantasyleague.RealLeague.DTO.PlayerDTO;
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
