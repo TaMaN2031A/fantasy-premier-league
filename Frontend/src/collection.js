@@ -4,7 +4,7 @@ export const commonPrivilege = "COMMON";
 export const externalPrivilege = "EXTERNAL";
 export const internalPrivilege = "INTERNAL";
 
-export const serverHost = "http://localhost:8081";
+export const serverHost = "http://localhost:8080";
 export const clientID = "157567928601-tpi54p30l3rpsdlmrh7on2fmfup3tpct.apps.googleusercontent.com";
 
 export const paths = {
@@ -23,8 +23,6 @@ export const paths = {
     transfer: "/transfer",
     history: "/history",
     groups: "/groups",
-    userGroups: "/userGroups",
-    joinGroups: "/joinGroups",
     players: "/players",
     team: "/teams",
     promotion: "/promotion",
@@ -34,11 +32,12 @@ export const paths = {
 
 export const toastStyle = {style: {background: '#000000'}};
 
+
 export const defaultPersonState = () => {
     return {
         isAuthorized: false,  /* to check if there is a  */
         username: "",
-        privilege: "",
+        privilege: "ADMIN",
         personObj: {}
     }
 }

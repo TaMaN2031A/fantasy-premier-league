@@ -29,8 +29,6 @@ import Players from "../Home/Common/Players/Players";
 import Teams from "../Home/Common/Teams/Teams";
 
 import Error from "../Security/Error";
-import UserGroups from "../Home/User/Groups/UserGroups";
-import JoinGroups from "../Home/User/Groups/JoinGroups";
 
 export const nav = [
 
@@ -145,24 +143,10 @@ export const nav = [
         path: paths.groups,
         Title: "Groups",
         description: "Engage with fellow enthusiasts, form leagues, and join competitive groups.",
-        element: <Groups  />,
+        element: <Groups />,
         status: userPrivilege
     },
-    {
-        path: paths.userGroups,
-        Title: "User Groups",
-        description: "View, manage user groups and create new group.",
-        element: <UserGroups />,
-        status: userPrivilege
-    },
-    {
-        path: paths.joinGroups,
-        Title: "Join Groups",
-        description: "View and join public and private groups.",
-        element: <JoinGroups />,
-        status: userPrivilege
-    },
-    
+
     // admin pages
     {
         path:     paths.promotion,
