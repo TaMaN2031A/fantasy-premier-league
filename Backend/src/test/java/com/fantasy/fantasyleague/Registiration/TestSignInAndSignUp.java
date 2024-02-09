@@ -1,9 +1,5 @@
 package com.fantasy.fantasyleague.Registiration;
-
-
-import com.fantasy.fantasyleague.Registiration.DTO.GoogleDTO;
 import com.fantasy.fantasyleague.Registiration.DTO.SignInDTO;
-
 import com.fantasy.fantasyleague.Registiration.Model.Admin;
 import com.fantasy.fantasyleague.Registiration.Model.Role;
 import com.fantasy.fantasyleague.Registiration.Model.User;
@@ -17,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)

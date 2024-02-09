@@ -7,6 +7,7 @@ import com.fantasy.fantasyleague.RealLeague.Model.Team;
 import com.fantasy.fantasyleague.RealLeague.Model.UpcomingMatch;
 import com.fantasy.fantasyleague.RealLeague.Repository.*;
 import com.fantasy.fantasyleague.RealLeague.Service.MatchServiceImpl;
+import com.fantasy.fantasyleague.fantasyGame.Service.PointsCalculator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,6 +41,9 @@ public class PlayedMatchServiceTest {
 
     @Mock
     private UpcomingMatchRepository upcomingMatchRepository;
+
+    @Mock
+    private PointsCalculator pointsCalculator;
 
     @InjectMocks
     private MatchServiceImpl matchService;
