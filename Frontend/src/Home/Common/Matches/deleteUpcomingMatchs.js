@@ -37,35 +37,43 @@ export const DeleteUpcomingMatch = () => {
             backgroundColor: 'white'
         }
     return (
-        <div className="border border-gray-300 p-5 rounded-lg bg-black w-2/5 mx-auto mt-10">
-            <form>
-                {/* ------------------ id part ---------------------- */}
-                <div className="mb-4">
-                    <label htmlFor="formId" className="block text-sm font-medium text-gray-600">
-                        Upcoming Delete
-                    </label>
-                    <input
-                        type="text"
-                        id="formId"
-                        placeholder="Enter id of upcoming match"
-                        name="id"
-                        value={upcomingMatch.id}
-                        onChange={inputChange}
-                        className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
-                        required
-                    />
-                </div>
-
-                <button
-                    type="button"
-                    className="bg-dark text-white py-2 px-4 rounded"
-                    onClick={handleSubmit}
-                >
-                    Submit
-                </button>
-            </form>
+        
+        <div>
+        {/* Join Group */}
+      <div>
+      <form className="space-y-4  w-4/5 ml-40">
+        <div>
+          <label
+            for="teamId"
+            className="block mb-2 text-2xl font-medium text-white"
+          >
+            Delete Upcoming Match
+          </label>
+          <input
+            name="id"
+            id="id"
+            value={upcomingMatch.id}
+            placeholder="Enter UpcomingMatch ID"
+            onChange={
+                inputChange
+            }
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+            required
+          />
         </div>
-
+        <button
+          type="button"
+          onClick={
+            handleSubmit
+          }
+          className="min-w-full focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-2xl px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+        >
+          Delete
+        </button>
+      </form>
+      <hr className="border-b-2 mt-20 mb-10 border-gray-500 w-4/5 mx-auto" />
+    </div>
+        </div>
 
     )
 
