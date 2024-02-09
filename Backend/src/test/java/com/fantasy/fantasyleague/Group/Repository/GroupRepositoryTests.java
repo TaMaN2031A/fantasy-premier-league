@@ -47,7 +47,7 @@ public class GroupRepositoryTests {
     @Test
     public void GroupRepository_SaveThenFindByName_ReturnNotNull() {
         // Arrange
-        GroupFantasy groupFantasy = new GroupFantasy(1, "Champions", 1, userRepository.findByUserName("mohamed_arous1"), new ArrayList<>());
+        GroupFantasy groupFantasy = new GroupFantasy(1, "Champions", 1, userRepository.findByUserName("mohamed_arous1").orElseThrow(), new ArrayList<>());
         //Act
         this.groupRepository.save(groupFantasy);
         //Assert
@@ -57,7 +57,7 @@ public class GroupRepositoryTests {
     @Test
     public void GroupRepository_DoNotSaveThenFindByName_ReturnNull() {
         // Arrange
-        GroupFantasy groupFantasy = new GroupFantasy(1, "Champions", 1, userRepository.findByUserName("mohamed_arous1"), new ArrayList<>());
+        GroupFantasy groupFantasy = new GroupFantasy(1, "Champions", 1, userRepository.findByUserName("mohamed_arous1").orElseThrow(), new ArrayList<>());
         //Act
         //Assert
         Assertions.assertNotNull(this.groupRepository.findByName(groupFantasy.getName()));
@@ -67,9 +67,9 @@ public class GroupRepositoryTests {
     public void TeamRepository_findPublicGroupsNotContainingUser_ReturnNoGroup() {
         // Arrange
         List<User> list = new ArrayList<>();
-        list.add(userRepository.findByUserName("mohamed_arous1"));
-        list.add(userRepository.findByUserName("Mohamed_arous1"));
-        GroupFantasy groupFantasy = new GroupFantasy(1, "Champions", 1, userRepository.findByUserName("mohamed_arous1"), list);
+        list.add(userRepository.findByUserName("mohamed_arous1").orElseThrow());
+        list.add(userRepository.findByUserName("Mohamed_arous1").orElseThrow());
+        GroupFantasy groupFantasy = new GroupFantasy(1, "Champions", 1, userRepository.findByUserName("mohamed_arous1").orElseThrow(), list);
         //Act
         groupRepository.save(groupFantasy);
         //Assert
@@ -80,8 +80,8 @@ public class GroupRepositoryTests {
     public void TeamRepository_findPublicGroupsNotContainingUser_ReturnOneGroup() {
         // Arrange
         List<User> list = new ArrayList<>();
-        list.add(userRepository.findByUserName("Mohamed_arous1"));
-        GroupFantasy groupFantasy = new GroupFantasy(1, "Champions", 1, userRepository.findByUserName("mohamed_arous1"), list);
+        list.add(userRepository.findByUserName("Mohamed_arous1").orElseThrow());
+        GroupFantasy groupFantasy = new GroupFantasy(1, "Champions", 1, userRepository.findByUserName("mohamed_arous1").orElseThrow(), list);
         //Act
         groupRepository.save(groupFantasy);
         //Assert

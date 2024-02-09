@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import defaultPlayer from "../Assets/defaultPlayer.jfif";
+import defaultPlayer from "../Assets/defaultPlayer.avif";
 import PlayerModal from "./PlayerModal";
 import {position} from "../../../collection";
 import {LineUpContextContextFn} from "./Transfers";

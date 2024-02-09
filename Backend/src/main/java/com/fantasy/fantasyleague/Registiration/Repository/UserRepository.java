@@ -26,5 +26,5 @@ public interface UserRepository extends JpaRepository<User, String> {
     // search by specification
     Page<User> findAll(Specification<User> spec, Pageable pageable);
 
-    User findByUserName(String userName);
+//    User findByUserName(String userName);
 }
