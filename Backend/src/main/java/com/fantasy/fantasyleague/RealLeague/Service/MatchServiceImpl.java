@@ -140,7 +140,7 @@ public class MatchServiceImpl implements MatchService{
 
 
     public PlayedMatch UpcomingMatchToPlayedMatch(UpcomingMatch upcomingMatch , MatchStatisticsDTO matchStatisticsDTO){
-        PlayedMatch  match= PlayedMatch.builder()
+        PlayedMatch  match = PlayedMatch.builder()
                 .away(upcomingMatch.getAway())
                 .home(upcomingMatch.getHome())
                 .date(new Date())
