@@ -67,21 +67,21 @@ public class TransferServiceTest {
     @Test
     public void testValidTransferConditions() {
         List<Player> validPlayers = Arrays.asList(
-                new Player("player1", "GK", 10, 1),
-                new Player("player2", "GK", 10, 1),
-                new Player("player3", "DEF", 10, 1),
-                new Player("player4", "DEF", 10, 1),
-                new Player("player5", "DEF", 10, 1),
-                new Player("player6", "DEF", 10, 1),
-                new Player("player6", "DEF", 10, 1),
-                new Player("player7", "MID", 10, 1),
-                new Player("player8", "MID", 10, 1),
-                new Player("player9", "MID", 10, 1),
-                new Player("player10", "MID", 10, 1),
-                new Player("player11", "MID", 10, 1),
-                new Player("player12", "FWD", 10, 1),
-                new Player("player13", "FWD", 10, 1),
-                new Player("player14", "FWD", 10, 1)
+                new Player("player1", Position.GK.name(), 10, 1),
+                new Player("player2", Position.GK.name(), 10, 1),
+                new Player("player3", Position.DEF.name(), 10, 1),
+                new Player("player4", Position.DEF.name(), 10, 1),
+                new Player("player5", Position.DEF.name(), 10, 1),
+                new Player("player6", Position.DEF.name(), 10, 1),
+                new Player("player6", Position.DEF.name(), 10, 1),
+                new Player("player7", Position.MID.name(), 10, 1),
+                new Player("player8", Position.MID.name(), 10, 1),
+                new Player("player9", Position.MID.name(), 10, 1),
+                new Player("player10", Position.MID.name(), 10, 1),
+                new Player("player11", Position.MID.name(), 10, 1),
+                new Player("player12", Position.FWD.name(), 10, 1),
+                new Player("player13", Position.FWD.name(), 10, 1),
+                new Player("player14", Position.FWD.name(), 10, 1)
         );
         for(int i=0;i<validPlayers.size();i++){
             validPlayers.get(i).setID(i);
@@ -93,21 +93,21 @@ public class TransferServiceTest {
     @Test
     public void testInvalidGoalkeeperCount() {
         List<Player> InValidPlayers = Arrays.asList(
-                new Player("player1", "GK", 10, 1),
-                new Player("player2", "GK", 10, 1),
-                new Player("player3", "GK", 10, 1),
-                new Player("player4", "DEF", 10, 1),
-                new Player("player5", "DEF", 10, 1),
-                new Player("player6", "DEF", 10, 1),
-                new Player("player6", "DEF", 10, 1),
-                new Player("player7", "MID", 10, 1),
-                new Player("player8", "MID", 10, 1),
-                new Player("player9", "MID", 10, 1),
-                new Player("player10", "MID", 10, 1),
-                new Player("player11", "MID", 10, 1),
-                new Player("player12", "FWD", 10, 1),
-                new Player("player13", "FWD", 10, 1),
-                new Player("player14", "FWD", 10, 1)
+                new Player("player1", Position.GK.name(), 10, 1),
+                new Player("player2", Position.GK.name(), 10, 1),
+                new Player("player3", Position.GK.name(), 10, 1),
+                new Player("player4", Position.DEF.name(), 10, 1),
+                new Player("player5", Position.DEF.name(), 10, 1),
+                new Player("player6", Position.DEF.name(), 10, 1),
+                new Player("player6", Position.DEF.name(), 10, 1),
+                new Player("player7", Position.MID.name(), 10, 1),
+                new Player("player8", Position.MID.name(), 10, 1),
+                new Player("player9", Position.MID.name(), 10, 1),
+                new Player("player10", Position.MID.name(), 10, 1),
+                new Player("player11", Position.MID.name(), 10, 1),
+                new Player("player12", Position.FWD.name(), 10, 1),
+                new Player("player13", Position.FWD.name(), 10, 1),
+                new Player("player14", Position.FWD.name(), 10, 1)
         );
         for(int i=0;i<InValidPlayers.size();i++){
             InValidPlayers.get(i).setID(i);
@@ -119,21 +119,21 @@ public class TransferServiceTest {
     @Test
     public void testInvalidDefenderCount() {
         List<Player> InValidPlayers = Arrays.asList(
-                new Player("player1", "GK", 10, 1),
-                new Player("player2", "GK", 10, 1),
-                new Player("player3", "DEF", 10, 1),
-                new Player("player4", "DEF", 10, 1),
-                new Player("player5", "DEF", 10, 1),
-                new Player("player6", "DEF", 10, 1),
-                new Player("player6", "DEF", 10, 1),
-                new Player("player7", "MID", 10, 1),
-                new Player("player8", "MID", 10, 1),
-                new Player("player9", "MID", 10, 1),
-                new Player("player10", "MID", 10, 1),
-                new Player("player11", "MID", 10, 1),
-                new Player("player12", "MID", 10, 1),
-                new Player("player13", "FWD", 10, 1),
-                new Player("player14", "FWD", 10, 1)
+                new Player("player1", Position.GK.name(), 10, 1),
+                new Player("player2", Position.GK.name(), 10, 1),
+                new Player("player3", Position.DEF.name(), 10, 1),
+                new Player("player4", Position.DEF.name(), 10, 1),
+                new Player("player5", Position.DEF.name(), 10, 1),
+                new Player("player6", Position.DEF.name(), 10, 1),
+                new Player("player6", Position.DEF.name(), 10, 1),
+                new Player("player7", Position.MID.name(), 10, 1),
+                new Player("player8", Position.MID.name(), 10, 1),
+                new Player("player9", Position.MID.name(), 10, 1),
+                new Player("player10", Position.MID.name(), 10, 1),
+                new Player("player11", Position.MID.name(), 10, 1),
+                new Player("player12", Position.MID.name(), 10, 1),
+                new Player("player13", Position.FWD.name(), 10, 1),
+                new Player("player14", Position.FWD.name(), 10, 1)
         );
         for(int i=0;i<InValidPlayers.size();i++){
             InValidPlayers.get(i).setID(i);
@@ -144,21 +144,21 @@ public class TransferServiceTest {
     @Test
     public void testInvalidTotalPrice() {
         List<Player> InValidPlayers = Arrays.asList(
-                new Player("player1", "GK", 10, 1),
-                new Player("player2", "GK", 10, 1),
-                new Player("player3", "GK", 10, 1),
-                new Player("player4", "DEF", 10, 1),
-                new Player("player5", "DEF", 10, 1),
-                new Player("player6", "DEF", 10, 1),
-                new Player("player6", "DEF", 10, 1),
-                new Player("player7", "MID", 10, 1),
-                new Player("player8", "MID", 10, 1),
-                new Player("player9", "MID", 10, 1),
-                new Player("player10", "MID", 10, 1),
-                new Player("player11", "MID", 10, 1),
-                new Player("player12", "FWD", 10, 1),
-                new Player("player13", "FWD", 10, 1),
-                new Player("player14", "FWD", 10, 1)
+                new Player("player1", Position.GK.name(), 10, 1),
+                new Player("player2", Position.GK.name(), 10, 1),
+                new Player("player3", Position.GK.name(), 10, 1),
+                new Player("player4", Position.DEF.name(), 10, 1),
+                new Player("player5", Position.DEF.name(), 10, 1),
+                new Player("player6", Position.DEF.name(), 10, 1),
+                new Player("player6", Position.DEF.name(), 10, 1),
+                new Player("player7", Position.MID.name(), 10, 1),
+                new Player("player8", Position.MID.name(), 10, 1),
+                new Player("player9", Position.MID.name(), 10, 1),
+                new Player("player10", Position.MID.name(), 10, 1),
+                new Player("player11", Position.MID.name(), 10, 1),
+                new Player("player12", Position.FWD.name(), 10, 1),
+                new Player("player13", Position.FWD.name(), 10, 1),
+                new Player("player14", Position.FWD.name(), 10, 1)
         );
         for (Player inValidPlayer : InValidPlayers) {
             inValidPlayer.setPrice(100);
@@ -170,9 +170,9 @@ public class TransferServiceTest {
     @Test
     public void testCollectPlayers() {
         // Mock playerRepo behavior for each player name
-        when(playerRepo.findByName("player1")).thenReturn(new Player("player1", "GK", 10, 1));
-        when(playerRepo.findByName("player2")).thenReturn(new Player("player2", "DF", 10, 2));
-        when(playerRepo.findByName("player3")).thenReturn(new Player("player3", "MF", 10, 3));
+        when(playerRepo.findByName("player1")).thenReturn(new Player("player1", Position.GK.name(), 10, 1));
+        when(playerRepo.findByName("player2")).thenReturn(new Player("player2", Position.DEF.name(), 10, 2));
+        when(playerRepo.findByName("player3")).thenReturn(new Player("player3", Position.MID.name(), 10, 3));
 
         List<String> team = Arrays.asList("player1", "player2", "player3");
 
@@ -181,15 +181,15 @@ public class TransferServiceTest {
         assertEquals(3, result.size());
 
         // Verify that the correct players were added to the result list
-        assertTrue(result.contains(new Player("player1", "GK", 10, 1)));
-        assertTrue(result.contains(new Player("player2", "DF", 10, 2)));
-        assertTrue(result.contains(new Player("player3", "MF", 10, 3)));
+        assertTrue(result.contains(new Player("player1", Position.GK.name(), 10, 1)));
+        assertTrue(result.contains(new Player("player2", Position.DEF.name(), 10, 2)));
+        assertTrue(result.contains(new Player("player3", Position.MID.name(), 10, 3)));
     }
 
     @Test
     public void testCollectPlayersWithMissingPlayers() {
         // Mock playerRepo behavior for each player name
-        when(playerRepo.findByName("player1")).thenReturn(new Player("player1", "GK", 10, 1));
+        when(playerRepo.findByName("player1")).thenReturn(new Player("player1", Position.GK.name(), 10, 1));
         // Not mocking "player2" and "player3" intentionally to simulate missing players
 
         List<String> team = Arrays.asList("player1", "player2", "player3");
@@ -199,7 +199,7 @@ public class TransferServiceTest {
         assertEquals(1, result.size());  // Only one player should be collected
 
         // Verify that the correct player was added to the result list
-        assertTrue(result.contains(new Player("player1", "GK", 10, 1)));
+        assertTrue(result.contains(new Player("player1", Position.GK.name(), 10, 1)));
 
         // Verify that missing players were not added to the result list
         verify(playerRepo, times(1)).findByName("player1");
@@ -210,11 +210,11 @@ public class TransferServiceTest {
     @Test
     void testGetPlayersWithValidPosition() {
         // Mock data
-        List<Player> goalkeepers = List.of(new Player("John", "GK", 10, 1));
-        when(playerRepo.findByPosition("GK")).thenReturn(goalkeepers);
+        List<Player> goalkeepers = List.of(new Player("John", Position.GK.name(), 10, 1));
+        when(playerRepo.findByPosition(Position.GK.name())).thenReturn(goalkeepers);
 
         // Test
-        List<Player> result = transferService.getPlayers("GK");
+        List<Player> result = transferService.getPlayers(Position.GK.name());
 
         // Assertions
         assertNotNull(result);
@@ -233,11 +233,11 @@ public class TransferServiceTest {
     @Test
     void testGetGoalKeepers() {
         // Mock data
-        List<Player> goalkeepers = List.of(new Player("John", "GK", 10, 1));
-        when(playerRepo.findByPosition("GK")).thenReturn(goalkeepers);
+        List<Player> goalkeepers = List.of(new Player("John", Position.GK.name(), 10, 1));
+        when(playerRepo.findByPosition(Position.GK.name())).thenReturn(goalkeepers);
 
         // Test
-        List<Player> result = transferService.getPlayers("GK");
+        List<Player> result = transferService.getPlayers(Position.GK.name());
 
         // Assertions
         assertNotNull(result);
@@ -247,11 +247,11 @@ public class TransferServiceTest {
     @Test
     void testGetDefenders() {
         // Mock data
-        List<Player> defenders = List.of(new Player("Bob", "DEF",10, 1));
-        when(playerRepo.findByPosition("DEF")).thenReturn(defenders);
+        List<Player> defenders = List.of(new Player("Bob", Position.DEF.name(),10, 1));
+        when(playerRepo.findByPosition(Position.DEF.name())).thenReturn(defenders);
 
         // Test
-        List<Player> result = transferService.getPlayers("DEF");
+        List<Player> result = transferService.getPlayers(Position.DEF.name());
 
         // Assertions
         assertNotNull(result);
@@ -261,11 +261,11 @@ public class TransferServiceTest {
     @Test
     void testGetMidfielders() {
         // Mock data
-        List<Player> midfielders = List.of(new Player("Alice", "MID", 10, 1));
-        when(playerRepo.findByPosition("MID")).thenReturn(midfielders);
+        List<Player> midfielders = List.of(new Player("Alice", Position.MID.name(), 10, 1));
+        when(playerRepo.findByPosition(Position.MID.name())).thenReturn(midfielders);
 
         // Test
-        List<Player> result = transferService.getPlayers("MID");
+        List<Player> result = transferService.getPlayers(Position.MID.name());
 
         // Assertions
         assertNotNull(result);
@@ -275,11 +275,11 @@ public class TransferServiceTest {
     @Test
     void testGetForwards() {
         // Mock data
-        List<Player> forwards = List.of(new Player("Charlie", "FWD", 10, 1));
-        when(playerRepo.findByPosition("FWD")).thenReturn(forwards);
+        List<Player> forwards = List.of(new Player("Charlie", Position.FWD.name(), 10, 1));
+        when(playerRepo.findByPosition(Position.FWD.name())).thenReturn(forwards);
 
         // Test
-        List<Player> result = transferService.getPlayers("FWD");
+        List<Player> result = transferService.getPlayers(Position.FWD.name());
 
         // Assertions
         assertNotNull(result);

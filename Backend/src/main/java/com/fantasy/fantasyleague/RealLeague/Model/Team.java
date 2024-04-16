@@ -18,6 +18,11 @@ public class Team {
     private int ID;
     @Column(unique = true, updatable = false)
     private String name;
+
+    // recently added
+    private String logo;
+    // recently added
+
     private int red_cards;
     private int yellow_cards;
     private int goals_for;
@@ -50,5 +55,6 @@ public class Team {
         this.goals_conceded = 0;
         this.goals_difference = 0;
         this.points = 0;
+        this.logo = "";
     }
 }

@@ -9,7 +9,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.EqualsAndHashCode;
-import com.fantasy.fantasyleague.Group.Model.GroupFantasy;
+//import com.fantasy.fantasyleague.Group.Model.GroupFantasy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -27,7 +27,9 @@ public class User extends Person implements Serializable {
     // private UserTeam team;
     @Column(nullable = true)
     private Boolean benchBoost = false;
+
     @Column(nullable = true)
+
     private Boolean tripleCaptain = false;
     @Column(nullable = true)
     private Double moneyRemaining = 100.0;
@@ -42,18 +44,18 @@ public class User extends Person implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vice_captain_id", referencedColumnName = "id")
-    private Player viceCaptain ;
+    private Player viceCaptain;
 
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-            name = "groupFantasy_user_relationship",
-            joinColumns = @JoinColumn(name = "user_name", referencedColumnName = "userName"),
-            inverseJoinColumns = @JoinColumn(name = "groupFantasy_id")
-    )
-    private List<GroupFantasy> groupFantasies = new ArrayList<>();
-    @JsonIgnore
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<GroupFantasy> ownedGroups = new ArrayList<>();
+//    @JsonIgnore
+//    @ManyToMany
+//    @JoinTable(
+//            name = "groupFantasy_user_relationship",
+//            joinColumns = @JoinColumn(name = "user_name", referencedColumnName = "userName"),
+//            inverseJoinColumns = @JoinColumn(name = "groupFantasy_id")
+//    )
+//    private List<GroupFantasy> groupFantasies = new ArrayList<>();
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+//    private List<GroupFantasy> ownedGroups = new ArrayList<>();
 
 }

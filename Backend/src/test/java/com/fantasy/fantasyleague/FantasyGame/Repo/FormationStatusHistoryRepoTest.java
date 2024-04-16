@@ -1,6 +1,7 @@
 package com.fantasy.fantasyleague.FantasyGame.Repo;
 
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
+import com.fantasy.fantasyleague.RealLeague.Model.Position;
 import com.fantasy.fantasyleague.RealLeague.Model.Team;
 import com.fantasy.fantasyleague.RealLeague.Repository.PlayerRepository;
 import com.fantasy.fantasyleague.RealLeague.Repository.TeamRepository;
@@ -35,8 +36,8 @@ public class FormationStatusHistoryRepoTest {
     @Test
     public void insertTest() {
         Team team = new Team("Liverpool");
-        Player captain = new Player("Mohamed Salah", "GK", 10, 1);
-        Player viceCaptain = new Player("Sadio Mane", "MF", 11, 2);
+        Player captain = new Player("Mohamed Salah", Position.GK.name(), 10, 1);
+        Player viceCaptain = new Player("Sadio Mane", Position.MID.name(), 11, 2);
         teamRepository.save(team);
         playerRepository.save(captain);
         playerRepository.save(viceCaptain);
@@ -60,8 +61,8 @@ public class FormationStatusHistoryRepoTest {
     @Test
     public void getTest() {
         Team team = new Team("Liverpool");
-        Player captain = new Player("Mohamed Salah", "GK", 10, 1);
-        Player viceCaptain = new Player("Sadio Mane", "MF", 11, 2);
+        Player captain = new Player("Mohamed Salah", Position.GK.name(), 10, 1);
+        Player viceCaptain = new Player("Sadio Mane", Position.MID.name(), 11, 2);
         teamRepository.save(team);
         playerRepository.save(captain);
         playerRepository.save(viceCaptain);

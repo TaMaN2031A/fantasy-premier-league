@@ -1,6 +1,7 @@
 package com.fantasy.fantasyleague.FantasyGame.Repo;
 
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
+import com.fantasy.fantasyleague.RealLeague.Model.Position;
 import com.fantasy.fantasyleague.RealLeague.Model.Team;
 import com.fantasy.fantasyleague.RealLeague.Repository.PlayerRepository;
 import com.fantasy.fantasyleague.RealLeague.Repository.TeamRepository;
@@ -63,8 +64,8 @@ public class UserTeamRepoTest {
         signup.setMoneyRemaining(100.0);
         userRepository.save(signup);
         User user1 = userRepository.findByEmailOrUserName("mohamed_arous1","mohamed_arous1");
-        Player player1 = new Player("player1","ST",1,1);
-        Player player2 = new Player("player2","ST",2,1);
+        Player player1 = new Player("player1", Position.FWD.name(),1,1);
+        Player player2 = new Player("player2",Position.FWD.name(),2,1);
         playerRepository.save(player1);
         playerRepository.save(player2);
         signup.setCaptain(player1);

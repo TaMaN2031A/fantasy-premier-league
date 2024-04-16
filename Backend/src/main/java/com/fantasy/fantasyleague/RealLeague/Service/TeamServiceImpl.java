@@ -50,7 +50,27 @@ public class TeamServiceImpl implements TeamService {
             response.put("error", e.toString());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
 
+    @Override
+    public ResponseEntity addTeamLogo(String ID, String logo) {
+        Map<String, String> response = new HashMap<>();
+        try {
+            // If not integer returns 500
+            int id = Integer.parseInt(ID);
+            if(!teamRepository.existsById(id)) {
+                response.put("error", "Team doesn't exist");
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            }
+            Team teamToUpdate = teamRepository.getReferenceById(id);
+            teamToUpdate.setLogo(logo);
+            teamRepository.save(teamToUpdate);
+            response.put("message", "Team Updated successfully");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            response.put("error", e.toString());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override
@@ -70,7 +90,6 @@ public class TeamServiceImpl implements TeamService {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @Override
     public List<Team> getAllTeams(){
         return teamRepository.findAll();

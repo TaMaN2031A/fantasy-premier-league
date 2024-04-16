@@ -1,6 +1,7 @@
 package com.fantasy.fantasyleague.FantasyGame.Repo;
 
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
+import com.fantasy.fantasyleague.RealLeague.Model.Position;
 import com.fantasy.fantasyleague.RealLeague.Model.Team;
 import com.fantasy.fantasyleague.RealLeague.Repository.PlayerRepository;
 import com.fantasy.fantasyleague.RealLeague.Repository.TeamRepository;
@@ -33,7 +34,7 @@ public class PointHistoryRepoTest {
     @Test
     void InsertAndGetTest() {
         Team team = new Team("ahmed");
-        Player player = new Player("abdo", "ST", 1, 1);
+        Player player = new Player("abdo", Position.FWD.name(), 1, 1);
         teamRepository.save(team);
         playerRepository.save(player);
         PointHistory pointHistory = new PointHistory(player, 0 , 1);

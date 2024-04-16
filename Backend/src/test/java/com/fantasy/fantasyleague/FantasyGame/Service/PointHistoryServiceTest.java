@@ -1,6 +1,7 @@
 package com.fantasy.fantasyleague.FantasyGame.Service;
 
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
+import com.fantasy.fantasyleague.RealLeague.Model.Position;
 import com.fantasy.fantasyleague.fantasyGame.Model.PointHistory.PointHistory;
 import com.fantasy.fantasyleague.fantasyGame.Repository.PointHistoryRepo;
 import com.fantasy.fantasyleague.fantasyGame.Service.PointHistoryService;
@@ -27,7 +28,7 @@ public class PointHistoryServiceTest  {
     @Test
     void testSavePointHistory() {
         // Arrange
-        List<PointHistory> pointHistoryList = List.of(new PointHistory(new Player("Mohamed Salah", "GK",10,1),1,5));
+        List<PointHistory> pointHistoryList = List.of(new PointHistory(new Player("Mohamed Salah", Position.GK.name(),10,1),1,5));
 
         // Act
         pointHistoryService.SavePointHistory(pointHistoryList);
@@ -39,7 +40,7 @@ public class PointHistoryServiceTest  {
     @Test
     void testSavePointHistoryException() {
         // Arrange
-        List<PointHistory> pointHistoryList = List.of(new PointHistory(new Player("Mohamed Salah", "GK",10,1),1,5));
+        List<PointHistory> pointHistoryList = List.of(new PointHistory(new Player("Mohamed Salah", Position.GK.name(),10,1),1,5));
         doThrow(new RuntimeException("Simulated exception")).when(pointHistoryRepo).saveAll(any());
 
         // Act and Assert
@@ -50,8 +51,8 @@ public class PointHistoryServiceTest  {
     void testGetPlayersPointInNthWeek() {
         // Arrange
         int weekNo = 1;
-        Player player1 = new Player("Mohamed Salah", "GK",10,1);
-        Player player2 = new Player("abdo","MID",11,1);
+        Player player1 = new Player("Mohamed Salah", Position.GK.name(),10,1);
+        Player player2 = new Player("abdo",Position.MID.name(),11,1);
         player1.setID(1);
         player2.setID(2);
         List<Player> players = Arrays.asList(player1, player2);

@@ -1,6 +1,7 @@
 package com.fantasy.fantasyleague.RealLeague.Repository;
 
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
+import com.fantasy.fantasyleague.RealLeague.Model.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class PlayerRepositoryTests {
     @Test
     public void TeamRepository_SaveThenExistByID_FindWhatWeSaved() {
         // Arrange
-        Player player = new Player("Ibrahim El Nabulsi", "ST", 19, 1);
+        Player player = new Player("Ibrahim El Nabulsi", Position.FWD.name(), 19, 1);
         //Act
         this.playerRepository.save(player);
         //Assert
@@ -27,8 +28,8 @@ public class PlayerRepositoryTests {
     @Test
     public void PlayerRepository_BulkInsertThenFindAll_FindWhatWeSaved() {
         // Arrange
-        Player player = new Player("Ibrahim El Nabulsi", "ST", 19, 1);
-        Player player2 = new Player("Sameeh Abo El Wafa", "ST", 19, 1);
+        Player player = new Player("Ibrahim El Nabulsi", Position.FWD.name(), 19, 1);
+        Player player2 = new Player("Sameeh Abo El Wafa", Position.FWD.name(), 19, 1);
         //Act
         this.playerRepository.save(player);
         this.playerRepository.save(player2);
@@ -41,7 +42,7 @@ public class PlayerRepositoryTests {
     @Test
     public void PlayerRepository_FindByIDThenUpdateAndSaveThenFindAllAndCheckNames_FindWhatWeSaved() {
         // Arrange
-        Player player = new Player("Ibrahim El Nabulsi", "ST", 19, 1);
+        Player player = new Player("Ibrahim El Nabulsi", Position.FWD.name(), 19, 1);
         //Act
         this.playerRepository.save(player);
         Player player1 = this.playerRepository.findById(player.getID()).orElse(null);
@@ -57,7 +58,7 @@ public class PlayerRepositoryTests {
     @Test
     public void PlayerRepository_FindNonExisting_FindWhatWeSaved() {
         // Arrange
-        Player player = new Player("Ibrahim El Nabulsi", "ST", 19, 1);
+        Player player = new Player("Ibrahim El Nabulsi", Position.FWD.name(), 19, 1);
         //Act
         this.playerRepository.save(player);
         // Assert
@@ -67,7 +68,7 @@ public class PlayerRepositoryTests {
     @Test
     public void PlayerRepository_DeleteAnExistingAndMakeSureItsDeleted_FindWhatWeSaved() {
         // Arrange
-        Player player = new Player("Ibrahim El Nabulsi", "ST", 19, 1);
+        Player player = new Player("Ibrahim El Nabulsi", Position.FWD.name(), 19, 1);
         //Act
         this.playerRepository.save(player);
         this.playerRepository.deleteById(player.getID());
@@ -81,7 +82,7 @@ public class PlayerRepositoryTests {
         String s = "";
         for (int i = 0; i < 100; i++) {
             s += "a";
-            Player player = new Player(s, "ST", 19, 1);
+            Player player = new Player(s, Position.FWD.name(), 19, 1);
             // Act
             this.playerRepository.save(player);
         }

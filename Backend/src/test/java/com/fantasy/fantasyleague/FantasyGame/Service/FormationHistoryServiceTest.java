@@ -1,6 +1,7 @@
 package com.fantasy.fantasyleague.FantasyGame.Service;
 
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
+import com.fantasy.fantasyleague.RealLeague.Model.Position;
 import com.fantasy.fantasyleague.RealLeague.Model.Team;
 import com.fantasy.fantasyleague.Registiration.Model.User;
 import com.fantasy.fantasyleague.Registiration.Repository.UserRepository;
@@ -52,8 +53,8 @@ public class FormationHistoryServiceTest {
 
     @Test
     public void testGetFormationHistoryByUserAndWeek() {
-        Player player = new Player("amin", "GK", 1, 1);
-        Player player1 = new Player("amr", "MID", 2, 1);
+        Player player = new Player("amin", Position.GK.name(), 1, 1);
+        Player player1 = new Player("amr", Position.MID.name(), 2, 1);
         player.setTeam(new Team("Liverpool"));
         player1.setTeam(new Team("Arsenal"));
         User user = generateUser("madyelzainy@gmail.com", "abdo", "Egypt", "mady", "elzainy", "123456");
@@ -89,7 +90,7 @@ public class FormationHistoryServiceTest {
         User user = generateUser("mohamed@mail.com", "mohamed1", "Egypt", "mohamed", "elzainy", "123456");
         users.add(user);
 
-        Player player = new Player("Mohamed Salah", "GK", 10, 1);
+        Player player = new Player("Mohamed Salah", Position.GK.name(), 10, 1);
 
         List<CurrentFormation> currentFormations = new ArrayList<>();
         CurrentFormation currentFormation = new CurrentFormation(player, user, true);

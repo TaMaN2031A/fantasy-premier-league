@@ -11,4 +11,6 @@ public interface TeamService {
     ResponseEntity updateTeam(String id, String newName);
     ResponseEntity deleteTeam(String ID);
     ResponseEntity deleteAllTeam();
+
+    ResponseEntity addTeamLogo(String name, String logo);
 }

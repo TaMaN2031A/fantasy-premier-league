@@ -26,6 +26,12 @@ public class TeamController {
     public ResponseEntity updateTeam(@PathVariable String id, @PathVariable String name) {
         return teamService.updateTeam(id, name);
     }
+
+    @PostMapping("/insert/{id}/{logo}")
+    public ResponseEntity addTeamLogo(@PathVariable String id, @PathVariable String logo) {
+        return teamService.addTeamLogo(id, logo);
+    }
+
     @GetMapping("/getAll")
     public List<Team> getAllTeam() {
         return teamService.getAllTeams();

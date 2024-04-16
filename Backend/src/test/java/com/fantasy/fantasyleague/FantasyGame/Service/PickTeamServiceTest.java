@@ -1,6 +1,7 @@
 package com.fantasy.fantasyleague.FantasyGame.Service;
 
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
+import com.fantasy.fantasyleague.RealLeague.Model.Position;
 import com.fantasy.fantasyleague.RealLeague.Model.Team;
 import com.fantasy.fantasyleague.Registiration.Model.User;
 import com.fantasy.fantasyleague.Registiration.Repository.UserRepository;
@@ -57,8 +58,8 @@ public class PickTeamServiceTest {
     }
 
     private static FormationWithoutPointsDTO getFormationWithoutPointsDTO() {
-        Player player = new Player("amin", "GK", 1, 1);
-        Player player1 = new Player("amin", "MID", 2, 1);
+        Player player = new Player("amin", Position.GK.name(), 1, 1);
+        Player player1 = new Player("amin", Position.MID.name(), 2, 1);
         List<PlayerWithoutPoints> playerWithoutPointsList = new ArrayList<>();
         PlayerWithoutPoints playerWithoutPoints = new PlayerWithoutPoints(player, "Arsenal", true);
         PlayerWithoutPoints playerWithoutPoints1 = new PlayerWithoutPoints(player1, "Liverpool", false);
@@ -75,8 +76,8 @@ public class PickTeamServiceTest {
     void getUserFantasyTeamFormation_success() {
         // Arrange
         Team team = new Team("Liverpool");
-        Player player = new Player("amin", "GK", 1, 1);
-        Player player1 = new Player("amin", "MID", 2, 1);
+        Player player = new Player("amin", Position.GK.name(), 1, 1);
+        Player player1 = new Player("amin", Position.MID.name(), 2, 1);
         player.setTeam(team);
         player1.setTeam(team);
         User user = generateUser("mady@gmail.com", "mady", "Egypt", "mady", "elzainy", "123456");

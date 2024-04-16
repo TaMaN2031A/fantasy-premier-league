@@ -3,6 +3,7 @@ package com.fantasy.fantasyleague.fantasyGame.Service;
 
 import com.fantasy.fantasyleague.RealLeague.DTO.MatchStatisticsDTO;
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
+import com.fantasy.fantasyleague.RealLeague.Model.Position;
 import com.fantasy.fantasyleague.RealLeague.Repository.PlayerRepository;
 import com.fantasy.fantasyleague.Registiration.Model.Response;
 import com.fantasy.fantasyleague.fantasyGame.Model.Lock;
@@ -132,46 +133,30 @@ public class PointsCalculator {
             totalPointsOfPlayers.merge(playerName, points, Integer::sum);
         });
     }
-
     BiFunction<String, Integer, Integer> goalPointsFunction = (position, goals) ->
-            goals * switch (position) {
-                case "GK", "DF" -> 6;
-                case "MF" -> 5;
-                case "FW" -> 4;
-                default -> null;
-            };
-
+            goals * (getPositionPoints(position, 6, 6, 5, 4).getOrDefault(position, 0));
     BiFunction<String, Integer, Integer> assistPointsFunction = (position, assists) ->
-            assists * switch (position) {
-                case "GK", "DF", "MF", "FW" -> 3;
-                default -> null;
-            };
+            assists * getPositionPoints(position, 3, 3, 3, 3).getOrDefault(position, 0);
 
     BiFunction<String, Integer, Integer> cleanSheetPointsFunction = (position, cleanSheets) ->
-            cleanSheets * switch (position) {
-                case "GK", "DF" -> 4;
-                case "MF", "FW" -> 1;
-                default -> null;
-            };
+            cleanSheets * getPositionPoints(position, 4, 4, 1, 1).getOrDefault(position, 0);
 
     BiFunction<String, Integer, Integer> redCardPointsFunction = (position, redCards) ->
-            redCards * switch (position) {
-                case "GK", "DF", "MF", "FW" -> -3;
-                default -> null;
-            };
+            redCards * getPositionPoints(position, -3, -3, -3, -3).getOrDefault(position, 0);
 
     BiFunction<String, Integer, Integer> yellowCardPointsFunction = (position, yellowCards) ->
-            yellowCards * switch (position) {
-                case "GK", "DF", "MF", "FW" -> -1;
-                default -> null;
-            };
+            yellowCards * getPositionPoints(position, -1, -1, -1, -1).getOrDefault(position, 0);
 
     BiFunction<String, Integer, Integer> savePointsFunction = (position, saves) ->
-            switch (position) {
-                case "GK" -> saves / 3;
-                case "DF", "MF" -> saves / 2;
-                case "FW" -> saves;
-                default -> null;
-            };
+            getPositionPoints(position, saves / 3, saves / 2, saves / 2, saves).getOrDefault(position, 0);
+
+    private static Map<String, Integer> getPositionPoints(String position, int GKScore, int DFScore, int MFScore, int FWScore) {
+        Map<String, Integer> positionPoints = new HashMap<>();
+        positionPoints.put(Position.GK.name(), GKScore);
+        positionPoints.put(Position.DEF.name(), DFScore);
+        positionPoints.put(Position.MID.name(), MFScore);
+        positionPoints.put(Position.FWD.name(), FWScore);
+        return positionPoints;
+    }
 
 }

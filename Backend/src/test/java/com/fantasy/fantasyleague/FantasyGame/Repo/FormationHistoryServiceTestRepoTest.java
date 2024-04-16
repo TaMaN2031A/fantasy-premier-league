@@ -1,6 +1,7 @@
 package com.fantasy.fantasyleague.FantasyGame.Repo;
 
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
+import com.fantasy.fantasyleague.RealLeague.Model.Position;
 import com.fantasy.fantasyleague.RealLeague.Model.Team;
 import com.fantasy.fantasyleague.RealLeague.Repository.PlayerRepository;
 import com.fantasy.fantasyleague.RealLeague.Repository.TeamRepository;
@@ -38,7 +39,7 @@ public class FormationHistoryServiceTestRepoTest {
     @Test
     public void InsertTest() {
         Team team = new Team("Liverpool");
-        Player player = new Player("Mohamed Salah", "GK",10,1);
+        Player player = new Player("Mohamed Salah", Position.GK.name(),10,1);
         teamRepository.save(team);
         playerRepository.save(player);
         // user sign in using username
@@ -60,7 +61,7 @@ public class FormationHistoryServiceTestRepoTest {
     @Test
     public void GetTest() {
         Team team = new Team("Liverpool");
-        Player player = new Player("Mohamed Salah", "GK",10,1);
+        Player player = new Player("Mohamed Salah", Position.GK.name(),10,1);
         teamRepository.save(team);
         playerRepository.save(player);
         // user sign in using username
@@ -77,9 +78,9 @@ public class FormationHistoryServiceTestRepoTest {
     @Test
     public void SaveAllTestAndGetAllForaCertainUser() {
         Team team = new Team("Liverpool");
-        Player player = new Player("Mohamed Salah", "GK",10,1);
-        Player player1 = new Player("abdo", "St",11,1);
-        Player player2 = new Player("abdo", "St",11,1);
+        Player player = new Player("Mohamed Salah", Position.GK.name(),10,1);
+        Player player1 = new Player("abdo", Position.FWD.name(),11,1);
+        Player player2 = new Player("abdo", Position.FWD.name(),11,1);
         teamRepository.save(team);
         playerRepository.save(player);
         playerRepository.save(player1);
