@@ -1,5 +1,6 @@
 package com.fantasy.fantasyleague.RealLeague.Controller;
 
+import com.fantasy.fantasyleague.RealLeague.DTO.TeamDTO;
 import com.fantasy.fantasyleague.RealLeague.Model.Team;
 import com.fantasy.fantasyleague.RealLeague.Service.TeamService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -69,12 +70,17 @@ public class TeamControllerTests {
                 willReturn(ResponseEntity.ok(responseS));
 
         // Perform the POST request
-        ResultActions response = mockMvc.perform(post("/team/insert/{name}", teamName));
+        ResultActions response = mockMvc.perform(
+                post("/team/insert")
+                        .contentType("application/json")
+                        .content(
+                                objectMapper.writeValueAsString(TeamDTO.builder().name(teamName).build())
+                        )
+        );
 
         // Check the HTTP status code
         response.andExpect(status().isOk())
                 .andExpect(jsonPath("message").value("Team inserted successfully"));
-
     }
 
     @Test
@@ -87,7 +93,13 @@ public class TeamControllerTests {
                 .body(responseS));
 
         // Perform the POST request
-        ResultActions response = mockMvc.perform(post("/team/insert/{name}", teamName));
+        ResultActions response = mockMvc.perform(
+                post("/team/insert")
+                    .contentType("application/json")
+                    .content(
+                            objectMapper.writeValueAsString(TeamDTO.builder().name(teamName).build())
+                    )
+        );
 
         // Check the HTTP status code
         response.andExpect(status().isBadRequest())

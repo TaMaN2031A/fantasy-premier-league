@@ -1,5 +1,6 @@
 package com.fantasy.fantasyleague.RealLeague.Controller;
 
+import com.fantasy.fantasyleague.RealLeague.DTO.TeamDTO;
 import com.fantasy.fantasyleague.RealLeague.Model.Team;
 import com.fantasy.fantasyleague.RealLeague.Service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,9 @@ import java.util.List;
 public class TeamController {
     @Autowired
     TeamService teamService;
-    @PostMapping("/insert/{name}")
-    public ResponseEntity insertTeam(@PathVariable String name) {
-        return teamService.insertTeam(name);
+    @PostMapping("/insert")
+    public ResponseEntity insertTeam(@RequestBody TeamDTO teamDTO) {
+        return teamService.insertTeam(teamDTO);
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteTeam(@PathVariable String id) {

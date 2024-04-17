@@ -32,5 +32,4 @@ public class GroupFantasy {
     @OrderBy("points ASC") // Order by points in ascending order
     private List<User> users = new ArrayList<>();
 
-
 }

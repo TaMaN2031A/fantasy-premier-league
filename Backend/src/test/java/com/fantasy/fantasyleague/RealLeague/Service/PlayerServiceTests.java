@@ -51,10 +51,9 @@ public class PlayerServiceTests {
     public void init(){
         validId = "101";
         notValidId = "AnyStringWithCharacters";
-        player = new Player("Eyad Games", "AMF", 21, 1);
-        player2 = new Player("Abo Treika", "AMF", 22, 1);
-        playerDTO = new PlayerDTO("Eyad Games", "AMF", 21, 1);
-
+        player = new Player("Eyad Games", Position.MID.name(), 21, 1);
+        player2 = new Player("Abo Treika", Position.MID.name(), 22, 1);
+        playerDTO = PlayerDTO.builder().name("Eyad Games").position(Position.MID.name()).number_in_team(21).id_of_team(1).build();
         list.add(player); list.add(player2);
         list1.add(player);
         emptyTeam = new Team("Al Ahly");
@@ -69,15 +68,16 @@ public class PlayerServiceTests {
         when(teamRepository.findById(anyInt())).thenReturn(Optional.of(teamWithSameShirtNumber));
 
         ResponseEntity response = playerService.
-                insertPlayer(new PlayerDTO("Mohamed Zidan", Position.FWD.name(), 2, teamWithSameShirtNumber.getID()));
+                insertPlayer(PlayerDTO.builder().name("Mohamed Zidan").position(Position.FWD.name()).number_in_team(2).id_of_team(teamWithSameShirtNumber.getID()).build());
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+
     }
     @Test
     public void PlayerService_InsertPlayerUnSuccessfullySameShirtNumber_ReturnResponseEntity400(){
         when(teamRepository.findById(anyInt())).thenReturn(Optional.of(teamWithSameShirtNumber));
 
         ResponseEntity response = playerService.
-                insertPlayer(new PlayerDTO("Mohamed Zidan", Position.FWD.name(), 22, teamWithSameShirtNumber.getID()));
+                insertPlayer(PlayerDTO.builder().name("Mohamed Zidan").position(Position.FWD.name()).number_in_team(22).id_of_team(teamWithSameShirtNumber.getID()).build());
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
@@ -86,7 +86,7 @@ public class PlayerServiceTests {
         when(teamRepository.findById(anyInt())).thenReturn(Optional.of(teamWithSameShirtNumber));
 
         ResponseEntity response = playerService.
-                insertPlayer(new PlayerDTO("Mohamed Zidan", Position.FWD.name(), -1, teamWithSameShirtNumber.getID()));
+                insertPlayer(PlayerDTO.builder().name("Mohamed Zidan").position(Position.FWD.name()).number_in_team(-1).id_of_team(teamWithSameShirtNumber.getID()).build());
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
@@ -95,7 +95,7 @@ public class PlayerServiceTests {
         when(teamRepository.findById(anyInt())).thenReturn(Optional.empty());
 
         ResponseEntity response = playerService.
-                insertPlayer(new PlayerDTO("Mohamed Zidan", Position.FWD.name(), -1, teamWithSameShirtNumber.getID()));
+                insertPlayer(PlayerDTO.builder().name("Mohamed Zidan").position(Position.FWD.name()).number_in_team(-1).id_of_team(teamWithSameShirtNumber.getID()).build());
         Assertions.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 

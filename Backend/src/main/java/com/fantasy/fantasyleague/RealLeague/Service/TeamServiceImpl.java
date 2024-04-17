@@ -1,6 +1,7 @@
 package com.fantasy.fantasyleague.RealLeague.Service;
 
 import com.fantasy.fantasyleague.RealLeague.DTO.PlayerDTO;
+import com.fantasy.fantasyleague.RealLeague.DTO.TeamDTO;
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
 import com.fantasy.fantasyleague.RealLeague.Model.Team;
 import com.fantasy.fantasyleague.RealLeague.Repository.TeamRepository;
@@ -19,14 +20,14 @@ public class TeamServiceImpl implements TeamService {
     @Autowired
     TeamRepository teamRepository;
     @Override
-    public ResponseEntity insertTeam(String name) {
+    public ResponseEntity insertTeam(TeamDTO teamDTO) {
         Map<String, String> response = new HashMap<>();
-        Team team1 = teamRepository.findByName(name);
+        Team team1 = teamRepository.findByName(teamDTO.getName());
         if(team1 != null) {
             response.put("error", "Team Already Exists");
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-        teamRepository.save(new Team(name));
+        teamRepository.save(teamDTO.getTeam());
         response.put("message", "Team inserted successfully");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

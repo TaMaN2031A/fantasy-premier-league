@@ -2,6 +2,7 @@ package com.fantasy.fantasyleague.RealLeague.Controller;
 
 import com.fantasy.fantasyleague.RealLeague.DTO.PlayerDTO;
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
+import com.fantasy.fantasyleague.RealLeague.Model.Position;
 import com.fantasy.fantasyleague.RealLeague.Service.PlayerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,9 +54,9 @@ public class PlayerControllerTests {
     public void init(){
         validId = "101";
         notValidId = "AnyStringWithCharacters";
-        player = new Player("Eyad Games", "AMF", 21, 1);
-        player2 = new Player("Abo Treika", "AMF", 22, 1);
-        playerDTO = new PlayerDTO("Eyad Games", "AMF", 21, 1);
+        player = new Player("Eyad Games", Position.MID.name(), 21, 1);
+        player2 = new Player("Abo Treika", Position.MID.name(), 22, 1);
+        playerDTO = PlayerDTO.builder().name("Eyad Games").position(Position.MID.name()).number_in_team(21).id_of_team(1).build();
         list.add(player); list.add(player2);
     }
 
@@ -187,8 +188,8 @@ public class PlayerControllerTests {
                 .andExpect(jsonPath("$", hasSize(2))) // Assuming the list has two teams
                 .andExpect(jsonPath("$[0].name", is("Eyad Games")))
                 .andExpect(jsonPath("$[1].name", is("Abo Treika")))
-                .andExpect(jsonPath("$[0].position", is("AMF")))
-                .andExpect(jsonPath("$[1].position", is("AMF")))
+                .andExpect(jsonPath("$[0].position", is(Position.MID.name())))
+                .andExpect(jsonPath("$[1].position", is(Position.MID.name())))
                 .andExpect(jsonPath("$[0].number_in_team", is(21)))
                 .andExpect(jsonPath("$[1].number_in_team", is(22)))
         ;

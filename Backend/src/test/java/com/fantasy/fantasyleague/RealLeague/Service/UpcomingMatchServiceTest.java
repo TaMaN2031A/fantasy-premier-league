@@ -51,8 +51,8 @@ public class UpcomingMatchServiceTest {
     public void init(){
         validId = "101";
         notValidId = "AnyStringWithCharacters";
-       // player = new Player("Eyad Games", "AMF", 21, 1);
-       // player2 = new Player("Abo Treika", "AMF", 22, 1);
+       // player = new Player("Eyad Games", Position.MID.name(), 21, 1);
+       // player2 = new Player("Abo Treika", Position.MID.name(), 22, 1);
         upcomingMatchInsertionDTO = new UpcomingMatchInsertionDTO(1, 1, 2, "Borg EL Arab");
 
        // list.add(player); list.add(player2);
@@ -177,8 +177,6 @@ public class UpcomingMatchServiceTest {
 
     @Test
     public void UpcomingMatchService_getUpcomingMatch_ReturnsUpcomingMatch(){
-
-
         UpcomingMatch upcomingMatch1 = upcomingMatchService.getMatch(anyInt());
         when(upcomingMatchRepository.existsById(anyInt())).thenReturn(true);
         Assertions.assertNull(upcomingMatchService.getMatch(1));

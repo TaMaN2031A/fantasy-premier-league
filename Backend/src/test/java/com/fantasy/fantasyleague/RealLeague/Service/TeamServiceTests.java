@@ -1,5 +1,6 @@
 package com.fantasy.fantasyleague.RealLeague.Service;
 
+import com.fantasy.fantasyleague.RealLeague.DTO.TeamDTO;
 import com.fantasy.fantasyleague.RealLeague.Model.Team;
 import com.fantasy.fantasyleague.RealLeague.Repository.TeamRepository;
 import org.junit.jupiter.api.Assertions;
@@ -33,14 +34,14 @@ public class TeamServiceTests {
         Team team = new Team("Damanhour");
         when(teamRepository.findByName(anyString())).thenReturn(null);
         when(teamRepository.save(Mockito.any(Team.class))).thenReturn(team);
-        ResponseEntity response = teamService.insertTeam("Damanhour");
+        ResponseEntity response = teamService.insertTeam(TeamDTO.builder().name("Damanhour").build());
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     public void TeamService_InsertTeamUnsuccessfullyAsTeamExists_ReturnResponseEntity400(){
         when(teamRepository.findByName(anyString())).thenReturn(new Team());
-        ResponseEntity response = teamService.insertTeam("Damanhour");
+        ResponseEntity response = teamService.insertTeam(TeamDTO.builder().name("Damanhour").build());
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 

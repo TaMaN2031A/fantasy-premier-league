@@ -1,12 +1,10 @@
 package com.fantasy.fantasyleague.FaqRule.Service;
-
-import com.fantasy.fantasyleague.FaqRule.Model.FAQ;
 import com.fantasy.fantasyleague.FaqRule.Model.Response;
 import com.fantasy.fantasyleague.FaqRule.Model.Rule;
 import com.fantasy.fantasyleague.FaqRule.Repository.RuleRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,6 +31,7 @@ public class RuleServiceTest {
     @Test
     public void RuleInsert() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
+
         ObjectNode jsonNode = objectMapper.createObjectNode();
         jsonNode.put("rule", "Sample Rule");
 
@@ -42,6 +41,7 @@ public class RuleServiceTest {
         when(ruleRepository.save(Mockito.any(Rule.class))).thenReturn(expectedRule);
 
         String result = ruleService.insertRule(jsonNode);
+        System.out.println(result);
 
         assertEquals(Response.INSERT_SUCCESS.getMessage(), result);
     }

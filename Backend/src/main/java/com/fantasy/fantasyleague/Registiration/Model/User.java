@@ -1,5 +1,6 @@
 package com.fantasy.fantasyleague.Registiration.Model;
 
+import com.fantasy.fantasyleague.Group.Model.GroupFantasy;
 import com.fantasy.fantasyleague.RealLeague.Model.Player;
 import com.fantasy.fantasyleague.fantasyGame.Model.Formation.CurrentFormation;
 import com.fantasy.fantasyleague.fantasyGame.Model.FormationStatusHistory.FormationStatusHistory;
@@ -25,6 +26,7 @@ import java.util.List;
 public class User extends Person implements Serializable {
     // @OneToOne(mappedBy = "userName", cascade = CascadeType.ALL)
     // private UserTeam team;
+
     @Column(nullable = true)
     private Boolean benchBoost = false;
 
@@ -46,16 +48,16 @@ public class User extends Person implements Serializable {
     @JoinColumn(name = "vice_captain_id", referencedColumnName = "id")
     private Player viceCaptain;
 
-//    @JsonIgnore
-//    @ManyToMany
-//    @JoinTable(
-//            name = "groupFantasy_user_relationship",
-//            joinColumns = @JoinColumn(name = "user_name", referencedColumnName = "userName"),
-//            inverseJoinColumns = @JoinColumn(name = "groupFantasy_id")
-//    )
-//    private List<GroupFantasy> groupFantasies = new ArrayList<>();
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-//    private List<GroupFantasy> ownedGroups = new ArrayList<>();
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "groupFantasy_user_relationship",
+            joinColumns = @JoinColumn(name = "user_name", referencedColumnName = "userName"),
+            inverseJoinColumns = @JoinColumn(name = "groupFantasy_id")
+    )
+    private List<GroupFantasy> groupFantasies = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    private List<GroupFantasy> ownedGroups = new ArrayList<>();
 
 }

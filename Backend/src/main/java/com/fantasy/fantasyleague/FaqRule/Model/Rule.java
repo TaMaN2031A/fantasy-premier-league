@@ -7,7 +7,8 @@ import jakarta.persistence.Id;
 import lombok.*;
 
 import java.util.Date;
-@Data
+@Getter
+@Setter
 @Entity
 public class Rule {
 

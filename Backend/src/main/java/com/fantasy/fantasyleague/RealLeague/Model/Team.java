@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@Builder
 public class Team {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

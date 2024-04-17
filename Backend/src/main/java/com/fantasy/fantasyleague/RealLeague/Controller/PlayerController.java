@@ -19,10 +19,7 @@ public class PlayerController {
     @Autowired
     PlayerService playerService;
     @PostMapping("/insert")
-    public ResponseEntity insertPlayer(@RequestBody PlayerDTO playerDTO) {
-        return playerService.insertPlayer(playerDTO);
-    }
-
+    public ResponseEntity insertPlayer(@RequestBody PlayerDTO playerDTO) { return playerService.insertPlayer(playerDTO); }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deletePlayer(@PathVariable String id) {
         return playerService.deletePlayer(id);

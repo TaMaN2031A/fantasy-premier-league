@@ -1,5 +1,6 @@
 package com.fantasy.fantasyleague.RealLeague.Service;
 
+import com.fantasy.fantasyleague.RealLeague.DTO.TeamDTO;
 import com.fantasy.fantasyleague.RealLeague.Model.Team;
 import org.springframework.http.ResponseEntity;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 public interface TeamService {
     List<Team> getAllTeams();
-    ResponseEntity insertTeam(String name);
+    ResponseEntity insertTeam(TeamDTO teamDTO);
     ResponseEntity updateTeam(String id, String newName);
     ResponseEntity deleteTeam(String ID);
     ResponseEntity deleteAllTeam();
