@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="./Frontend/src/Home/Home Page/assets/TopPlayers.png" width="750">
+</p>
+
+
 # Fantasy League Website: Applying Software Engineering Principles
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
